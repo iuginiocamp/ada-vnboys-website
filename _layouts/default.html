@@ -469,49 +469,51 @@ The pie chart above shows the political orientation of the channels obtained fro
         // Initialize the chart
         var chartDom = document.getElementById('pie-chart');
         var myChart = echarts.init(chartDom);
-        
-        // Your configuration
+
+        // Chart configuration
         var option = {
+            color: ['#CC0000', '#FF6B6B', '#808080', '#6495ED', '#4169E1'],
             title: {
-            text: 'Political Content Distribution',
-            subtext: 'YouTube Categories',
-            left: 'center'
+                text: 'Number of subscriber share by political orientation',
+                subtext: 'Total Number of Subscribers: 52,500,000',
+                left: 'center'
             },
             tooltip: {
-            trigger: 'item'
+                trigger: 'item',
+                formatter: '{b}: {c}%'
             },
             legend: {
-            orient: 'vertical',
-            left: 'left'
+                orient: 'vertical',
+                left: 'left'
             },
             series: [
-            {
-                name: 'Category',
-                type: 'pie',
-                radius: '50%',
-                data: [
-                { value: 1048, name: 'News & Politics' },
-                { value: 735, name: 'Entertainment' },
-                { value: 580, name: 'Education' },
-                { value: 484, name: 'Science & Tech' },
-                { value: 300, name: 'Other' }
-                ],
-                emphasis: {
-                itemStyle: {
-                    shadowBlur: 10,
-                    shadowOffsetX: 0,
-                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                {
+                    name: 'Political Orientation',
+                    type: 'pie',
+                    radius: '50%',
+                    data: [
+                        { value: 7.7, name: 'Right' },
+                        { value: 13.4, name: 'Lean Right' },
+                        { value: 35.4, name: 'Center' },
+                        { value: 26.2, name: 'Lean Left' },
+                        { value: 17.2, name: 'Left' }
+                    ],
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
                 }
-                }
-            }
             ]
         };
-        
+
         // Apply the configuration
         myChart.setOption(option);
-        
+
         // Make chart responsive
-        window.addEventListener('resize', function() {
+        window.addEventListener('resize', function () {
             myChart.resize();
         });
     </script>
