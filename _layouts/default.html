@@ -999,81 +999,59 @@ function roundXYValue(val) {
 }
 </script>
 
+
+
+
+
 <script>
-const categories = [
-  "News & Politics",
-  "Nonprofits & Activism",
-  "Travel & Events",
-  "Education",
-  "People & Blogs",
-  "Science & Technology",
-  "Gaming",
-  "Autos & Vehicles",
-  "Howto & Style",
-  "Entertainment",
-  "Film & Animation",
-  "Sports",
-  "Pets & Animals",
-  "Comedy",
-  "Music"
-];
+(function () {
+  const categories = [
+    "News & Politics","Nonprofits & Activism","Travel & Events","Education",
+    "People & Blogs","Science & Technology","Gaming","Autos & Vehicles",
+    "Howto & Style","Entertainment","Film & Animation","Sports",
+    "Pets & Animals","Comedy","Music"
+  ];
 
-const values = [
-  42.3, 32.3, 28.2, 27.8, 20.9, 20.2, 19.2,
-  18.1, 18.1, 18.0, 17.7, 16.7, 16.4, 15.4, 12.0
-];
+  const values = [
+    42.3, 32.3, 28.2, 27.8, 20.9, 20.2, 19.2,
+    18.1, 18.1, 18.0, 17.7, 16.7, 16.4, 15.4, 12.0
+  ];
 
-const chart = echarts.init(
-  document.getElementById("political-bar-chart")
-);
+  const el = document.getElementById("political-bar-chart");
+  if (!el) return;
 
-const option = {
-  title: {
-    text: "Proportion of Political Content by Video Category",
-    left: "center"
-  },
-  tooltip: {
-    trigger: "axis",
-    axisPointer: { type: "shadow" },
-    formatter: p =>
-      `${p[0].name}<br/>${p[0].value}%`
-  },
-  grid: {
-    left: 60,
-    right: 40,
-    bottom: 120,
-    top: 80
-  },
-  xAxis: {
-    type: "category",
-    data: categories,
-    axisLabel: {
-      rotate: 45,
-      interval: 0
-    }
-  },
-  yAxis: {
-    type: "value",
-    name: "Videos containing political vocabulary (%)",
-    min: 0,
-    max: 100
-  },
-  series: [
-    {
+  const chart = echarts.init(el);
+
+  const option = {
+    title: { text: "Proportion of Political Content by Video Category", left: "center" },
+    tooltip: {
+      trigger: "axis",
+      axisPointer: { type: "shadow" },
+      formatter: p => `${p[0].name}<br/>${p[0].value}%`
+    },
+    grid: { left: 60, right: 40, bottom: 120, top: 80 },
+    xAxis: {
+      type: "category",
+      data: categories,
+      axisLabel: { rotate: 45, interval: 0 }
+    },
+    yAxis: {
+      type: "value",
+      name: "Videos containing political vocabulary (%)",
+      min: 0,
+      max: 100
+    },
+    series: [{
       type: "bar",
       data: values,
       barWidth: "60%",
-      label: {
-        show: true,
-        position: "top",
-        formatter: v => `${v.value}%`
-      }
-    }
-  ]
-};
+      label: { show: true, position: "top", formatter: v => `${v.value}%` }
+    }]
+  };
 
-chart.setOption(option);
-window.addEventListener("resize", () => chart.resize());
+  chart.setOption(option);
+  window.addEventListener("resize", () => chart.resize());
+})();
 </script>
 
 
