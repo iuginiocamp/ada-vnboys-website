@@ -1,0 +1,1362 @@
+[
+  {
+    "Category":"Economy",
+    "year":2009,
+    "share":0.1582051282
+  },
+  {
+    "Category":"Economy",
+    "year":2010,
+    "share":0.133974359
+  },
+  {
+    "Category":"Economy",
+    "year":2011,
+    "share":0.1468627451
+  },
+  {
+    "Category":"Economy",
+    "year":2012,
+    "share":0.1492156863
+  },
+  {
+    "Category":"Economy",
+    "year":2013,
+    "share":0.1264102564
+  },
+  {
+    "Category":"Economy",
+    "year":2014,
+    "share":0.1147712418
+  },
+  {
+    "Category":"Economy",
+    "year":2015,
+    "share":0.0841666667
+  },
+  {
+    "Category":"Economy",
+    "year":2016,
+    "share":0.0708130081
+  },
+  {
+    "Category":"Economy",
+    "year":2017,
+    "share":0.061503268
+  },
+  {
+    "Category":"Economy",
+    "year":2018,
+    "share":0.0576923077
+  },
+  {
+    "Category":"Economy",
+    "year":2019,
+    "share":0.0549358974
+  },
+  {
+    "Category":"Economy",
+    "year":2020,
+    "share":0.0915333333
+  },
+  {
+    "Category":"Economy",
+    "year":2021,
+    "share":0.0808666667
+  },
+  {
+    "Category":"Economy",
+    "year":2022,
+    "share":0.0720261438
+  },
+  {
+    "Category":"Economy",
+    "year":2023,
+    "share":0.0562
+  },
+  {
+    "Category":"Economy",
+    "year":2024,
+    "share":0.0510457516
+  },
+  {
+    "Category":"Economy",
+    "year":2025,
+    "share":0.0671428571
+  },
+  {
+    "Category":"Education",
+    "year":2009,
+    "share":0.0584615385
+  },
+  {
+    "Category":"Education",
+    "year":2010,
+    "share":0.0571153846
+  },
+  {
+    "Category":"Education",
+    "year":2011,
+    "share":0.0580392157
+  },
+  {
+    "Category":"Education",
+    "year":2012,
+    "share":0.0541176471
+  },
+  {
+    "Category":"Education",
+    "year":2013,
+    "share":0.0703846154
+  },
+  {
+    "Category":"Education",
+    "year":2014,
+    "share":0.0752941176
+  },
+  {
+    "Category":"Education",
+    "year":2015,
+    "share":0.07875
+  },
+  {
+    "Category":"Education",
+    "year":2016,
+    "share":0.053902439
+  },
+  {
+    "Category":"Education",
+    "year":2017,
+    "share":0.0664705882
+  },
+  {
+    "Category":"Education",
+    "year":2018,
+    "share":0.0582692308
+  },
+  {
+    "Category":"Education",
+    "year":2019,
+    "share":0.0511538462
+  },
+  {
+    "Category":"Education",
+    "year":2020,
+    "share":0.049
+  },
+  {
+    "Category":"Education",
+    "year":2021,
+    "share":0.0494
+  },
+  {
+    "Category":"Education",
+    "year":2022,
+    "share":0.0409803922
+  },
+  {
+    "Category":"Education",
+    "year":2023,
+    "share":0.0404
+  },
+  {
+    "Category":"Education",
+    "year":2024,
+    "share":0.0260784314
+  },
+  {
+    "Category":"Education",
+    "year":2025,
+    "share":0.0259183673
+  },
+  {
+    "Category":"Environment",
+    "year":2009,
+    "share":0.0392307692
+  },
+  {
+    "Category":"Environment",
+    "year":2010,
+    "share":0.0401923077
+  },
+  {
+    "Category":"Environment",
+    "year":2011,
+    "share":0.0315686275
+  },
+  {
+    "Category":"Environment",
+    "year":2012,
+    "share":0.0339215686
+  },
+  {
+    "Category":"Environment",
+    "year":2013,
+    "share":0.0521153846
+  },
+  {
+    "Category":"Environment",
+    "year":2014,
+    "share":0.057254902
+  },
+  {
+    "Category":"Environment",
+    "year":2015,
+    "share":0.06225
+  },
+  {
+    "Category":"Environment",
+    "year":2016,
+    "share":0.0641463415
+  },
+  {
+    "Category":"Environment",
+    "year":2017,
+    "share":0.0780392157
+  },
+  {
+    "Category":"Environment",
+    "year":2018,
+    "share":0.0778846154
+  },
+  {
+    "Category":"Environment",
+    "year":2019,
+    "share":0.1171153846
+  },
+  {
+    "Category":"Environment",
+    "year":2020,
+    "share":0.1228
+  },
+  {
+    "Category":"Environment",
+    "year":2021,
+    "share":0.1336
+  },
+  {
+    "Category":"Environment",
+    "year":2022,
+    "share":0.1152941176
+  },
+  {
+    "Category":"Environment",
+    "year":2023,
+    "share":0.1028
+  },
+  {
+    "Category":"Environment",
+    "year":2024,
+    "share":0.0809803922
+  },
+  {
+    "Category":"Environment",
+    "year":2025,
+    "share":0.0626530612
+  },
+  {
+    "Category":"Foreign policy",
+    "year":2009,
+    "share":0.0534615385
+  },
+  {
+    "Category":"Foreign policy",
+    "year":2010,
+    "share":0.0565384615
+  },
+  {
+    "Category":"Foreign policy",
+    "year":2011,
+    "share":0.0423529412
+  },
+  {
+    "Category":"Foreign policy",
+    "year":2012,
+    "share":0.0292156863
+  },
+  {
+    "Category":"Foreign policy",
+    "year":2013,
+    "share":0.0367307692
+  },
+  {
+    "Category":"Foreign policy",
+    "year":2014,
+    "share":0.061372549
+  },
+  {
+    "Category":"Foreign policy",
+    "year":2015,
+    "share":0.0725
+  },
+  {
+    "Category":"Foreign policy",
+    "year":2016,
+    "share":0.076097561
+  },
+  {
+    "Category":"Foreign policy",
+    "year":2017,
+    "share":0.0631372549
+  },
+  {
+    "Category":"Foreign policy",
+    "year":2018,
+    "share":0.1134615385
+  },
+  {
+    "Category":"Foreign policy",
+    "year":2019,
+    "share":0.1457692308
+  },
+  {
+    "Category":"Foreign policy",
+    "year":2020,
+    "share":0.074
+  },
+  {
+    "Category":"Foreign policy",
+    "year":2021,
+    "share":0.0828
+  },
+  {
+    "Category":"Foreign policy",
+    "year":2022,
+    "share":0.0768627451
+  },
+  {
+    "Category":"Foreign policy",
+    "year":2023,
+    "share":0.0792
+  },
+  {
+    "Category":"Foreign policy",
+    "year":2024,
+    "share":0.1421568627
+  },
+  {
+    "Category":"Foreign policy",
+    "year":2025,
+    "share":0.0920408163
+  },
+  {
+    "Category":"Gay rights",
+    "year":2009,
+    "share":0.0280769231
+  },
+  {
+    "Category":"Gay rights",
+    "year":2010,
+    "share":0.0255769231
+  },
+  {
+    "Category":"Gay rights",
+    "year":2011,
+    "share":0.0225490196
+  },
+  {
+    "Category":"Gay rights",
+    "year":2012,
+    "share":0.0196078431
+  },
+  {
+    "Category":"Gay rights",
+    "year":2013,
+    "share":0.0215384615
+  },
+  {
+    "Category":"Gay rights",
+    "year":2014,
+    "share":0.0207843137
+  },
+  {
+    "Category":"Gay rights",
+    "year":2015,
+    "share":0.024
+  },
+  {
+    "Category":"Gay rights",
+    "year":2016,
+    "share":0.0143902439
+  },
+  {
+    "Category":"Gay rights",
+    "year":2017,
+    "share":0.0149019608
+  },
+  {
+    "Category":"Gay rights",
+    "year":2018,
+    "share":0.015
+  },
+  {
+    "Category":"Gay rights",
+    "year":2019,
+    "share":0.0148076923
+  },
+  {
+    "Category":"Gay rights",
+    "year":2020,
+    "share":0.0016
+  },
+  {
+    "Category":"Gay rights",
+    "year":2021,
+    "share":0.0
+  },
+  {
+    "Category":"Gay rights",
+    "year":2022,
+    "share":0.0
+  },
+  {
+    "Category":"Gay rights",
+    "year":2023,
+    "share":0.0
+  },
+  {
+    "Category":"Gay rights",
+    "year":2024,
+    "share":0.0
+  },
+  {
+    "Category":"Gay rights",
+    "year":2025,
+    "share":0.0
+  },
+  {
+    "Category":"Gun control",
+    "year":2009,
+    "share":0.0
+  },
+  {
+    "Category":"Gun control",
+    "year":2010,
+    "share":0.0
+  },
+  {
+    "Category":"Gun control",
+    "year":2011,
+    "share":0.0
+  },
+  {
+    "Category":"Gun control",
+    "year":2012,
+    "share":0.0
+  },
+  {
+    "Category":"Gun control",
+    "year":2013,
+    "share":0.0
+  },
+  {
+    "Category":"Gun control",
+    "year":2014,
+    "share":0.0
+  },
+  {
+    "Category":"Gun control",
+    "year":2015,
+    "share":0.01125
+  },
+  {
+    "Category":"Gun control",
+    "year":2016,
+    "share":0.0470731707
+  },
+  {
+    "Category":"Gun control",
+    "year":2017,
+    "share":0.0278431373
+  },
+  {
+    "Category":"Gun control",
+    "year":2018,
+    "share":0.0503846154
+  },
+  {
+    "Category":"Gun control",
+    "year":2019,
+    "share":0.0528846154
+  },
+  {
+    "Category":"Gun control",
+    "year":2020,
+    "share":0.0384
+  },
+  {
+    "Category":"Gun control",
+    "year":2021,
+    "share":0.0408
+  },
+  {
+    "Category":"Gun control",
+    "year":2022,
+    "share":0.0439215686
+  },
+  {
+    "Category":"Gun control",
+    "year":2023,
+    "share":0.0548
+  },
+  {
+    "Category":"Gun control",
+    "year":2024,
+    "share":0.0339215686
+  },
+  {
+    "Category":"Gun control",
+    "year":2025,
+    "share":0.0214285714
+  },
+  {
+    "Category":"Health",
+    "year":2009,
+    "share":0.1873076923
+  },
+  {
+    "Category":"Health",
+    "year":2010,
+    "share":0.1698076923
+  },
+  {
+    "Category":"Health",
+    "year":2011,
+    "share":0.1190196078
+  },
+  {
+    "Category":"Health",
+    "year":2012,
+    "share":0.1101960784
+  },
+  {
+    "Category":"Health",
+    "year":2013,
+    "share":0.1130769231
+  },
+  {
+    "Category":"Health",
+    "year":2014,
+    "share":0.091372549
+  },
+  {
+    "Category":"Health",
+    "year":2015,
+    "share":0.0815
+  },
+  {
+    "Category":"Health",
+    "year":2016,
+    "share":0.0992682927
+  },
+  {
+    "Category":"Health",
+    "year":2017,
+    "share":0.16
+  },
+  {
+    "Category":"Health",
+    "year":2018,
+    "share":0.1686538462
+  },
+  {
+    "Category":"Health",
+    "year":2019,
+    "share":0.1794230769
+  },
+  {
+    "Category":"Health",
+    "year":2020,
+    "share":0.2486
+  },
+  {
+    "Category":"Health",
+    "year":2021,
+    "share":0.1752
+  },
+  {
+    "Category":"Health",
+    "year":2022,
+    "share":0.1247058824
+  },
+  {
+    "Category":"Health",
+    "year":2023,
+    "share":0.1068
+  },
+  {
+    "Category":"Health",
+    "year":2024,
+    "share":0.0909803922
+  },
+  {
+    "Category":"Health",
+    "year":2025,
+    "share":0.1004081633
+  },
+  {
+    "Category":"Inflation\/prices",
+    "year":2009,
+    "share":0.0
+  },
+  {
+    "Category":"Inflation\/prices",
+    "year":2010,
+    "share":0.0
+  },
+  {
+    "Category":"Inflation\/prices",
+    "year":2011,
+    "share":0.0
+  },
+  {
+    "Category":"Inflation\/prices",
+    "year":2012,
+    "share":0.0
+  },
+  {
+    "Category":"Inflation\/prices",
+    "year":2013,
+    "share":0.0
+  },
+  {
+    "Category":"Inflation\/prices",
+    "year":2014,
+    "share":0.0
+  },
+  {
+    "Category":"Inflation\/prices",
+    "year":2015,
+    "share":0.0
+  },
+  {
+    "Category":"Inflation\/prices",
+    "year":2016,
+    "share":0.0
+  },
+  {
+    "Category":"Inflation\/prices",
+    "year":2017,
+    "share":0.0
+  },
+  {
+    "Category":"Inflation\/prices",
+    "year":2018,
+    "share":0.0
+  },
+  {
+    "Category":"Inflation\/prices",
+    "year":2019,
+    "share":0.0
+  },
+  {
+    "Category":"Inflation\/prices",
+    "year":2020,
+    "share":0.0
+  },
+  {
+    "Category":"Inflation\/prices",
+    "year":2021,
+    "share":0.0
+  },
+  {
+    "Category":"Inflation\/prices",
+    "year":2022,
+    "share":0.0992156863
+  },
+  {
+    "Category":"Inflation\/prices",
+    "year":2023,
+    "share":0.1904
+  },
+  {
+    "Category":"Inflation\/prices",
+    "year":2024,
+    "share":0.2152941176
+  },
+  {
+    "Category":"Inflation\/prices",
+    "year":2025,
+    "share":0.22
+  },
+  {
+    "Category":"Medicare",
+    "year":2009,
+    "share":0.0
+  },
+  {
+    "Category":"Medicare",
+    "year":2010,
+    "share":0.0
+  },
+  {
+    "Category":"Medicare",
+    "year":2011,
+    "share":0.02
+  },
+  {
+    "Category":"Medicare",
+    "year":2012,
+    "share":0.0362745098
+  },
+  {
+    "Category":"Medicare",
+    "year":2013,
+    "share":0.0317307692
+  },
+  {
+    "Category":"Medicare",
+    "year":2014,
+    "share":0.0303921569
+  },
+  {
+    "Category":"Medicare",
+    "year":2015,
+    "share":0.03025
+  },
+  {
+    "Category":"Medicare",
+    "year":2016,
+    "share":0.0309756098
+  },
+  {
+    "Category":"Medicare",
+    "year":2017,
+    "share":0.0484313725
+  },
+  {
+    "Category":"Medicare",
+    "year":2018,
+    "share":0.0438461538
+  },
+  {
+    "Category":"Medicare",
+    "year":2019,
+    "share":0.0321153846
+  },
+  {
+    "Category":"Medicare",
+    "year":2020,
+    "share":0.0054
+  },
+  {
+    "Category":"Medicare",
+    "year":2021,
+    "share":0.0
+  },
+  {
+    "Category":"Medicare",
+    "year":2022,
+    "share":0.0
+  },
+  {
+    "Category":"Medicare",
+    "year":2023,
+    "share":0.0
+  },
+  {
+    "Category":"Medicare",
+    "year":2024,
+    "share":0.0
+  },
+  {
+    "Category":"Medicare",
+    "year":2025,
+    "share":0.0
+  },
+  {
+    "Category":"National Security and foreign policy",
+    "year":2009,
+    "share":0.0
+  },
+  {
+    "Category":"National Security and foreign policy",
+    "year":2010,
+    "share":0.0
+  },
+  {
+    "Category":"National Security and foreign policy",
+    "year":2011,
+    "share":0.0
+  },
+  {
+    "Category":"National Security and foreign policy",
+    "year":2012,
+    "share":0.0
+  },
+  {
+    "Category":"National Security and foreign policy",
+    "year":2013,
+    "share":0.0
+  },
+  {
+    "Category":"National Security and foreign policy",
+    "year":2014,
+    "share":0.0078431373
+  },
+  {
+    "Category":"National Security and foreign policy",
+    "year":2015,
+    "share":0.02325
+  },
+  {
+    "Category":"National Security and foreign policy",
+    "year":2016,
+    "share":0.0202439024
+  },
+  {
+    "Category":"National Security and foreign policy",
+    "year":2017,
+    "share":0.0133333333
+  },
+  {
+    "Category":"National Security and foreign policy",
+    "year":2018,
+    "share":0.0115384615
+  },
+  {
+    "Category":"National Security and foreign policy",
+    "year":2019,
+    "share":0.0111538462
+  },
+  {
+    "Category":"National Security and foreign policy",
+    "year":2020,
+    "share":0.059
+  },
+  {
+    "Category":"National Security and foreign policy",
+    "year":2021,
+    "share":0.081
+  },
+  {
+    "Category":"National Security and foreign policy",
+    "year":2022,
+    "share":0.0815686275
+  },
+  {
+    "Category":"National Security and foreign policy",
+    "year":2023,
+    "share":0.0832
+  },
+  {
+    "Category":"National Security and foreign policy",
+    "year":2024,
+    "share":0.0717647059
+  },
+  {
+    "Category":"National Security and foreign policy",
+    "year":2025,
+    "share":0.0724489796
+  },
+  {
+    "Category":"Social issues",
+    "year":2009,
+    "share":0.0
+  },
+  {
+    "Category":"Social issues",
+    "year":2010,
+    "share":0.0
+  },
+  {
+    "Category":"Social issues",
+    "year":2011,
+    "share":0.0000653595
+  },
+  {
+    "Category":"Social issues",
+    "year":2012,
+    "share":0.010130719
+  },
+  {
+    "Category":"Social issues",
+    "year":2013,
+    "share":0.013974359
+  },
+  {
+    "Category":"Social issues",
+    "year":2014,
+    "share":0.012745098
+  },
+  {
+    "Category":"Social issues",
+    "year":2015,
+    "share":0.01475
+  },
+  {
+    "Category":"Social issues",
+    "year":2016,
+    "share":0.0128455285
+  },
+  {
+    "Category":"Social issues",
+    "year":2017,
+    "share":0.0145098039
+  },
+  {
+    "Category":"Social issues",
+    "year":2018,
+    "share":0.0155128205
+  },
+  {
+    "Category":"Social issues",
+    "year":2019,
+    "share":0.0166666667
+  },
+  {
+    "Category":"Social issues",
+    "year":2020,
+    "share":0.0328666667
+  },
+  {
+    "Category":"Social issues",
+    "year":2021,
+    "share":0.0644
+  },
+  {
+    "Category":"Social issues",
+    "year":2022,
+    "share":0.0666013072
+  },
+  {
+    "Category":"Social issues",
+    "year":2023,
+    "share":0.0575333333
+  },
+  {
+    "Category":"Social issues",
+    "year":2024,
+    "share":0.0625490196
+  },
+  {
+    "Category":"Social issues",
+    "year":2025,
+    "share":0.067755102
+  },
+  {
+    "Category":"Social security",
+    "year":2009,
+    "share":0.0923076923
+  },
+  {
+    "Category":"Social security",
+    "year":2010,
+    "share":0.0980769231
+  },
+  {
+    "Category":"Social security",
+    "year":2011,
+    "share":0.1178431373
+  },
+  {
+    "Category":"Social security",
+    "year":2012,
+    "share":0.1033333333
+  },
+  {
+    "Category":"Social security",
+    "year":2013,
+    "share":0.1186538462
+  },
+  {
+    "Category":"Social security",
+    "year":2014,
+    "share":0.1282352941
+  },
+  {
+    "Category":"Social security",
+    "year":2015,
+    "share":0.148
+  },
+  {
+    "Category":"Social security",
+    "year":2016,
+    "share":0.1548780488
+  },
+  {
+    "Category":"Social security",
+    "year":2017,
+    "share":0.1505882353
+  },
+  {
+    "Category":"Social security",
+    "year":2018,
+    "share":0.1396153846
+  },
+  {
+    "Category":"Social security",
+    "year":2019,
+    "share":0.1017307692
+  },
+  {
+    "Category":"Social security",
+    "year":2020,
+    "share":0.0176
+  },
+  {
+    "Category":"Social security",
+    "year":2021,
+    "share":0.0
+  },
+  {
+    "Category":"Social security",
+    "year":2022,
+    "share":0.0
+  },
+  {
+    "Category":"Social security",
+    "year":2023,
+    "share":0.0
+  },
+  {
+    "Category":"Social security",
+    "year":2024,
+    "share":0.0
+  },
+  {
+    "Category":"Social security",
+    "year":2025,
+    "share":0.0
+  },
+  {
+    "Category":"Terrorism",
+    "year":2009,
+    "share":0.0661538462
+  },
+  {
+    "Category":"Terrorism",
+    "year":2010,
+    "share":0.0484615385
+  },
+  {
+    "Category":"Terrorism",
+    "year":2011,
+    "share":0.0270588235
+  },
+  {
+    "Category":"Terrorism",
+    "year":2012,
+    "share":0.0192156863
+  },
+  {
+    "Category":"Terrorism",
+    "year":2013,
+    "share":0.0284615385
+  },
+  {
+    "Category":"Terrorism",
+    "year":2014,
+    "share":0.0601960784
+  },
+  {
+    "Category":"Terrorism",
+    "year":2015,
+    "share":0.1135
+  },
+  {
+    "Category":"Terrorism",
+    "year":2016,
+    "share":0.1368292683
+  },
+  {
+    "Category":"Terrorism",
+    "year":2017,
+    "share":0.1103921569
+  },
+  {
+    "Category":"Terrorism",
+    "year":2018,
+    "share":0.0644230769
+  },
+  {
+    "Category":"Terrorism",
+    "year":2019,
+    "share":0.0484615385
+  },
+  {
+    "Category":"Terrorism",
+    "year":2020,
+    "share":0.0084
+  },
+  {
+    "Category":"Terrorism",
+    "year":2021,
+    "share":0.0
+  },
+  {
+    "Category":"Terrorism",
+    "year":2022,
+    "share":0.0
+  },
+  {
+    "Category":"Terrorism",
+    "year":2023,
+    "share":0.0
+  },
+  {
+    "Category":"Terrorism",
+    "year":2024,
+    "share":0.0
+  },
+  {
+    "Category":"Terrorism",
+    "year":2025,
+    "share":0.0
+  },
+  {
+    "Category":"The budget deficit",
+    "year":2009,
+    "share":0.0
+  },
+  {
+    "Category":"The budget deficit",
+    "year":2010,
+    "share":0.0878846154
+  },
+  {
+    "Category":"The budget deficit",
+    "year":2011,
+    "share":0.1107843137
+  },
+  {
+    "Category":"The budget deficit",
+    "year":2012,
+    "share":0.1080392157
+  },
+  {
+    "Category":"The budget deficit",
+    "year":2013,
+    "share":0.0986538462
+  },
+  {
+    "Category":"The budget deficit",
+    "year":2014,
+    "share":0.0770588235
+  },
+  {
+    "Category":"The budget deficit",
+    "year":2015,
+    "share":0.05475
+  },
+  {
+    "Category":"The budget deficit",
+    "year":2016,
+    "share":0.043902439
+  },
+  {
+    "Category":"The budget deficit",
+    "year":2017,
+    "share":0.0303921569
+  },
+  {
+    "Category":"The budget deficit",
+    "year":2018,
+    "share":0.0342307692
+  },
+  {
+    "Category":"The budget deficit",
+    "year":2019,
+    "share":0.0269230769
+  },
+  {
+    "Category":"The budget deficit",
+    "year":2020,
+    "share":0.0038
+  },
+  {
+    "Category":"The budget deficit",
+    "year":2021,
+    "share":0.0
+  },
+  {
+    "Category":"The budget deficit",
+    "year":2022,
+    "share":0.0
+  },
+  {
+    "Category":"The budget deficit",
+    "year":2023,
+    "share":0.0
+  },
+  {
+    "Category":"The budget deficit",
+    "year":2024,
+    "share":0.0
+  },
+  {
+    "Category":"The budget deficit",
+    "year":2025,
+    "share":0.0
+  },
+  {
+    "Category":"The war in Afghanistan",
+    "year":2009,
+    "share":0.0
+  },
+  {
+    "Category":"The war in Afghanistan",
+    "year":2010,
+    "share":0.0157692308
+  },
+  {
+    "Category":"The war in Afghanistan",
+    "year":2011,
+    "share":0.0115686275
+  },
+  {
+    "Category":"The war in Afghanistan",
+    "year":2012,
+    "share":0.0092156863
+  },
+  {
+    "Category":"The war in Afghanistan",
+    "year":2013,
+    "share":0.0061538462
+  },
+  {
+    "Category":"The war in Afghanistan",
+    "year":2014,
+    "share":0.0050980392
+  },
+  {
+    "Category":"The war in Afghanistan",
+    "year":2015,
+    "share":0.0065
+  },
+  {
+    "Category":"The war in Afghanistan",
+    "year":2016,
+    "share":0.0053658537
+  },
+  {
+    "Category":"The war in Afghanistan",
+    "year":2017,
+    "share":0.0054901961
+  },
+  {
+    "Category":"The war in Afghanistan",
+    "year":2018,
+    "share":0.0025
+  },
+  {
+    "Category":"The war in Afghanistan",
+    "year":2019,
+    "share":0.0019230769
+  },
+  {
+    "Category":"The war in Afghanistan",
+    "year":2020,
+    "share":0.0008
+  },
+  {
+    "Category":"The war in Afghanistan",
+    "year":2021,
+    "share":0.0
+  },
+  {
+    "Category":"The war in Afghanistan",
+    "year":2022,
+    "share":0.0
+  },
+  {
+    "Category":"The war in Afghanistan",
+    "year":2023,
+    "share":0.0
+  },
+  {
+    "Category":"The war in Afghanistan",
+    "year":2024,
+    "share":0.0
+  },
+  {
+    "Category":"The war in Afghanistan",
+    "year":2025,
+    "share":0.0
+  },
+  {
+    "Category":"Unweighted base",
+    "year":2009,
+    "share":722.8076923077
+  },
+  {
+    "Category":"Unweighted base",
+    "year":2010,
+    "share":793.5961538462
+  },
+  {
+    "Category":"Unweighted base",
+    "year":2011,
+    "share":776.7843137255
+  },
+  {
+    "Category":"Unweighted base",
+    "year":2012,
+    "share":806.431372549
+  },
+  {
+    "Category":"Unweighted base",
+    "year":2013,
+    "share":836.2884615385
+  },
+  {
+    "Category":"Unweighted base",
+    "year":2014,
+    "share":780.7254901961
+  },
+  {
+    "Category":"Unweighted base",
+    "year":2015,
+    "share":1011.725
+  },
+  {
+    "Category":"Unweighted base",
+    "year":2016,
+    "share":1322.2926829268
+  },
+  {
+    "Category":"Unweighted base",
+    "year":2017,
+    "share":1266.9803921569
+  },
+  {
+    "Category":"Unweighted base",
+    "year":2018,
+    "share":1230.5769230769
+  },
+  {
+    "Category":"Unweighted base",
+    "year":2019,
+    "share":1167.1923076923
+  },
+  {
+    "Category":"Unweighted base",
+    "year":2020,
+    "share":1209.18
+  },
+  {
+    "Category":"Unweighted base",
+    "year":2021,
+    "share":1236.54
+  },
+  {
+    "Category":"Unweighted base",
+    "year":2022,
+    "share":1241.4705882353
+  },
+  {
+    "Category":"Unweighted base",
+    "year":2023,
+    "share":1310.8
+  },
+  {
+    "Category":"Unweighted base",
+    "year":2024,
+    "share":1445.2549019608
+  },
+  {
+    "Category":"Unweighted base",
+    "year":2025,
+    "share":1485.4489795918
+  }
+]

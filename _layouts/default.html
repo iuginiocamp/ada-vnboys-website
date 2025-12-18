@@ -317,6 +317,23 @@
             <img class="plot--img" src="/ada-vnboys-website/assets/img/media.jpg"
             alt="Political orientation">
                 <!-- ADD THE CHART HERE -->
+
+
+
+
+
+
+            <div id="issues-chart" style="width:100%; height:600px; margin: 40px 0;"></div>
+
+
+
+
+
+
+
+
+
+
             <div id="pie-chart" style="width: 100%; height: 500px; max-width: 800px; margin: 20px auto;"></div>
                 
             <img class="plot--img" src="/ada-vnboys-website/assets/img/image7.png"
@@ -632,6 +649,8 @@ The pie chart above shows the political orientation of the channels obtained fro
     </script>
     {% endif %}
 
+
+
     <script>
         // Initialize the chart
         var chartDom = document.getElementById('pie-chart');
@@ -684,6 +703,119 @@ The pie chart above shows the political orientation of the channels obtained fro
             myChart.resize();
         });
     </script>
+
+
+/* ===============================
+   LINE CHART – PRE-PROCESS POOLS
+   =============================== */
+
+    <script>
+
+
+var issuesChartDom = document.getElementById('issues-chart');
+var issuesChart = echarts.init(issuesChartDom);
+
+// charge le JSON généré par le notebook
+fetch('{{ "/data/pre-process-pools.json" | relative_url }}')
+  .then(response => response.json())
+  .then(rawData => runIssuesChart(rawData));
+
+function runIssuesChart(rawData) {
+
+  // catégories = séries
+  const categories = [...new Set(rawData.map(d => d.Category))];
+
+  // adapter les données pour garder le template ECharts
+  // colonnes : [Value, Year, Category, Label]
+  const adaptedData = rawData.map(d => [
+    d.share,      // Value
+    d.year,       // Year
+    d.Category,   // Category
+    d.Category    // Label
+  ]);
+
+  const datasetWithFilters = [];
+  const seriesList = [];
+
+  categories.forEach(cat => {
+    const datasetId = 'dataset_' + cat;
+
+    datasetWithFilters.push({
+      id: datasetId,
+      fromDatasetId: 'dataset_raw',
+      transform: {
+        type: 'filter',
+        config: {
+          and: [
+            { dimension: 'Year', gte: 1950 },
+            { dimension: 'Category', '=': cat }
+          ]
+        }
+      }
+    });
+
+    seriesList.push({
+      type: 'line',
+      datasetId: datasetId,
+      showSymbol: false,
+      name: cat,
+      endLabel: {
+        show: true,
+        formatter: function (params) {
+          return params.value[3] + ': ' + (params.value[0] * 100).toFixed(1) + '%';
+        }
+      },
+      labelLayout: { moveOverlap: 'shiftY' },
+      emphasis: { focus: 'series' },
+      encode: {
+        x: 'Year',
+        y: 'Value',
+        tooltip: ['Value']
+      }
+    });
+  });
+
+  const option = {
+    animationDuration: 10000,
+    dataset: [
+      {
+        id: 'dataset_raw',
+        dimensions: ['Value', 'Year', 'Category', 'Label'],
+        source: adaptedData
+      },
+      ...datasetWithFilters
+    ],
+    title: {
+      text: 'Most important political issues over time'
+    },
+    tooltip: {
+      trigger: 'axis',
+      valueFormatter: v => (v * 100).toFixed(1) + '%'
+    },
+    xAxis: {
+      type: 'category',
+      name: 'Year'
+    },
+    yAxis: {
+      name: 'Share',
+      axisLabel: {
+        formatter: v => (v * 100).toFixed(0) + '%'
+      }
+    },
+    grid: {
+      right: 160
+    },
+    series: seriesList
+  };
+
+  issuesChart.setOption(option);
+  window.addEventListener('resize', () => issuesChart.resize());
+}
+</script>
+
+
+
+
 </body>
 
 </html>
