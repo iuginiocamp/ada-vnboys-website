@@ -50,27 +50,29 @@
         line-height: 1.4;      /* Pour que le texte ne soit pas trop serré si la ligne coupe */
     }
 
-    #introduction li strong {
-        font-size: 1.1em;      /* Rend les noms des partis encore un peu plus visibles */
-        color: #333;           /* Optionnel : rend le gras un peu plus foncé */
-    }
-    /* Style pour le point Démocrate */
-    .democrat {
-        color: #0015BC; /* Un beau bleu politique */
-        font-size: 1.2em;
-        margin-bottom: 15px;
+    #introduction ul {
+        display: table;
+        margin: 20px auto; /* Centre la liste et ajoute de l'espace en haut/bas */
+        text-align: left;
+        padding-left: 0;
     }
 
-    /* Style pour le point Républicain */
-    .republican {
-        color: #E91D0E; /* Un beau rouge politique */
+    #introduction li {
         font-size: 1.2em;
         margin-bottom: 15px;
+        line-height: 1.4;
+        color: #333; /* Le texte de la description reste gris foncé/noir */
     }
 
-    /* Pour que le texte de description reste noir si tu préfères */
-    .democrat, .republican {
-        font-weight: normal;
+    /* On cible uniquement le texte en gras pour la couleur */
+    .text-democrat {
+        color: #0015BC; /* Bleu */
+        font-size: 1.1em;
+    }
+
+    .text-republican {
+        color: #E91D0E; /* Rouge */
+        font-size: 1.1em;
     }
   </style>
 </head>
@@ -98,8 +100,8 @@
         </p>
 
         <ul> 
-            <li><strong>The Democratic Party:</strong> Generally representing liberal, progressive values.</li>
-            <li><strong>The Republican Party:</strong> Generally representing conservative, traditionalist values.</li>
+            <li><strong class="text-democrat">The Democratic Party (Blue):</strong> Generally representing liberal, progressive values.</li>
+            <li><strong class="text-republican">The Republican Party (Red):</strong> Generally representing conservative, traditionalist values.</li>
         </ul>
 
         <p>
