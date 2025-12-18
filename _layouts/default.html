@@ -695,7 +695,7 @@ var issuesChartDom = document.getElementById('issues-chart');
 var issuesChart = echarts.init(issuesChartDom);
 
 // charge le JSON généré par le notebook
-fetch('{{ "/data/pre-process-pools.json" | relative_url }}')
+fetch('{{ "/pre-process-pools.json" | relative_url }}')
   .then(response => response.json())
   .then(rawData => runIssuesChart(rawData));
 
