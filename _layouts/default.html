@@ -100,6 +100,36 @@
       margin: 0 auto;         
       display: block;
     }
+    /* Style spécifique pour la liste de données */
+    .data-list {
+        display: table;            /* Réduit la largeur au contenu pour permettre le centrage */
+        margin: 30px auto;         /* Centre horizontalement et ajoute de l'espace vertical */
+        font-size: 1.15em;         /* Agrandit légèrement le texte */
+        line-height: 1.6;          /* Espace les lignes pour plus de clarté */
+        padding-left: 20px;        /* Espace pour les puces */
+    }
+
+    .data-list li {
+        margin-bottom: 12px;       /* Espace entre chaque point de la liste */
+        text-align: left;          /* Aligne le texte à gauche à l'intérieur du bloc centré */
+    }
+
+    .data-list li strong {
+        color: #222;               /* Rend les chiffres un peu plus profonds */
+    }
+    .stats-list {
+        background-color: #f4f4f4; /* Un léger fond gris */
+        padding: 20px 40px;
+        border-left: 5px solid #333; /* Une petite barre sur le côté pour le style */
+        margin: 20px auto;
+        max-width: 850px;
+        list-style-type: none; /* On enlève les puces standards si tu veux */
+    }
+
+    .stats-list li {
+        margin-bottom: 10px;
+        font-family: 'Courier New', Courier, monospace; /* Un look un peu plus "code/maths" */
+    }
     </style>
 </head>
 
@@ -159,7 +189,8 @@
             <p>
                 The scale of the data is monumental, establishing the statistical significance of our observations:
             </p>
-            <ul>
+            
+            <ul class="data-list">
                 <li><strong>136,470 Channels:</strong> Filtered for English content, with a minimum of 10k subscribers to ensure relevance.</li>
                 <li><strong>73 Million Videos:</strong> Spanning from 2005 to late 2019.</li>
                 <li><strong>8.6 Billion Comments:</strong> Representing the voice of the "electorate" (users).</li>
@@ -186,9 +217,22 @@
             <img class="plot--img" src="/ada-vnboys-website/assets/img/image9.png"
                 alt="Political Conent">
             <p>
-                As shown in this chart, the category <strong>"News &amp; Politics"</strong> is the clear leader,
-                with 42.3% of its videos containing political vocabulary. While "Nonprofits" and "Travel" show
-                some density, they lack the volume and specific focus of the News & Politics category.
+                As shown in this chart, the category <strong>"News &amp; Politics"</strong> is the clear leader, 
+                with 42.3% of its videos containing political vocabulary. While "Nonprofits" and "Travel" 
+                show some density, they lack the volume and specific focus of the News category.
+            </p>
+
+            <p>To scientifically validate the isolation of this category, we performed a <strong>Chi-square test ($\chi^2$)</strong> of independence:</p>
+
+            <ul class="stats-list">
+                <li><strong>Hypothesis ($H_0$):</strong> There is no association; political terms are distributed randomly across categories.</li>
+                <li><strong>Result ($P < 0.05$):</strong> We rejected the null hypothesis. However, in Big Data, p-values almost always approach zero due to sample size.</li>
+                <li><strong>Effect Size (Cramér's V):</strong> The crucial metric here is <strong>Cramér's V</strong>, which resulted in <strong>0.19</strong>. This indicates a medium effect size, confirming a significant structural dependence.</li>
+            </ul>
+
+            <p>
+                <strong>Conclusion:</strong> The statistical evidence confirms that "News &amp; Politics" is structurally distinct. 
+                To ensure our Data Story analyzes genuine political engagement rather than noise, we restrict our subsequent analysis to this category.
             </p>
 
             
