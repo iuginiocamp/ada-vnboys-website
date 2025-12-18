@@ -141,6 +141,22 @@
         margin-bottom: 10px;
         font-family: 'Courier New', Courier, monospace; /* Un look un peu plus "code/maths" */
     }
+    .clean-stats {
+        display: table;           /* Réduit la largeur au strict nécessaire */
+        margin: 30px auto;        /* Centre le bloc et ajoute de l'espace en haut/bas */
+        padding-left: 25px;       /* Garde un peu d'espace pour les puces */
+        list-style-type: disc;    /* Remet les puces classiques si tu les avais enlevées */
+        border-left: none;        /* On enlève la ligne bleue latérale pour un centrage plus propre */
+    }
+
+    .clean-stats li {
+        margin-bottom: 15px;
+        font-size: 1.1em;
+        line-height: 1.5;
+        color: #444;
+        text-align: left;         /* Le texte reste aligné à gauche à l'intérieur du bloc centré */
+    }
+
     </style>
 </head>
 
@@ -230,11 +246,11 @@
                 show some density, they lack the volume and specific focus of the News category.
             </p>
 
-            <p>To scientifically validate the isolation of this category, we performed a <strong>Chi-square test</strong> ($\chi^2$) of independence:</p>
+            <p>To scientifically validate the isolation of this category, we performed a <strong>Chi-square test</strong> of independence:</p>
             
             <ul class="clean-stats">
-                <li><strong>Hypothesis ($H_0$):</strong> There is no association; political terms are distributed randomly across categories.</li>
-                <li><strong>Result ($P < 0.05$):</strong> We rejected the null hypothesis. However, in Big Data, p-values almost always approach zero due to sample size.</li>
+                <li><strong>Hypothesis (H_0):</strong> There is no association; political terms are distributed randomly across categories.</li>
+                <li><strong>Result (P < 0.05):</strong> We rejected the null hypothesis. However, in Big Data, p-values almost always approach zero due to sample size.</li>
                 <li><strong>Effect Size (Cramér's V):</strong> The crucial metric here is <strong>Cramér's V</strong>, which resulted in <strong>0.19</strong>. This indicates a medium effect size, confirming a significant structural dependence.</li>
             </ul>
 
