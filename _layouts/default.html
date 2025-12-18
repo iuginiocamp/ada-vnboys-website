@@ -9,6 +9,7 @@
 
     <link rel="stylesheet" href="{{ '/assets/css/styles.css?v=' | append: site.github.build_revision | relative_url }}">
     <meta name="viewport" content="width=device-width">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
     <style>
     .section-title {
       font-weight: bold;
@@ -42,7 +43,8 @@
             <p>
                 When America chooses its leader, the whole world holds its breath. Calling it a mere national voting process would be an understatement; 
                 it is a sacred geopolitical ritual whose consequences are felt across the globe, from Asian stock markets to European frontlines. 
-
+            </p>
+            
             <p>
                 The American presidential election is a quadrennial marathon punctuated by key milestones: the primaries, the national conventions, and the final race between Democrats and Republicans, a duopoly that splits the nation in two distinct colors:
 
@@ -57,13 +59,15 @@
             </p>
             <p>Here, we enter what we call the "Attention Democracy." In this digital space, legitimacy is no longer won solely by the vote, but by the obsessive capture of the voter’s mind.</p>
 
-<p> Our investigation dives deep into YouTube's massive datasets to answer a crucial question: is this new digital arena a faithful mirror of a nation in turmoil, or a distortion machine that polarizes reality and tears apart the social fabric?
+            <p> Our investigation dives deep into YouTube's massive datasets to answer a crucial question: is this new digital arena a faithful mirror of a nation in turmoil, or a distortion machine that polarizes reality and tears apart the social fabric?
 
 
             </p>
         </section>
+
         <section id="channels">
             <div class="section-title">Data Presentation</div>
+            
             <p>
                 Before presenting our answers to all these questions, we must first define the boundaries of our arena.
                 YouTube is vast and noisy; isolating the signal of political discourse requires rigorous filtering.
@@ -145,7 +149,8 @@
                 mobility.</p>
             <img class="plot--img" src="/ada-vnboys-website/assets/img/media.jpg"
             alt="Political orientation">
-                
+                <!-- ADD THE CHART HERE -->
+            <div id="pie-chart" style="width: 100%; height: 500px; max-width: 800px; margin: 20px auto;"></div>
                 
             <img class="plot--img" src="/ada-vnboys-website/assets/img/image7.png"
                 alt="Political orientation">
@@ -459,6 +464,57 @@ The pie chart above shows the political orientation of the channels obtained fro
         ga('send', 'pageview');
     </script>
     {% endif %}
+
+    <script>
+        // Initialize the chart
+        var chartDom = document.getElementById('pie-chart');
+        var myChart = echarts.init(chartDom);
+        
+        // Your configuration
+        var option = {
+            title: {
+            text: 'Political Content Distribution',
+            subtext: 'YouTube Categories',
+            left: 'center'
+            },
+            tooltip: {
+            trigger: 'item'
+            },
+            legend: {
+            orient: 'vertical',
+            left: 'left'
+            },
+            series: [
+            {
+                name: 'Category',
+                type: 'pie',
+                radius: '50%',
+                data: [
+                { value: 1048, name: 'News & Politics' },
+                { value: 735, name: 'Entertainment' },
+                { value: 580, name: 'Education' },
+                { value: 484, name: 'Science & Tech' },
+                { value: 300, name: 'Other' }
+                ],
+                emphasis: {
+                itemStyle: {
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+                }
+            }
+            ]
+        };
+        
+        // Apply the configuration
+        myChart.setOption(option);
+        
+        // Make chart responsive
+        window.addEventListener('resize', function() {
+            myChart.resize();
+        });
+    </script>
 </body>
 
 </html>
