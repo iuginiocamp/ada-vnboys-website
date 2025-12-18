@@ -76,18 +76,29 @@
     }
     header {
       display: flex;
-      flex-direction: column; /* Aligne le logo et le titre verticalement */
-      align-items: center;    /* Centre horizontalement */
+      justify-content: center; /* Centre la DIV dans le header */
       padding: 40px 0;
-      background-color: #f8f9fa; /* Optionnel : un léger fond gris pour démarquer le haut */
+      background-color: #f8f9fa;
+    }
+
+    .header-content {
+      display: flex;
+      flex-direction: column; /* Aligne les éléments en colonne */
+      align-items: center;    /* Centre horizontalement l'image et les titres */
+      text-align: center;     /* Centre le texte au cas où */
+      width: 100%;            /* S'assure que la div prend toute la place */
     }
 
     .header-content h1 {
       margin-top: 20px;
+      margin-bottom: 5px;     /* Rapproche le titre du sous-titre */
       font-size: 2.5em;
-      color: #222;
-      text-align: center;
-      font-family: 'Helvetica', sans-serif; /* Ou la police de ton choix */
+    }
+
+    /* On s'assure que l'image elle-même se comporte bien */
+    .header-content img {
+      margin: 0 auto;         
+      display: block;
     }
     </style>
 </head>
@@ -119,8 +130,8 @@
         </p>
 
         <ul> 
-            <li><strong class="text-democrat">The Democratic Party (Blue):</strong> Generally representing liberal, progressive values.</li>
-            <li><strong class="text-republican">The Republican Party (Red):</strong> Generally representing conservative, traditionalist values.</li>
+            <li><strong class="text-democrat">The Democratic Party:</strong> Generally representing liberal, progressive values.</li>
+            <li><strong class="text-republican">The Republican Party:</strong> Generally representing conservative, traditionalist values.</li>
         </ul>
 
         <p>
@@ -177,7 +188,7 @@
             <p>
                 As shown in this chart, the category <strong>"News &amp; Politics"</strong> is the clear leader,
                 with 42.3% of its videos containing political vocabulary. While "Nonprofits" and "Travel" show
-                some density, they lack the volume and specific focus of the News category.
+                some density, they lack the volume and specific focus of the News & Politics category.
             </p>
 
             
