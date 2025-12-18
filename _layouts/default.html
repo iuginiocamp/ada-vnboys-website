@@ -688,29 +688,24 @@ The pie chart above shows the political orientation of the channels obtained fro
    LINE CHART – PRE-PROCESS POOLS
    =============================== */
 
-    <script>
-
-
+<script>
 var issuesChartDom = document.getElementById('issues-chart');
 var issuesChart = echarts.init(issuesChartDom);
 
-// charge le JSON généré par le notebook
-fetch('{{ "/data/pre-process-pools.json" | relative_url }}')
-  .then(response => response.json())
+fetch('{{ site.baseurl }}/data/pre-process-pools.json')
+  .then(r => r.json())
   .then(rawData => runIssuesChart(rawData));
 
 function runIssuesChart(rawData) {
 
-  // catégories = séries
   const categories = [...new Set(rawData.map(d => d.Category))];
 
-  // adapter les données pour garder le template ECharts
-  // colonnes : [Value, Year, Category, Label]
+  // adapter les données (poll-level)
   const adaptedData = rawData.map(d => [
-    d.share,      // Value
-    d.year,       // Year
-    d.Category,   // Category
-    d.Category    // Label
+    d.share,        // Value
+    d.poll_date,    // Date
+    d.Category,     // Category
+    d.Category      // Label
   ]);
 
   const datasetWithFilters = [];
@@ -725,10 +720,8 @@ function runIssuesChart(rawData) {
       transform: {
         type: 'filter',
         config: {
-          and: [
-            { dimension: 'Year', gte: 1950 },
-            { dimension: 'Category', '=': cat }
-          ]
+          dimension: 'Category',
+          '=': cat
         }
       }
     });
@@ -740,14 +733,13 @@ function runIssuesChart(rawData) {
       name: cat,
       endLabel: {
         show: true,
-        formatter: function (params) {
-          return params.value[3] + ': ' + (params.value[0] * 100).toFixed(1) + '%';
-        }
+        formatter: params =>
+          params.value[3] + ': ' + (params.value[0] * 100).toFixed(1) + '%'
       },
       labelLayout: { moveOverlap: 'shiftY' },
       emphasis: { focus: 'series' },
       encode: {
-        x: 'Year',
+        x: 'Date',
         y: 'Value',
         tooltip: ['Value']
       }
@@ -755,35 +747,33 @@ function runIssuesChart(rawData) {
   });
 
   const option = {
-    animationDuration: 10000,
+    animationDuration: 8000,
     dataset: [
       {
         id: 'dataset_raw',
-        dimensions: ['Value', 'Year', 'Category', 'Label'],
+        dimensions: ['Value', 'Date', 'Category', 'Label'],
         source: adaptedData
       },
       ...datasetWithFilters
     ],
     title: {
-      text: 'Most important political issues over time'
+      text: 'Most important political issues (poll-level, smoothed upstream)'
     },
     tooltip: {
       trigger: 'axis',
       valueFormatter: v => (v * 100).toFixed(1) + '%'
     },
     xAxis: {
-      type: 'category',
-      name: 'Year'
+      type: 'time',
+      name: 'Poll date'
     },
     yAxis: {
-      name: 'Share',
+      name: 'Share (%)',
       axisLabel: {
         formatter: v => (v * 100).toFixed(0) + '%'
       }
     },
-    grid: {
-      right: 160
-    },
+    grid: { right: 160 },
     series: seriesList
   };
 
@@ -791,6 +781,7 @@ function runIssuesChart(rawData) {
   window.addEventListener('resize', () => issuesChart.resize());
 }
 </script>
+
 
 
 
