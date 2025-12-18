@@ -9,6 +9,18 @@
 
     <link rel="stylesheet" href="{{ '/assets/css/styles.css?v=' | append: site.github.build_revision | relative_url }}">
     <meta name="viewport" content="width=device-width">
+    <style>
+    .section-title {
+      font-weight: bold;
+      font-size: 1.5em;
+      margin-top: 1.2em;
+    }
+    .subsection-title {
+      font-weight: bold;
+      font-size: 1.3em;
+      margin-top: 1em;
+    }
+  </style>
 </head>
 
 <body>
@@ -17,7 +29,7 @@
     </header>
     <nav>
         <ul>
-            <li><a href="*channels">The Political Landscape of Youtube</a></li>
+            <li><a href="*channels">Youtube?</a></li>
             <li><a href="#grouping">Youtube's Communities</a></li>
             <li><a href="#pageviews">Political Interest</a></li>
             <li><a href="#opinions">Political Opinions</a></li>
@@ -35,108 +47,92 @@
 
             </p>
             <p>
-                *The Democratic Party (Blue): Generally representing liberal, progressive values.
-                *The Republican Party (Red): Generally representing conservative, traditionalist values. 
-
+                <ul> <li>The Democratic Party (Blue): Generally representing liberal, progressive values. </li>
+                    </li>The Republican Party (Red): Generally representing conservative, traditionalist values. </li>
+                </ul>
             </p>
             <p>
-                In this context, it is natural to wonder whether an alignment between political
-                decisions and people's behaviour has been achieved. Have people felt that their
-                leaders need to be more in touch with their concerns and are unable to address
-                the challenges at hand effectively? Has the COVID-19 pandemic, with its
-                restrictions on daily life, sparked a renewed interest in politics among the
-                population? As we examine this dynamic, it is also important to consider the
-                role of the leading political party. Have they received support from the
-                population, or have they faced disapproval for their actions or lack thereof?
+                Our study focuses on the elections from 2008 to 2016, a period where the battlefield silently mutated. The epicenter of power shifted from television stages to a dematerialized arena, governed by new and volatile codes. Voters became users; speeches became content.
+            </p>
+            <p>Here, we enter what we call the "Attention Democracy." In this digital space, legitimacy is no longer won solely by the vote, but by the obsessive capture of the voter’s mind.</p>
+
+<p> Our investigation dives deep into YouTube's massive datasets to answer a crucial question: is this new digital arena a faithful mirror of a nation in turmoil, or a distortion machine that polarizes reality and tears apart the social fabric?
+
 
             </p>
         </section>
         <section id="channels">
-            <h2>Is there alignment between political decisions and people's behaviour during the COVID-19 pandemic?</h2>
+            <div class="section-title">Data Presentation</div>
             <p>
-                The COVID-19 pandemic brought unprecedented restrictions on mobility, forcing people to stay at home
-                and go out only when necessary. But as the population adjusted to this new reality, a question
-                lingered in the minds of many: who decided to reduce mobility? Was it the government responding
-                to the crisis to slow the spread of the virus? Or were there other forces at play, shaping the
-                decisions being made and dictating the course of the pandemic? The mobility data reveals an
-                influence between the governments of European countries managing the crisis and their populations
-                regarding reduced mobility. How European governments and populations responded to the COVID-19 crisis
-                had a noticeable impact on mobility behaviour.
+                Before presenting our answers to all these questions, we must first define the boundaries of our arena.
+                YouTube is vast and noisy; isolating the signal of political discourse requires rigorous filtering.
             </p>
+
+            <div class="subsection-title">2.1 The Dataset: YouNiverse</div>
             <p>
-                The graph below depicts the changes in mobility over time (don't forget to slide!).
+                Our analysis relies on YouNiverse, a large-scale dataset of English-speaking YouTube metadata.
+                This massive archive allows us to observe the platform's evolution during the critical years of
+                2008, 2012, and 2016.
             </p>
-            <!-- slider for mobillity -->
-            <div class="images-slideshow">
-                <div class="imageSlides fade">
-                    <img src="/ada-vnboys-website/assets/img/mob/mob_de.png">
-                </div>
-                <div class="imageSlides fade">
-                    <img src="/ada-vnboys-website/assets/img/mob/mob_dk.png">
-                </div>
-                <div class="imageSlides fade">
-                    <img src="/ada-vnboys-website/assets/img/mob/mob_fi.png">
-                </div>
-                <div class="imageSlides fade">
-                    <img src="/ada-vnboys-website/assets/img/mob/mob_fr.png">
-                </div>
-                <div class="imageSlides fade">
-                    <img src="/ada-vnboys-website/assets/img/mob/mob_it.png">
-                </div>
-                <div class="imageSlides fade">
-                    <img src="/ada-vnboys-website/assets/img/mob/mob_ne.png">
-                </div>
-                <div class="imageSlides fade">
-                    <img src="/ada-vnboys-website/assets/img/mob/mob_no.png">
-                </div>
-                <div class="imageSlides fade">
-                    <img src="/ada-vnboys-website/assets/img/mob/mob_se.png">
-                </div>
-                <div class="imageSlides fade">
-                    <img src="/ada-vnboys-website/assets/img/mob/mob_spain.png">
-                </div>
-                <a class="slider-btn previous" onclick="setSlides(-1)">❮</a>
-                <a class="slider-btn next" onclick="setSlides(1)">❯</a>
-            </div>
+
             <p>
-                When the first deaths from COVID-19 occurred in countries such as France, Spain, and Norway,
-                there was little change in mobility. This may be because COVID-19 was still relatively unknown in Europe
-                then.
-                However, as the virus spread more widely and began causing more deaths, particularly in countries like
-                Italy,
-                the interest in COVID-19 increased. This was reflected in the evolution of COVID-related pageviews over
-                time.
-                In Germany, Italy, the Netherlands, and Sweden, the first deaths were accompanied by reduced mobility
-                and increased
-                interest in COVID-19. In Denmark and Finland, where the first deaths occurred later, and events had
-                already
-                influenced the interest in COVID-19 in other countries, the increased interest in the virus likely
-                explained the
-                reduction in mobility.
+                The scale of the data is monumental, establishing the statistical significance of our observations:
             </p>
+            <ul>
+                <li><strong>136,470 Channels:</strong> Filtered for English content, with a minimum of 10k subscribers to ensure relevance.</li>
+                <li><strong>73 Million Videos:</strong> Spanning from 2005 to late 2019.</li>
+                <li><strong>8.6 Billion Comments:</strong> Representing the voice of the "electorate" (users).</li>
+                <li><strong>Metadata Richness:</strong> We utilize titles, tags, view counts, and upload dates to reconstruct the timeline of events.</li>
+            </ul>
+
+            <div class="subsection-title">2.2 The Filter: Defining "Political" Content</div>
             <p>
-                Regarding what governments did concerning mobility behaviour, lockdown measures were often implemented
-                once the
-                decline in mobility had stabilised. This suggests that the government's restrictions on mobility came
-                after the
-                population had already decided to reduce their mobility. This may reflect a need for governments to be
-                more
-                responsive to the needs and concerns of their citizens.
+                One of the major challenges in this analysis was distinguishing a political video from the ocean
+                of gaming, music, and vlog content. To detect political content, we needed a robust lexicon.
+                Initial attempts to build a dictionary using political tracts and manifestos yielded poor results,
+                often capturing generic terms unrelated to the specific vernacular of YouTube. Consequently, we
+                leveraged Large Language Models (LLMs) to generate a massive, comprehensive vocabulary of political
+                terminology, covering the spectrum from legislative terms to campaign slogans.
             </p>
+
+            <div class="subsection-title">2.3 The Focus: Why "News &amp; Politics"?</div>
             <p>
-                As the COVID-19 pandemic swept across the globe, governments worldwide faced the daunting task of trying
-                to ease
-                the burden on hospitals and protect their populations. To this end, many governments implemented various
-                measures,
-                including confinement, school closures, and mask mandates.
+                With our vocabulary in place, we mapped the distribution of political terms across YouTube's
+                15 primary categories. Processing the descriptions of 73 million videos was computationally
+                prohibitive, so we focused our signal detection on Video Titles and Tags. The goal was to identify
+                which category serves as the true "battlefield" for political discourse.
             </p>
+
             <p>
-                But as the crisis wore on, it became clear that not all countries were acting similarly. Some countries
-                were
-                more aggressive in their efforts to control the spread of the virus, while others were laxer in their
-                approach.
-                This raised the question: are there countries that acted similarly, or were they taking a unique
-                approach to the crisis?
+                As shown in this chart, the category <strong>"News &amp; Politics"</strong> is the clear leader,
+                with 42.3% of its videos containing political vocabulary. While "Nonprofits" and "Travel" show
+                some density, they lack the volume and specific focus of the News category.
+            </p>
+
+            <p>
+                To scientifically validate the isolation of the "News &amp; Politics" category, we performed a
+                Chi-square test (<em>&chi;<sup>2</sup></em>) of independence. We tested the hypothesis that the
+                presence of political vocabulary is dependent on the channel category.
+            </p>
+
+            <p>
+                <strong>Hypothesis (H<sub>0</sub>):</strong> There is no association; political terms are distributed randomly across categories.
+            </p>
+
+            <p>
+                <strong>Result (P &lt; 0.05):</strong> We rejected the null hypothesis. However, in Big Data,
+                p-values almost always approach zero due to sample size.
+            </p>
+
+            <p>
+                <strong>Effect Size (Cramér's V):</strong> The crucial metric here is Cramér's V, which resulted
+                in 0.19. This indicates a medium effect size, confirming a significant structural dependence.
+            </p>
+
+            <p>
+                <strong>Conclusion:</strong> The statistical evidence confirms that "News &amp; Politics" is
+                structurally distinct. To ensure our Data Story analyzes genuine political engagement rather
+                than noise, we restrict our subsequent analysis to this category.
             </p>
 
         </section>
