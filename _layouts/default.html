@@ -74,13 +74,31 @@
         color: #E91D0E; /* Rouge */
         font-size: 1.1em;
     }
-  </style>
+    header {
+      display: flex;
+      flex-direction: column; /* Aligne le logo et le titre verticalement */
+      align-items: center;    /* Centre horizontalement */
+      padding: 40px 0;
+      background-color: #f8f9fa; /* Optionnel : un léger fond gris pour démarquer le haut */
+    }
+
+    .header-content h1 {
+      margin-top: 20px;
+      font-size: 2.5em;
+      color: #222;
+      text-align: center;
+      font-family: 'Helvetica', sans-serif; /* Ou la police de ton choix */
+    }
+    </style>
 </head>
 
 <body>
     <header>
-        <img  class="plot--img" src="/ada-vnboys-website/assets/img/youtube_logo.webp">
-
+        <div class="header-content">
+        <img class="plot--img" src="/ada-vnboys-website/assets/img/youtube_logo.webp">
+        <h1>Views as Votes, a Datastory of Political Polarization</h1>
+        <p class="subtitle"> Is YouTube a mirror or a distortion of American politics?</p>
+    </div>
     </header>
     <nav>
         <ul>
@@ -93,6 +111,7 @@
     </nav>
     <main>
     <section id="introduction" class="justify-text">
+        <div class="section-title">Introduction</div>
         <p>
             When America chooses its leader, the whole world holds its breath. Calling it a mere national voting process would be an understatement; 
             it is a sacred geopolitical ritual whose consequences are felt across the globe, from Asian stock markets to European frontlines.
