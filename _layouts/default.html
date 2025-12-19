@@ -607,8 +607,8 @@
     </script>
   
     <script type="text/javascript">
-  var chartDom = document.getElementById('main');
-  var myChart = echarts.init(chartDom);
+  var mainChartDom = document.getElementById('main');
+  var mainPieChart = echarts.init(mainChartDom);  // Changed from myChart
 
   var dataByYear = {
     2008: [
@@ -649,6 +649,10 @@
         trigger: 'item',
         formatter: '{b}: {d}%'
       },
+      legend: {
+        orient: 'vertical',
+        left: 'left'
+      },
       series: [
         {
           type: 'pie',
@@ -661,11 +665,16 @@
       ]
     };
 
-    myChart.setOption(option, true);
+    mainPieChart.setOption(option, true);  // Changed from myChart
   }
 
   // default view
   showYear(2008);
+  
+  // Make responsive
+  window.addEventListener('resize', function() {
+    mainPieChart.resize();  // Changed from myChart
+  });
 </script>
 
 
