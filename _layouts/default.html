@@ -337,7 +337,14 @@
 
 
             <!-- ADD THE CHART HERE  celui avec les 3 périodes électorales-->
-             <div id="main" style="width: 100%; height: 500px; margin: 20px auto;"></div>
+            <div style="text-align:center; margin-bottom:10px;">
+              <button onclick="showYear(2008)">2008</button>
+              <button onclick="showYear(2012)">2012</button>
+              <button onclick="showYear(2016)">2016</button>
+            </div>
+
+            <div id="main" style="width: 100%; height: 500px; margin: 20px auto;"></div>
+
 
 
 
@@ -598,181 +605,69 @@
             myChart.resize();
         });
     </script>
-    <script>
-        var chartDom = document.getElementById('main');
-        var myChart = echarts.init(chartDom);
-        
-        var option = {
-          color: ['#CC0000', '#FF6B6B', '#808080', '#6495ED', '#4169E1'],
-          
-          dataset: [
-            {
-              source: [
-                ['Category', 'Value', 'Year'],
-                ['Right', 0, 2008],
-                ['Lean Right', 7.3, 2008],
-                ['Center', 66.5, 2008],
-                ['Lean left', 26.2, 2008],
-                ['Left', 0, 2008],
-                ['Right', 0.4, 2012],
-                ['Lean Right', 5.7, 2012],
-                ['Center', 85.5, 2012],
-                ['Lean left', 6.9, 2012],
-                ['Left', 1, 2012],
-                ['Right', 0.3, 2016],
-                ['Lean Right', 23.7, 2016],
-                ['Center', 35.2, 2016],
-                ['Lean left', 19, 2016],
-                ['Left', 21.7, 2016]
-              ]
-            },
-            {
-              transform: {
-                type: 'filter',
-                config: { dimension: 'Year', value: 2008 }
-              }
-            },
-            {
-              transform: {
-                type: 'filter',
-                config: { dimension: 'Year', value: 2012 }
-              }
-            },
-            {
-              transform: {
-                type: 'filter',
-                config: { dimension: 'Year', value: 2016 }
-              }
-            }
-          ],
-          title: [
-            {
-              text: '2008',
-              subtext: '328 videos',
-              left: '50%',
-              top: '5%',
-              textAlign: 'center'
-            },
-            {
-              text: '2012',
-              subtext: '7,646 videos',
-              left: '50%',
-              top: '35%',
-              textAlign: 'center'
-            },
-            {
-              text: '2016',
-              subtext: '56,519 videos',
-              left: '50%',
-              top: '65%',
-              textAlign: 'center'
-            }
-          ],
-          series: [
-            {
-              type: 'pie',
-              radius: 45,
-              label: {
-                show: true,
-                formatter: '{b}: {d}%',
-                fontSize: 11
-              },
-              center: ['50%', '25%'],
-              datasetIndex: 1,
-              encode: {
-                itemName: 'Category',
-                value: 'Value'
-              }
-            },
-            {
-              type: 'pie',
-              radius: 45,
-              label: {
-                show: true,
-                formatter: '{b}: {d}%',
-                fontSize: 11
-              },
-              center: ['50%', '50%'],
-              datasetIndex: 2,
-              encode: {
-                itemName: 'Category',
-                value: 'Value'
-              }
-            },
-            {
-              type: 'pie',
-              radius: 45,
-              label: {
-                show: true,
-                formatter: '{b}: {d}%',
-                fontSize: 11
-              },
-              center: ['50%', '75%'],
-              datasetIndex: 3,
-              encode: {
-                itemName: 'Category',
-                value: 'Value'
-              }
-            }
-          ],
-          media: [
-            {
-              query: { minAspectRatio: 1 },
-              option: {
-                title: [
-                  {
-                    left: '25%',
-                    top: '5%'
-                  },
-                  {
-                    left: '50%',
-                    top: '5%'
-                  },
-                  {
-                    left: '75%',
-                    top: '5%'
-                  }
-                ],
-                series: [
-                  { center: ['25%', '50%'] },
-                  { center: ['50%', '50%'] },
-                  { center: ['75%', '50%'] }
-                ]
-              }
-            },
-            {
-              option: {
-                title: [
-                  {
-                    left: '50%',
-                    top: '5%'
-                  },
-                  {
-                    left: '50%',
-                    top: '35%'
-                  },
-                  {
-                    left: '50%',
-                    top: '65%'
-                  }
-                ],
-                series: [
-                  { center: ['50%', '25%'] },
-                  { center: ['50%', '50%'] },
-                  { center: ['50%', '75%'] }
-                ]
-              }
-            }
-          ]
-        };
-        
-        myChart.setOption(option);
-        
-        // Make chart responsive
-        window.addEventListener('resize', function() {
-            myChart.resize();
-        });
-    </script>
+  
+    <script type="text/javascript">
+  var chartDom = document.getElementById('main');
+  var myChart = echarts.init(chartDom);
+
+  var dataByYear = {
+    2008: [
+      { name: 'Right', value: 0 },
+      { name: 'Lean Right', value: 7.3 },
+      { name: 'Center', value: 66.5 },
+      { name: 'Lean left', value: 26.2 },
+      { name: 'Left', value: 0 }
+    ],
+    2012: [
+      { name: 'Right', value: 0.4 },
+      { name: 'Lean Right', value: 5.7 },
+      { name: 'Center', value: 85.5 },
+      { name: 'Lean left', value: 6.9 },
+      { name: 'Left', value: 1 }
+    ],
+    2016: [
+      { name: 'Right', value: 0.3 },
+      { name: 'Lean Right', value: 23.7 },
+      { name: 'Center', value: 35.2 },
+      { name: 'Lean left', value: 19 },
+      { name: 'Left', value: 21.7 }
+    ]
+  };
+
+  function showYear(year) {
+    var option = {
+      color: ['#CC0000', '#FF6B6B', '#808080', '#6495ED', '#4169E1'],
+      title: {
+        text: year.toString(),
+        subtext:
+          year === 2008 ? '328 videos' :
+          year === 2012 ? '7,646 videos' :
+          '56,519 videos',
+        left: 'center'
+      },
+      tooltip: {
+        trigger: 'item',
+        formatter: '{b}: {d}%'
+      },
+      series: [
+        {
+          type: 'pie',
+          radius: '55%',
+          data: dataByYear[year],
+          label: {
+            formatter: '{b}: {d}%'
+          }
+        }
+      ]
+    };
+
+    myChart.setOption(option, true);
+  }
+
+  // default view
+  showYear(2008);
+</script>
+
 
     <script>
         // Initialize the chart
