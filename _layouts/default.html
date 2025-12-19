@@ -870,151 +870,167 @@
        - auto-fills dates + auto-plot
        ========================================================= -->
   <script>
-    (function () {
-      const elWords = document.getElementById("words");
-      const elStart = document.getElementById("start");
-      const elEnd = document.getElementById("end");
-      const elBtn = document.getElementById("plotBtn");
-      const elErr = document.getElementById("err");
+  (function () {
+    const elWords = document.getElementById("words");
+    const elStart = document.getElementById("start");
+    const elEnd   = document.getElementById("end");
+    const elBtn   = document.getElementById("plotBtn");
+    const elErr   = document.getElementById("err");
 
-      const chartDom = document.getElementById("word-chart");
-      const chart = echarts.init(chartDom);
+    const chartDom = document.getElementById("word-chart");
+    const chart = echarts.init(chartDom);
 
-      const DATA_URL = '{{ "/data/word_presence_monthly.json" | relative_url }}';
-      const POL_URL = '{{ "/data/politicians.json" | relative_url }}';
+    // ✅ Correct paths
+    const DATA_URL = '{{ "/data/preprocessed/word_presence_monthly.json" | relative_url }}';
+    const POL_URL  = '{{ "/data/extern/politicians.json" | relative_url }}';
 
-      let rows = null;
-      let polIndex = null;
+    let rows = null;
+    let polIndex = null;
 
-      function resolveWords(words, index, maxPerLastName = 1) {
-        const resolved = [];
-        for (const w of words) {
-          const w0 = String(w).trim();
-          if (!w0) continue;
-          const key = w0.toLowerCase();
+    function resolveWords(words, index, maxPerLastName = 1) {
+      const resolved = [];
 
-          if (!key.includes(" ") && index && index[key]) {
-            const hits = index[key];
-            if (maxPerLastName === 1) resolved.push(hits[0]);
-            else resolved.push(...hits.slice(0, maxPerLastName));
-          } else {
-            resolved.push(w0);
-          }
+      for (const w of words) {
+        const w0 = String(w).trim();
+        if (!w0) continue;
+
+        const key = w0.toLowerCase();
+
+        // If user typed a single token and it exists as a last-name bucket, expand it
+        if (!key.includes(" ") && index && index[key]) {
+          const hits = index[key];
+          if (maxPerLastName === 1) resolved.push(hits[0]);
+          else resolved.push(...hits.slice(0, maxPerLastName));
+        } else {
+          resolved.push(w0);
         }
-
-        const seen = new Set();
-        const out = [];
-        for (const x of resolved) {
-          const k = x.toLowerCase();
-          if (!seen.has(k)) { seen.add(k); out.push(x); }
-        }
-        return out;
       }
 
-      function ymToInt(ym) {
-        const [Y, M] = ym.split("-").map(Number);
-        return Y * 100 + M;
-      }
-
-      function inRange(ym, startYm, endYm) {
-        const v = ymToInt(ym);
-        return v >= ymToInt(startYm) && v <= ymToInt(endYm);
-      }
-
-      function parseWords() {
-        return elWords.value
-          .split(",")
-          .map(s => s.trim())
-          .filter(Boolean)
-          .slice(0, 4);
-      }
-
-      function render() {
-        elErr.textContent = "";
-
-        const words = parseWords();
-        if (words.length < 3 || words.length > 4) {
-          elErr.textContent = "Please enter 3–4 names, comma-separated.";
-          return;
+      // unique (case-insensitive), keep order
+      const seen = new Set();
+      const out = [];
+      for (const x of resolved) {
+        const k = x.toLowerCase();
+        if (!seen.has(k)) {
+          seen.add(k);
+          out.push(x);
         }
+      }
+      return out;
+    }
 
-        const resolvedWords = resolveWords(words, polIndex, 1);
+    // --- helpers dates "YYYY-MM" ---
+    function ymToInt(ym) {
+      const [Y, M] = ym.split("-").map(Number);
+      return Y * 100 + M;
+    }
+    function inRange(ym, startYm, endYm) {
+      const v = ymToInt(ym);
+      return v >= ymToInt(startYm) && v <= ymToInt(endYm);
+    }
 
-        const startYM = elStart.value;
-        const endYM = elEnd.value;
-        if (!startYM || !endYM) {
-          elErr.textContent = "Start and End must be filled.";
-          return;
-        }
+    function parseWords() {
+      return elWords.value
+        .split(",")
+        .map(s => s.trim())
+        .filter(Boolean)
+        .slice(0, 4);
+    }
 
-        const x = [...new Set(rows
-          .map(d => String(d.date))
-          .filter(ym => inRange(ym, startYM, endYM))
-        )].sort((a, b) => ymToInt(a) - ymToInt(b));
+    function render() {
+      elErr.textContent = "";
 
-        const series = resolvedWords.map(w => {
-          const mapYMtoShare = new Map(
-            rows
-              .filter(d => String(d.word).toLowerCase() === w.toLowerCase())
-              .map(d => [String(d.date), Number(d.share)])
-          );
-
-          const y = x.map(ym => mapYMtoShare.has(ym) ? mapYMtoShare.get(ym) : null);
-
-          return {
-            name: w,
-            type: "line",
-            showSymbol: false,
-            connectNulls: true,
-            data: y
-          };
-        });
-
-        chart.setOption({
-          title: { text: "Word presence over time", left: "center" },
-          tooltip: {
-            trigger: "axis",
-            valueFormatter: v => (v == null ? "-" : v.toFixed(3) + "%")
-          },
-          legend: { top: 40 },
-          grid: { top: 90, left: 55, right: 30, bottom: 50 },
-          xAxis: { type: "category", data: x, name: "Month" },
-          yAxis: {
-            type: "value",
-            name: "Mentions / videos (%)",
-            axisLabel: { formatter: v => v.toFixed(2) + "%" }
-          },
-          series
-        }, true);
+      // 1) parse user input
+      const words = parseWords();
+      if (words.length < 3 || words.length > 4) {
+        elErr.textContent = "Please enter 3–4 names, comma-separated.";
+        return;
       }
 
-      (async function init() {
-        try {
-          const [rData, rPol] = await Promise.all([fetch(DATA_URL), fetch(POL_URL)]);
-          if (!rData.ok) throw new Error("Cannot load JSON: " + DATA_URL + " (" + rData.status + ")");
-          if (!rPol.ok) throw new Error("Cannot load JSON: " + POL_URL + " (" + rPol.status + ")");
+      // 2) resolve last names -> full names (Biden -> Joe Biden)
+      const resolvedWords = resolveWords(words, polIndex, 1);
 
-          rows = await rData.json();
-          polIndex = await rPol.json();
+      const startYM = elStart.value;
+      const endYM   = elEnd.value;
+      if (!startYM || !endYM) {
+        elErr.textContent = "Start and End must be filled.";
+        return;
+      }
 
-          const allYM = rows.map(d => String(d.date));
-          const minYM = allYM.reduce((a, b) => ymToInt(a) < ymToInt(b) ? a : b);
-          const maxYM = allYM.reduce((a, b) => ymToInt(a) > ymToInt(b) ? a : b);
+      // x-axis : all months in the window
+      const x = [...new Set(rows
+        .map(d => String(d.date))
+        .filter(ym => inRange(ym, startYM, endYM))
+      )].sort((a, b) => ymToInt(a) - ymToInt(b));
 
-          elStart.value = minYM;
-          elEnd.value = maxYM; // or set "2019-09" if you want a default cutoff
+      // series: one line per resolved word
+      const series = resolvedWords.map(w => {
+        const mapYMtoShare = new Map(
+          rows
+            .filter(d => String(d.word).toLowerCase() === w.toLowerCase())
+            .map(d => [String(d.date), Number(d.share)])   // share is already in %
+        );
 
-          elBtn.addEventListener("click", render);
-          window.addEventListener("resize", () => chart.resize());
+        const y = x.map(ym => mapYMtoShare.has(ym) ? mapYMtoShare.get(ym) : null);
 
-          render();
-        } catch (e) {
-          elErr.textContent = e.message;
-          console.error(e);
-        }
-      })();
+        return {
+          name: w,
+          type: "line",
+          showSymbol: false,
+          connectNulls: true,
+          data: y
+        };
+      });
+
+      chart.setOption({
+        title: { text: "Word presence over time", left: "center" },
+        tooltip: {
+          trigger: "axis",
+          valueFormatter: v => (v == null ? "-" : v.toFixed(3) + "%")
+        },
+        legend: { top: 40 },
+        grid: { top: 90, left: 55, right: 30, bottom: 50 },
+        xAxis: { type: "category", data: x, name: "Month" },
+        yAxis: {
+          type: "value",
+          name: "Mentions / videos (%)",
+          axisLabel: { formatter: v => v.toFixed(2) + "%" }
+        },
+        series
+      }, true);
+    }
+
+    (async function init() {
+      try {
+        const [rData, rPol] = await Promise.all([fetch(DATA_URL), fetch(POL_URL)]);
+        if (!rData.ok) throw new Error("Cannot load JSON: " + DATA_URL + " (" + rData.status + ")");
+        if (!rPol.ok)  throw new Error("Cannot load JSON: " + POL_URL + " (" + rPol.status + ")");
+
+        rows = await rData.json();
+        polIndex = await rPol.json();
+
+        // Default dates from dataset
+        const allYM = rows.map(d => String(d.date));
+        const minYM = allYM.reduce((a, b) => ymToInt(a) < ymToInt(b) ? a : b);
+        const maxYM = allYM.reduce((a, b) => ymToInt(a) > ymToInt(b) ? a : b);
+
+        elStart.value = minYM;
+        elEnd.value   = maxYM;      // or set "2019-09" if you want a default cutoff
+
+        elBtn.addEventListener("click", render);
+        window.addEventListener("resize", () => chart.resize());
+
+        // Auto plot on load
+        render();
+
+      } catch (e) {
+        elErr.textContent = e.message;
+        console.error(e);
+      }
     })();
+  })();
   </script>
+
 
 </body>
 
