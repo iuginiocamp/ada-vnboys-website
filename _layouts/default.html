@@ -757,7 +757,7 @@
           dimensions: ['Value', 'Date', 'Category', 'Label'],
           source: adaptedData
         }, ...datasetWithFilters],
-        title: { text: 'Most important political issues (poll-level, smoothed upstream)' },
+        title: { text: 'Most important issues facing the US (poll by YouGov)' },
         tooltip: {
           trigger: 'axis',
           valueFormatter: v => (v * 100).toFixed(1) + '%'
@@ -808,7 +808,7 @@
 
       var option = {
         title: {
-          text: 'Videos posted on YouTube during the covered period',
+          text: 'News & Politics videos posted on YouTube during the covered period',
           subtext: '',
           left: 'center',
           textStyle: { fontSize: 20 },
@@ -1190,7 +1190,7 @@
   const chart = echarts.init(el);
 
   // JSON généré par le notebook
-  const DATA_URL = '{{ "/data/preprocessed/top10_tags_share_of_voice_yearly.json" | relative_url }}';
+  const DATA_URL = '{{ "/data/top10_tags_share_of_voice_yearly.json" | relative_url }}';
 
   let rows;
   try {
