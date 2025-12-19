@@ -337,7 +337,7 @@
 
 
             <!-- ADD THE CHART HERE  celui avec les 3 périodes électorales-->
-             <div id="main" style="width: 100%; height: 800px; margin: 20px auto;"></div>
+             <div id="main" style="width: 100%; height: 500px; margin: 20px auto;"></div>
 
 
 
@@ -647,7 +647,12 @@
           series: [
             {
               type: 'pie',
-              radius: 50,
+              radius: 45,
+              label: {
+                show: true,
+                formatter: '{b}: {d}%',
+                fontSize: 11
+              },
               center: ['50%', '25%'],
               datasetIndex: 1,
               encode: {
@@ -657,7 +662,12 @@
             },
             {
               type: 'pie',
-              radius: 50,
+              radius: 45,
+              label: {
+                show: true,
+                formatter: '{b}: {d}%',
+                fontSize: 11
+              },
               center: ['50%', '50%'],
               datasetIndex: 2,
               encode: {
@@ -667,7 +677,12 @@
             },
             {
               type: 'pie',
-              radius: 50,
+              radius: 45,
+              label: {
+                show: true,
+                formatter: '{b}: {d}%',
+                fontSize: 11
+              },
               center: ['50%', '75%'],
               datasetIndex: 3,
               encode: {
