@@ -429,6 +429,11 @@
 
     <img src="/ada-vnboys-website/assets/img/Cumulative_prevalence_top10_tag.png"  style="width:100%; height:600px; margin: 40px 0;" alt="Analysis of the top 10 tags of all time by year">
 
+    <div id="tags-area-chart" style="width:100%; height:600px; margin: 20px auto;"></div>
+
+
+
+
       <p>
         The graph above shows the evolution over time of the top 10 most used tags filtered on the selected US channels in their share of total tags. 
         We can see that many tags stay relatively stable in their use but a few vary significantly. 
@@ -513,7 +518,7 @@
     ga('send', 'pageview');
   </script>
   {% endif %}
-
+ 
   <!-- =========================================================
        EXISTING CHARTS (unchanged except for consistency)
        ========================================================= -->
@@ -1176,6 +1181,88 @@
   }
 })();
 </script>
+
+<script>
+(async function () {
+  const el = document.getElementById("tags-area-chart");
+  if (!el) return;
+
+  const chart = echarts.init(el);
+
+  // JSON généré par le notebook
+  const DATA_URL = '{{ "/data/preprocessed/top10_tags_share_of_voice_yearly.json" | relative_url }}';
+
+  let rows;
+  try {
+    const r = await fetch(DATA_URL);
+    if (!r.ok) throw new Error(`Cannot load JSON: ${DATA_URL} (${r.status})`);
+    rows = await r.json();
+  } catch (e) {
+    console.error(e);
+    el.innerHTML = `<p style="color:#b00020;font-weight:600;">${e.message}</p>`;
+    return;
+  }
+
+  // years (x-axis)
+  const years = rows.map(d => String(d.year));
+
+  // tags = toutes les clés sauf "year"
+  const tags = Object.keys(rows[0]).filter(k => k !== "year");
+
+  // series stacked area
+  const series = tags.map(tag => ({
+    name: tag,
+    type: "line",
+    stack: "Total",
+    areaStyle: {},
+    emphasis: { focus: "series" },
+    showSymbol: false,
+    data: rows.map(d => Number(d[tag] ?? 0))
+  }));
+
+  const option = {
+    title: {
+      text: "Cumulative prevalence of the top 10 leading political tags over time",
+      left: "center"
+    },
+    tooltip: {
+      trigger: "axis",
+      axisPointer: {
+        type: "cross",
+        label: { backgroundColor: "#6a7985" }
+      },
+      valueFormatter: v => `${Number(v).toFixed(2)}%`
+    },
+    legend: {
+      top: 35,
+      data: tags
+    },
+    grid: { top: 90, left: 60, right: 60, bottom: 60 },
+    xAxis: [{
+      type: "category",
+      boundaryGap: false,
+      data: years,
+      name: "Year"
+    }],
+    yAxis: [{
+      type: "value",
+      name: "Cumulative share of voice (%)",
+      axisLabel: { formatter: v => `${v}%` }
+    }],
+    series
+  };
+
+  chart.setOption(option);
+  window.addEventListener("resize", () => chart.resize());
+})();
+</script>
+
+
+
+
+
+
+
 
 
 
