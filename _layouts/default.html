@@ -345,6 +345,7 @@
             <input id="end" type="month">
           </div>
           <button id="plotBtn">Plot</button>
+          <div id="resolved" style="font-size:0.95em; color:#444; margin-top:6px;"></div>
           <div id="err" style="color:#b00020; font-weight:600;"></div>
         </div>
 
@@ -870,166 +871,199 @@
        - auto-fills dates + auto-plot
        ========================================================= -->
   <script>
-  (function () {
-    const elWords = document.getElementById("words");
-    const elStart = document.getElementById("start");
-    const elEnd   = document.getElementById("end");
-    const elBtn   = document.getElementById("plotBtn");
-    const elErr   = document.getElementById("err");
+(async function () {
+  const elWords = document.getElementById("words");
+  const elStart = document.getElementById("start");
+  const elEnd   = document.getElementById("end");
+  const elBtn   = document.getElementById("plotBtn");
+  const elErr   = document.getElementById("err");
+  const elResolved = document.getElementById("resolved");
 
-    const chartDom = document.getElementById("word-chart");
-    const chart = echarts.init(chartDom);
+  const chartDom = document.getElementById("word-chart");
+  const chart = echarts.init(chartDom);
 
-    // ✅ Correct paths
-    const DATA_URL = '{{ "/data/word_presence_monthly.json" | relative_url }}';
-    const POL_URL  = '{{ "/data/politicians.json" | relative_url }}';
+  const DATA_URL = '{{ "/data/preprocessed/word_presence_monthly.json" | relative_url }}';
 
-    let rows = null;
-    let polIndex = null;
+  let rows;
 
-    function resolveWords(words, index, maxPerLastName = 1) {
-      const resolved = [];
+  // ---- helpers ----
+  function norm(s) {
+    return String(s || "")
+      .toLowerCase()
+      .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^\w\s-]/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+  function ymToInt(ym) { const [Y,M] = ym.split("-").map(Number); return Y*100 + M; }
+  function inRange(ym, startYm, endYm) {
+    const v = ymToInt(ym);
+    return v >= ymToInt(startYm) && v <= ymToInt(endYm);
+  }
+  function parseWords() {
+    return elWords.value.split(",").map(s => s.trim()).filter(Boolean).slice(0, 4);
+  }
 
-      for (const w of words) {
-        const w0 = String(w).trim();
-        if (!w0) continue;
+  // ---- build indices from dataset itself (no politicians.json needed) ----
+  // Map: lastName -> [fullName1, fullName2, ...] (from dataset words)
+  const lastToFull = new Map();
+  // popularity: fullName(norm) -> totalCount
+  const pop = new Map();
+  // original: norm -> original cased full name
+  const orig = new Map();
 
-        const key = w0.toLowerCase();
+  function buildIndex() {
+    for (const r of rows) {
+      const full = String(r.word);
+      const fullN = norm(full);
+      orig.set(fullN, full);
 
-        // If user typed a single token and it exists as a last-name bucket, expand it
-        if (!key.includes(" ") && index && index[key]) {
-          const hits = index[key];
-          if (maxPerLastName === 1) resolved.push(hits[0]);
-          else resolved.push(...hits.slice(0, maxPerLastName));
-        } else {
-          resolved.push(w0);
-        }
-      }
+      const c = Number(r.count) || 0;
+      pop.set(fullN, (pop.get(fullN) || 0) + c);
 
-      // unique (case-insensitive), keep order
-      const seen = new Set();
-      const out = [];
-      for (const x of resolved) {
-        const k = x.toLowerCase();
-        if (!seen.has(k)) {
-          seen.add(k);
-          out.push(x);
-        }
-      }
-      return out;
+      const parts = fullN.split(" ");
+      const last = parts[parts.length - 1];
+      if (!last) continue;
+      if (!lastToFull.has(last)) lastToFull.set(last, []);
+      // store norm version, we’ll convert back with orig
+      lastToFull.get(last).push(fullN);
     }
 
-    // --- helpers dates "YYYY-MM" ---
-    function ymToInt(ym) {
-      const [Y, M] = ym.split("-").map(Number);
-      return Y * 100 + M;
+    // unique + sort each bucket by popularity desc
+    for (const [last, arr] of lastToFull.entries()) {
+      const uniq = [...new Set(arr)];
+      uniq.sort((a,b) => (pop.get(b)||0) - (pop.get(a)||0));
+      lastToFull.set(last, uniq);
     }
-    function inRange(ym, startYm, endYm) {
-      const v = ymToInt(ym);
-      return v >= ymToInt(startYm) && v <= ymToInt(endYm);
-    }
+  }
 
-    function parseWords() {
-      return elWords.value
-        .split(",")
-        .map(s => s.trim())
-        .filter(Boolean)
-        .slice(0, 4);
-    }
+  // resolve input tokens to best dataset "word"
+  function resolveInputs(inputs, maxPerLast = 1) {
+    const resolved = [];
+    const mapping = []; // for UI display
 
-    function render() {
-      elErr.textContent = "";
+    for (const raw of inputs) {
+      const q = norm(raw);
+      if (!q) continue;
 
-      // 1) parse user input
-      const words = parseWords();
-      if (words.length < 3 || words.length > 4) {
-        elErr.textContent = "Please enter 3–4 names, comma-separated.";
-        return;
+      // 1) exact full-name exists in dataset
+      if (orig.has(q)) {
+        resolved.push(orig.get(q));
+        mapping.push(`${raw} → ${orig.get(q)}`);
+        continue;
       }
 
-      // 2) resolve last names -> full names (Biden -> Joe Biden)
-      const resolvedWords = resolveWords(words, polIndex, 1);
-
-      const startYM = elStart.value;
-      const endYM   = elEnd.value;
-      if (!startYM || !endYM) {
-        elErr.textContent = "Start and End must be filled.";
-        return;
+      // 2) single token: treat as last name, pick most popular full name(s)
+      if (!q.includes(" ") && lastToFull.has(q)) {
+        const bucket = lastToFull.get(q).slice(0, maxPerLast).map(n => orig.get(n) || n);
+        resolved.push(...bucket);
+        mapping.push(`${raw} → ${bucket.join(", ")}`);
+        continue;
       }
 
-      // x-axis : all months in the window
-      const x = [...new Set(rows
-        .map(d => String(d.date))
-        .filter(ym => inRange(ym, startYM, endYM))
-      )].sort((a, b) => ymToInt(a) - ymToInt(b));
-
-      // series: one line per resolved word
-      const series = resolvedWords.map(w => {
-        const mapYMtoShare = new Map(
-          rows
-            .filter(d => String(d.word).toLowerCase() === w.toLowerCase())
-            .map(d => [String(d.date), Number(d.share)])   // share is already in %
-        );
-
-        const y = x.map(ym => mapYMtoShare.has(ym) ? mapYMtoShare.get(ym) : null);
-
-        return {
-          name: w,
-          type: "line",
-          showSymbol: false,
-          connectNulls: true,
-          data: y
-        };
-      });
-
-      chart.setOption({
-        title: { text: "Word presence over time", left: "center" },
-        tooltip: {
-          trigger: "axis",
-          valueFormatter: v => (v == null ? "-" : v.toFixed(3) + "%")
-        },
-        legend: { top: 40 },
-        grid: { top: 90, left: 55, right: 30, bottom: 50 },
-        xAxis: { type: "category", data: x, name: "Month" },
-        yAxis: {
-          type: "value",
-          name: "Mentions / videos (%)",
-          axisLabel: { formatter: v => v.toFixed(2) + "%" }
-        },
-        series
-      }, true);
+      // 3) fallback: keep raw (will likely be empty)
+      resolved.push(raw);
+      mapping.push(`${raw} → (no match)`);
     }
 
-    (async function init() {
-      try {
-        const [rData, rPol] = await Promise.all([fetch(DATA_URL), fetch(POL_URL)]);
-        if (!rData.ok) throw new Error("Cannot load JSON: " + DATA_URL + " (" + rData.status + ")");
-        if (!rPol.ok)  throw new Error("Cannot load JSON: " + POL_URL + " (" + rPol.status + ")");
+    // unique preserve order (case-insensitive)
+    const seen = new Set();
+    const out = [];
+    for (const x of resolved) {
+      const k = norm(x);
+      if (!seen.has(k)) { seen.add(k); out.push(x); }
+    }
+    return { words: out, mapping };
+  }
 
-        rows = await rData.json();
-        polIndex = await rPol.json();
+  function render() {
+    elErr.textContent = "";
+    if (elResolved) elResolved.textContent = "";
 
-        // Default dates from dataset
-        const allYM = rows.map(d => String(d.date));
-        const minYM = allYM.reduce((a, b) => ymToInt(a) < ymToInt(b) ? a : b);
-        const maxYM = allYM.reduce((a, b) => ymToInt(a) > ymToInt(b) ? a : b);
+    const inputs = parseWords();
+    if (inputs.length < 3 || inputs.length > 4) {
+      elErr.textContent = "Please enter 3–4 names, comma-separated.";
+      return;
+    }
 
-        elStart.value = minYM;
-        elEnd.value   = maxYM;      // or set "2019-09" if you want a default cutoff
+    const startYM = elStart.value;
+    const endYM   = elEnd.value;
+    if (!startYM || !endYM) {
+      elErr.textContent = "Start and End must be filled.";
+      return;
+    }
 
-        elBtn.addEventListener("click", render);
-        window.addEventListener("resize", () => chart.resize());
+    const { words, mapping } = resolveInputs(inputs, 1);
+    if (elResolved) elResolved.textContent = "Resolved: " + mapping.join(" | ");
 
-        // Auto plot on load
-        render();
+    // x-axis months in window
+    const x = [...new Set(rows
+      .map(d => String(d.date))
+      .filter(ym => inRange(ym, startYM, endYM))
+    )].sort((a,b) => ymToInt(a) - ymToInt(b));
 
-      } catch (e) {
-        elErr.textContent = e.message;
-        console.error(e);
-      }
-    })();
-  })();
-  </script>
+    const series = words.map(w => {
+      const wKey = norm(w);
+      const mapYMtoShare = new Map(
+        rows
+          .filter(d => norm(d.word) === wKey)
+          .map(d => [String(d.date), Number(d.share)])
+      );
+      const y = x.map(ym => mapYMtoShare.has(ym) ? mapYMtoShare.get(ym) : null);
+
+      return {
+        name: w,
+        type: "line",
+        showSymbol: false,
+        connectNulls: true,
+        data: y
+      };
+    });
+
+    chart.setOption({
+      title: { text: "Word presence over time", left: "center" },
+      tooltip: {
+        trigger: "axis",
+        valueFormatter: v => (v == null ? "-" : v.toFixed(3) + "%")
+      },
+      legend: { top: 40 },
+      grid: { top: 90, left: 55, right: 30, bottom: 50 },
+      xAxis: { type: "category", data: x, name: "Month" },
+      yAxis: {
+        type: "value",
+        name: "Mentions / videos (%)",
+        axisLabel: { formatter: v => v.toFixed(2) + "%" }
+      },
+      series
+    }, true);
+  }
+
+  // ---- load data + init ----
+  try {
+    const r = await fetch(DATA_URL);
+    if (!r.ok) throw new Error("Cannot load JSON: " + DATA_URL + " (" + r.status + ")");
+    rows = await r.json();
+    buildIndex();
+
+    // defaults for date inputs
+    const allYM = rows.map(d => String(d.date));
+    const minYM = allYM.reduce((a,b) => ymToInt(a) < ymToInt(b) ? a : b);
+    const maxYM = allYM.reduce((a,b) => ymToInt(a) > ymToInt(b) ? a : b);
+
+    elStart.value = minYM;
+    elEnd.value   = maxYM;
+
+    elBtn.addEventListener("click", render);
+    window.addEventListener("resize", () => chart.resize());
+
+    render(); // auto plot on load
+  } catch (e) {
+    elErr.textContent = e.message;
+    console.error(e);
+  }
+})();
+</script>
+
 
 
 </body>
