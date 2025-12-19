@@ -289,6 +289,11 @@
             
 
         </section>
+
+
+
+
+        <!-- RQ1 -->
         <section id="grouping">
             <h2> RQ1: Does YouTube act as a reliable barometer of genuine political interest? </h2>
             <p>
@@ -300,7 +305,7 @@
 
             <div id="videos-chart" style="width:100%; height:650px;"></div>
 
-            alt="Political orientation">
+            
                 <!-- ADD THE CHART HERE -->
 
 
@@ -311,24 +316,42 @@
 
 
 
-
-
-
-
             <p>
-                
-            The pie chart bellow shows the political orientation of the channels obtained from the external dataset us_bias. We can see that the distribution is fairly even with channels with a centered political orientation representing the largest part. This is to be expected as many channels are rather neutral or prefer to stay politically objective. We can see that the proportion of left-oriented vs right-oriented is very similar: 35.1% total on the right and 33.3% on the left. Interestingly, there are more Lean Left than Lean Right which suggests that the leftists are somewhat more moderate. The size of the dataset hinders us from drawing any conclusions as it is too small and not representative of all the channels in the News & Politics category. 
-
+            The pie chart bellow shows the political orientation of the channels obtained from the external dataset us_bias.
+            We can see that the distribution is fairly even with channels with a centered political orientation representing the largest part. 
+            This is to be expected as many channels are rather neutral or prefer to stay politically objective. We can see that the proportion of left-oriented vs right-oriented is very similar: 35.1% total on the right and 33.3% on the left. 
+            Interestingly, there are more Lean Left than Lean Right which suggests that the leftists are somewhat more moderate. The size of the dataset hinders us from drawing any conclusions as it is too small and not representative of all the channels in the News & Politics category. 
             </p>
-            <div id="pie-chart_1" style="width: 100%; height: 500px; margin: 20px auto;"></div>
 
-            <p>
-                
-The pie chart above shows the political orientation of the channels obtained from the external dataset us_bias. We can see that the distribution is fairly even with channels with a centered political orientation representing the largest part. This is to be expected as many channels are rather neutral or prefer to stay politically objective. We can see that the proportion of left-oriented vs right-oriented is very similar: 35.1% total on the right and 33.3% on the left. Interestingly, there are more Lean Left than Lean Right which suggests that the leftists are somewhat more moderate. The size of the dataset hinders us from drawing any conclusions as it is too small and not representative of all the channels in the News & Politics category. 
 
-            </p>
+
+<<<<<<< Updated upstream
+
 
 =======
+>>>>>>> Stashed changes
+            <div id="pie-chart" style="width: 100%; height: 500px; margin: 20px auto;"></div>
+                
+            <img class="plot--img" src="/ada-vnboys-website/assets/img/image7.png"
+                alt="Political orientation">
+
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+            <div id="pie-chart_2" style="width: 100%; height: 500px; margin: 20px auto;"></div>
+
+
+
+            <p>Who is present on YouTube? We now compare political parties based on subscribers. The pie chart above once again shows an advantage for the Democrats. Indeed, 43.4% of subscribers to channels in the News & Politics category are classified as left-wing, while only 21.1% are right-wing. According to our analysis, there are therefore twice as many Democrats as Republicans in this category of channels.</p>
+
+            <div id="pie-chart" style="width: 100%; height: 500px; margin: 20px auto;"></div>
+                
+
+
+
+
+=======
+=======
+>>>>>>> Stashed changes
             <img class="plot--img" src="/ada-vnboys-website/assets/img/image4.png"
                 alt="Political orientation">
             <p>
@@ -428,7 +451,6 @@ The pie chart above shows the political orientation of the channels obtained fro
             <div id="words-chart" style="width:100%; height:600px; max-width: 1000px; margin: 20px auto;"></div>
 
 
-            {% include word_presence_widget.html %}
 
 
 
@@ -436,31 +458,6 @@ The pie chart above shows the political orientation of the channels obtained fro
 
 
 
-
-
-
-
-
-
-
-
-
-            <p>The figures display the pageviews for political and COVID-related pages over time for group 2 countries.
-            </p>
-            <!-- slider pv for 2 -->
-            <div class="images-slideshow-pv2">
-                <div class="imageSlides-pv2 fade">
-                    <img src="/ada-vnboys-website/assets/img/pv/pv_denmark.png">
-                </div>
-                <div class="imageSlides-pv2 fade">
-                    <img src="/ada-vnboys-website/assets/img/pv/pv_netherlands.png">
-                </div>
-                <div class="imageSlides-pv2 fade">
-                    <img src="/ada-vnboys-website/assets/img/pv/pv_norway.png">
-                </div>
-                <a class="slider-btn-pv2 previous-pv2" onclick="setSlidespv2(-1)">❮</a>
-                <a class="slider-btn-pv2 next-pv2" onclick="setSlidespv2(1)">❯</a>
-            </div>
 
 
 
@@ -1080,47 +1077,29 @@ function roundXYValue(val) {
 
 
 
-<div style="max-width: 900px; margin: 20px auto;">
-  <h3>Explore word presence over time</h3>
-  <p style="margin-bottom:8px;">Enter 3–4 words (comma or space separated):</p>
-
-  <input id="words-input" type="text"
-         placeholder="e.g. election, trump, vote"
-         style="width: 100%; padding: 10px; font-size: 16px;" />
-
-  <button id="plot-btn"
-          style="margin-top:10px; padding:10px 16px; font-size:16px; cursor:pointer;">
-    Plot
-  </button>
-
-  <div id="words-error" style="color:#b00020; margin-top:10px;"></div>
-</div>
-
-<div id="words-chart" style="width:100%; height:600px; max-width: 1000px; margin: 20px auto;"></div>
-
 <script>
 (async function () {
   const chartEl = document.getElementById("words-chart");
+  const chart = echarts.init(chartEl);
+
   const inputEl = document.getElementById("words-input");
   const btnEl = document.getElementById("plot-btn");
   const errEl = document.getElementById("words-error");
 
-  if (!window.echarts) {
-    errEl.textContent = "ECharts is not loaded (echarts is undefined).";
-    return;
-  }
-
-  const chart = echarts.init(chartEl);
-
+  // charge le JSON une seule fois
   const url = '{{ site.baseurl }}/data/preprocessed/word_presence_monthly.json';
   const data = await fetch(url).then(r => r.json());
 
-  const months = data.months;
-  const total = data.total_videos;
-  const wordsMap = data.words;
+  const months = data.months;              // ["2006-01", ...]
+  const total = data.total_videos;         // [123, ...]
+  const wordsMap = data.words;             // { "election": [..], ... }
 
   function parseWords(str) {
-    return str.toLowerCase().split(/[\s,;]+/).map(s => s.trim()).filter(Boolean);
+    return str
+      .toLowerCase()
+      .split(/[\s,;]+/)
+      .map(s => s.trim())
+      .filter(Boolean);
   }
 
   function updateChart(words) {
@@ -1133,21 +1112,34 @@ function roundXYValue(val) {
 
     const missing = words.filter(w => !(w in wordsMap));
     if (missing.length) {
-      errEl.textContent = "Unknown words: " + missing.join(", ");
+      errEl.textContent = "Unknown words (not in vocabulary): " + missing.join(", ");
       return;
     }
 
+    // Série = proportion (% of videos that contain the word) par mois
     const series = words.map(w => {
       const counts = wordsMap[w];
       const pct = counts.map((c, i) => total[i] ? (100 * c / total[i]) : 0);
-      return { name: w, type: "line", showSymbol: false, data: pct };
+      return {
+        name: w,
+        type: "line",
+        showSymbol: false,
+        data: months.map((m, i) => [m, +pct[i].toFixed(3)])
+      };
     });
 
     chart.setOption({
-      title: { text: "Word presence over time", left: "center" },
-      tooltip: { trigger: "axis", valueFormatter: v => (+v).toFixed(2) + "%" },
-      legend: { top: 50 },
-      grid: { left: 60, right: 40, top: 90, bottom: 60 },
+      title: {
+        text: "Word presence over time",
+        subtext: "Share of videos containing the word (%)",
+        left: "center"
+      },
+      tooltip: {
+        trigger: "axis",
+        valueFormatter: v => v.toFixed(2) + "%"
+      },
+      legend: { top: 60 },
+      grid: { left: 60, right: 40, top: 110, bottom: 60 },
       xAxis: { type: "category", data: months, name: "Month" },
       yAxis: { type: "value", name: "% of videos" },
       series
@@ -1157,10 +1149,12 @@ function roundXYValue(val) {
   btnEl.addEventListener("click", () => updateChart(parseWords(inputEl.value)));
   inputEl.addEventListener("keydown", (e) => { if (e.key === "Enter") btnEl.click(); });
 
+  // plot par défaut (si existants)
+  updateChart(["election", "trump", "vote"].filter(w => w in wordsMap).slice(0,3));
+
   window.addEventListener("resize", () => chart.resize());
 })();
 </script>
-
 
 
 
