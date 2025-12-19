@@ -1138,254 +1138,131 @@ function roundXYValue(val) {
 
 
 
+
+
+
 <script>
 (async function () {
-  // --- paths ---
-  const DATA_URL  = '{{ site.baseurl }}/data/preprocessed/word_presence_monthly.json';
-  const INDEX_URL = '{{ site.baseurl }}/data/preprocessed/politicians_index.json'; // last_name -> [full names]
+  const elWords = document.getElementById("words");
+  const elStart = document.getElementById("start");
+  const elEnd   = document.getElementById("end");
+  const elBtn   = document.getElementById("plotBtn");
+  const elErr   = document.getElementById("err");
 
-  const elWords  = document.getElementById("wp-words");
-  const elStart  = document.getElementById("wp-start");
-  const elEnd    = document.getElementById("wp-end");
-  const elSplits = document.getElementById("wp-splits");
-  const elBtn    = document.getElementById("wp-btn");
-  const elErr    = document.getElementById("wp-error");
-  const elCharts = document.getElementById("wp-charts");
-  const elHint   = document.getElementById("wp-hint");
+  const chartDom = document.getElementById("word-chart");
+  const chart = echarts.init(chartDom);
 
-  if (!window.echarts) {
-    elErr.textContent = "ECharts is not loaded (echarts is undefined).";
+  // ✅ Chemin vers ton JSON (à adapter si besoin)
+  // Si ton site est /ada-vnboys-website/, site.baseurl marche bien en Jekyll
+  const DATA_URL = '{{ "/data/preprocessed/word_presence_monthly.json" | relative_url }}';
+
+  let rows;
+  try {
+    const r = await fetch(DATA_URL);
+    if (!r.ok) throw new Error("Cannot load JSON: " + DATA_URL + " (" + r.status + ")");
+    rows = await r.json();
+  } catch (e) {
+    elErr.textContent = e.message;
     return;
   }
 
-  // --- load json once ---
-  const [rows, index] = await Promise.all([
-    fetch(DATA_URL).then(r => r.json()),
-    fetch(INDEX_URL).then(r => r.json())
-  ]);
-
-  // rows: [{word,date,share,count,total},...]
-  // build set of available full names
-  const available = new Set(rows.map(r => String(r.word).toLowerCase()));
-
-  // parse YYYY-MM into a Date (use day 01)
-  function ymToDate(ym) {
-    // ym can be "YYYY-MM" or "YYYY-MM-DD"
-    if (ym.length === 7) return new Date(ym + "-01T00:00:00");
-    return new Date(ym + "T00:00:00");
+  // --- helpers dates "YYYY-MM" ---
+  function ymToInt(ym) { // ex "2018-09" -> 201809
+    const [Y,M] = ym.split("-").map(Number);
+    return Y*100 + M;
+  }
+  function inRange(ym, startYm, endYm) {
+    const v = ymToInt(ym);
+    return v >= ymToInt(startYm) && v <= ymToInt(endYm);
   }
 
-  // convert input token -> full name candidates using index
-  function resolveTokens(tokens, maxPerLast=1) {
-    const out = [];
-    for (const tRaw of tokens) {
-      const t = tRaw.trim().toLowerCase();
-      if (!t) continue;
+  // --- set default dates from dataset ---
+  const allYM = rows.map(d => String(d.date));
+  const minYM = allYM.reduce((a,b) => ymToInt(a) < ymToInt(b) ? a : b);
+  const maxYM = allYM.reduce((a,b) => ymToInt(a) > ymToInt(b) ? a : b);
 
-      if (!t.includes(" ") && index[t]) {
-        const hits = index[t];
-        out.push(...hits.slice(0, maxPerLast));
-      } else {
-        // allow full name typed
-        out.push(tRaw.trim());
-      }
-    }
-    // unique (case-insensitive)
-    const seen = new Set();
-    const uniq = [];
-    for (const x of out) {
-      const k = x.toLowerCase();
-      if (!seen.has(k)) { seen.add(k); uniq.push(x); }
-    }
-    return uniq;
+  // ✅ valeurs par défaut dans les inputs
+  elStart.value = minYM;         // "YYYY-MM" ok pour type="month"
+  elEnd.value   = maxYM;         // (tu peux aussi mettre "2019-09" si tu veux)
+  // Si tu veux couper à Sep 2019 par défaut :
+  // elEnd.value = "2019-09";
+
+  function parseWords() {
+    return elWords.value
+      .split(",")
+      .map(s => s.trim())
+      .filter(Boolean)
+      .slice(0, 4);
   }
 
-  // keep only words that exist in dataset
-  function filterExisting(words) {
-    const ok = [];
-    const missing = [];
-    for (const w of words) {
-      if (available.has(w.toLowerCase())) ok.push(w);
-      else missing.push(w);
-    }
-    return { ok, missing };
-  }
-
-  function parseWords(str) {
-    return str.split(/[\s,;]+/).map(s => s.trim()).filter(Boolean);
-  }
-
-  // get overall min/max dates from dataset
-  const allDates = rows.map(r => ymToDate(String(r.date)));
-  const minD = new Date(Math.min(...allDates));
-  const maxD = new Date(Math.max(...allDates));
-  const fmtDateInput = d => d.toISOString().slice(0,10);
-
-  // init date inputs
-  elStart.value = fmtDateInput(minD);
-  elEnd.value   = fmtDateInput(maxD);
-  elHint.textContent = `Dataset range: ${fmtDateInput(minD)} → ${fmtDateInput(maxD)}`;
-
-  // group by word for fast access: wordLower -> [{dateObj, share, count, total},...]
-  const byWord = new Map();
-  for (const r of rows) {
-    const w = String(r.word);
-    const wl = w.toLowerCase();
-    const item = {
-      word: w,
-      dateObj: ymToDate(String(r.date)),
-      dateStr: String(r.date),
-      share: +r.share,
-      count: +r.count,
-      total: +r.total
-    };
-    if (!byWord.has(wl)) byWord.set(wl, []);
-    byWord.get(wl).push(item);
-  }
-  // sort each series
-  for (const [k, arr] of byWord.entries()) {
-    arr.sort((a,b) => a.dateObj - b.dateObj);
-  }
-
-  function dateSplitBoundaries(startDate, endDate, splits) {
-    const s = startDate.getTime();
-    const e = endDate.getTime();
-    const bounds = [];
-    for (let i=0;i<=splits;i++){
-      bounds.push(new Date(s + (e - s) * (i / splits)));
-    }
-    return bounds;
-  }
-
-  function buildBarsForWindow(words, s, e) {
-    // Equivalent to your Python:
-    // mentions[w] = number of videos containing word in [s,e)
-    // normalized => 100 * mentions / n_videos
-    //
-    // Here we use monthly shares; we aggregate as weighted average by total videos.
-    // share_window = 100 * sum(count) / sum(total)
-    const result = [];
-    for (const w of words) {
-      const arr = byWord.get(w.toLowerCase()) || [];
-      let sumCount = 0;
-      let sumTotal = 0;
-      for (const p of arr) {
-        if (p.dateObj >= s && p.dateObj < e) {
-          sumCount += p.count;
-          sumTotal += p.total;
-        }
-      }
-      const share = sumTotal > 0 ? (100 * sumCount / sumTotal) : 0;
-      result.push({ word: w, share, sumTotal });
-    }
-    return result;
-  }
-
-  function clearCharts() {
-    elCharts.innerHTML = "";
-  }
-
-  function render(words, startStr, endStr, splits) {
+  function render() {
     elErr.textContent = "";
-    clearCharts();
 
-    // resolve last names -> full names
-    const resolved = resolveTokens(words, 1);
-
-    // keep only existing (in dataset)
-    const { ok, missing } = filterExisting(resolved);
-
-    if (ok.length < 3 || ok.length > 4) {
-      elErr.textContent = `Need 3–4 valid names. Currently valid: ${ok.length}.` +
-        (missing.length ? ` Missing: ${missing.join(", ")}` : "");
+    const words = parseWords();
+    if (words.length < 3 || words.length > 4) {
+      elErr.textContent = "Entre 3 et 4 mots, séparés par des virgules.";
       return;
     }
 
-    const start = new Date(startStr + "T00:00:00");
-    const end   = new Date(endStr   + "T00:00:00");
-    if (!(start < end)) {
-      elErr.textContent = "Start must be before End.";
+    const startYM = elStart.value;
+    const endYM   = elEnd.value;
+    if (!startYM || !endYM) {
+      elErr.textContent = "Start/End doivent être remplis.";
       return;
     }
 
-    // grid for subplots like Python
-    const ncols = Math.min(2, splits);
-    elCharts.style.gridTemplateColumns = `repeat(${ncols}, minmax(0, 1fr))`;
+    // x-axis : tous les mois dans la fenêtre
+    const x = [...new Set(rows
+      .map(d => String(d.date))
+      .filter(ym => inRange(ym, startYM, endYM))
+    )].sort((a,b) => ymToInt(a) - ymToInt(b));
 
-    const bounds = dateSplitBoundaries(start, end, splits);
+    // series: une ligne par mot
+    const series = words.map(w => {
+      const mapYMtoShare = new Map(
+        rows
+          .filter(d => String(d.word).toLowerCase() === w.toLowerCase())
+          .map(d => [String(d.date), Number(d.share)])   // share déjà en %
+      );
 
-    // create one chart per window
-    for (let i=0;i<splits;i++) {
-      const s = bounds[i];
-      const e = bounds[i+1];
+      // aligné sur tous les mois (null si absent)
+      const y = x.map(ym => mapYMtoShare.has(ym) ? mapYMtoShare.get(ym) : null);
 
-      const bars = buildBarsForWindow(ok, s, e);
+      return {
+        name: w,
+        type: "line",
+        showSymbol: false,
+        connectNulls: true,
+        data: y
+      };
+    });
 
-      // create div
-      const div = document.createElement("div");
-      div.style.width = "100%";
-      div.style.height = "420px";
-      div.style.border = "1px solid rgba(0,0,0,0.08)";
-      div.style.borderRadius = "10px";
-      div.style.padding = "8px";
-      elCharts.appendChild(div);
-
-      const chart = echarts.init(div);
-
-      const x = bars.map(b => b.word);
-      const y = bars.map(b => +b.share.toFixed(2));
-
-      chart.setOption({
-        title: {
-          text: `${s.toISOString().slice(0,10)} → ${e.toISOString().slice(0,10)}`,
-          subtext: `Weighted by #videos per month (approx. Python normalize=True)`,
-          left: "center",
-          textStyle: { fontSize: 12 },
-          subtextStyle: { fontSize: 11 }
-        },
-        tooltip: {
-          trigger: "axis",
-          axisPointer: { type: "shadow" },
-          formatter: (p) => `${p[0].name}<br/>${p[0].value}%`
-        },
-        grid: { left: 55, right: 20, top: 70, bottom: 80 },
-        xAxis: {
-          type: "category",
-          data: x,
-          axisLabel: { rotate: 30, interval: 0 }
-        },
-        yAxis: {
-          type: "value",
-          name: "Mentions / videos (%)",
-          min: 0,
-          max: 100
-        },
-        series: [{
-          type: "bar",
-          data: y,
-          label: { show: true, position: "top", formatter: v => `${v.value}%` }
-        }]
-      });
-
-      window.addEventListener("resize", () => chart.resize());
-    }
+    // Option ECharts
+    chart.setOption({
+      title: { text: "Word presence over time", left: "center" },
+      tooltip: {
+        trigger: "axis",
+        valueFormatter: (v) => (v == null ? "-" : v.toFixed(3) + "%")
+      },
+      legend: { top: 40 },
+      grid: { top: 90, left: 55, right: 30, bottom: 50 },
+      xAxis: { type: "category", data: x, name: "Month" },
+      yAxis: {
+        type: "value",
+        name: "Mentions / videos (%)",
+        axisLabel: { formatter: (v) => v.toFixed(2) + "%" }
+      },
+      series
+    }, true);
   }
 
-  // button handler
-  elBtn.addEventListener("click", () => {
-    const words = parseWords(elWords.value);
-    render(words, elStart.value, elEnd.value, parseInt(elSplits.value, 10));
-  });
+  elBtn.addEventListener("click", render);
+  window.addEventListener("resize", () => chart.resize());
 
-  // default example (if present)
-  elWords.value = "biden trump obama";
-  elBtn.click();
+  // ✅ plot automatique au chargement
+  render();
 })();
 </script>
-
-
-
-
 
 
 
