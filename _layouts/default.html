@@ -409,48 +409,29 @@
             
 
 
-        <div style="max-width:1000px;margin:20px auto;">
-          <h3>Word / politician presence (title + tags)</h3>
+<div style="max-width: 1100px; margin: 0 auto;">
+  <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:end; margin: 10px 0;">
+    <div>
+      <label>Mots (3–4, séparés par virgule)</label><br>
+      <input id="words" type="text" value="Biden, Trump, Obama" style="width:320px;">
+    </div>
+    <div>
+      <label>Start</label><br>
+      <input id="start" type="month">
+    </div>
+    <div>
+      <label>End</label><br>
+      <input id="end" type="month">
+    </div>
+    <button id="plotBtn">Plot</button>
+    <div id="err" style="color:#b00020; font-weight:600;"></div>
+  </div>
 
-          <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;">
-            <div style="flex:1;min-width:280px;">
-              <label>3–4 words (comma/space separated)</label><br/>
-              <input id="wp-words" style="width:100%;padding:8px;font-size:16px;"
-                    placeholder="e.g. biden, trump, obama" />
-              <div id="wp-hint" style="font-size:12px;opacity:0.8;margin-top:4px;"></div>
-            </div>
+  <div id="word-chart" style="width:100%; height:520px;"></div>
+</div>
 
-            <div>
-              <label>Start</label><br/>
-              <input id="wp-start" type="date" style="padding:8px;font-size:16px;" />
-            </div>
-
-            <div>
-              <label>End</label><br/>
-              <input id="wp-end" type="date" style="padding:8px;font-size:16px;" />
-            </div>
-
-            <div>
-              <label>Splits</label><br/>
-              <select id="wp-splits" style="padding:8px;font-size:16px;">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4" selected>4</option>
-              </select>
-            </div>
-
-            <div>
-              <button id="wp-btn" style="padding:10px 14px;font-size:16px;cursor:pointer;">
-                Plot
-              </button>
-            </div>
-          </div>
-
-          <div id="wp-error" style="color:#b00020;margin-top:10px;"></div>
-        </div>
-
-        <div id="wp-charts" style="max-width:1100px;margin:10px auto;display:grid;gap:16px;"></div>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<script>
 
 
 
