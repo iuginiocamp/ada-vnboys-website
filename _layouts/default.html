@@ -409,7 +409,7 @@
         <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:end; margin: 10px 0;">
           <div>
             <label>Names (3–4, comma-separated)</label><br>
-            <input id="words" type="text" value="Biden, Trump, Obama" style="width:320px;">
+            <input id="words" type="text" value="Clinton, Trump, Obama" style="width:320px;">
           </div>
           <div>
             <label>Start</label><br>
@@ -756,7 +756,7 @@
           dimensions: ['Value', 'Date', 'Category', 'Label'],
           source: adaptedData
         }, ...datasetWithFilters],
-        title: { text: 'Most important political issues (poll-level, smoothed upstream)' },
+        title: { text: 'Most important issues facing the US (poll by YouGov)' },
         tooltip: {
           trigger: 'axis',
           valueFormatter: v => (v * 100).toFixed(1) + '%'
@@ -807,7 +807,7 @@
 
       var option = {
         title: {
-          text: 'Videos posted on YouTube during the covered period',
+          text: 'News & Politics videos posted on YouTube during the covered period',
           subtext: '',
           left: 'center',
           textStyle: { fontSize: 20 },
@@ -1138,7 +1138,7 @@
     });
 
     chart.setOption({
-      title: { text: "Word presence over time", left: "center" },
+      title: { text: "Presence of American personalities in video titles and tags over time", left: "center" },
       tooltip: {
         trigger: "axis",
         valueFormatter: v => (v == null ? "-" : v.toFixed(3) + "%")
@@ -1189,7 +1189,7 @@
   const chart = echarts.init(el);
 
   // JSON généré par le notebook
-  const DATA_URL = '{{ "/data/preprocessed/top10_tags_share_of_voice_yearly.json" | relative_url }}';
+  const DATA_URL = '{{ "/data/top10_tags_share_of_voice_yearly.json" | relative_url }}';
 
   let rows;
   try {
