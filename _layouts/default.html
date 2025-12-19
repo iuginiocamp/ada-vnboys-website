@@ -2,994 +2,733 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <link rel="icon" type="image/png" href="assets/img/favicon.png">
-    <title>{{ site.title | default: site.github.repository_name }} by {{ site.github.owner_name }}</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <title>{{ site.title | default: site.github.repository_name }} by {{ site.github.owner_name }}</title>
 
-    <link rel="stylesheet" href="{{ '/assets/css/styles.css?v=' | append: site.github.build_revision | relative_url }}">
-    <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" href="{{ '/assets/css/styles.css?v=' | append: site.github.build_revision | relative_url }}">
+  <meta name="viewport" content="width=device-width">
 
-    <script src="https://cdn.jsdelivr.net/npm/echarts@6/dist/echarts.min.js"></script>
-    <style>
+  <!-- ✅ Keep ONE ECharts version only (v6) -->
+  <script src="https://cdn.jsdelivr.net/npm/echarts@6/dist/echarts.min.js"></script>
+
+  <style>
     .section-title {
       font-weight: bold;
       font-size: 1.5em;
       margin-top: 1.2em;
     }
+
     .subsection-title {
       font-weight: bold;
       font-size: 1.4em;
       margin-top: 1em;
     }
+
     .subtitle {
-        font-size: 1.6em;       /* Augmente cette valeur (1.3em était la précédente) */
-        color: #666;           
-        margin-top: 10px;      
-        font-style: italic;    
-        text-align: center;
-        max-width: 800px;      /* On élargit un peu pour que la grande police tienne bien */
-        margin-left: auto;
-        margin-right: auto;
-        line-height: 1.4;      /* Ajoute un peu d'espace entre les lignes si le texte est long */
-    }
-    header {
-      display: flex;          /* Active le mode Flexbox */
-      justify-content: center; /* Centre horizontalement le contenu */
-      padding: 20px 0;        /* Ajoute un peu d'espace au-dessus/en-dessous */
+      font-size: 1.6em;
+      color: #666;
+      margin-top: 10px;
+      font-style: italic;
+      text-align: center;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.4;
     }
 
-    .plot--img {
-      max-width: 100%;        /* Évite que l'image ne dépasse sur mobile */
-      height: auto;
-      display: block;         /* Permet une meilleure gestion des marges */
-    }
-    /* On cible la liste à l'intérieur de l'introduction */
-    #introduction ul {
-        display: table;       /* Le bloc s'adapte à la largeur du texte */
-        margin-left: auto;    /* Ces deux lignes centrent le bloc */
-        margin-right: auto;
-        text-align: left;     /* Garde le texte aligné à gauche à l'intérieur du bloc centré */
-        padding-left: 0;      /* Optionnel : retire le décalage par défaut des puces */
-    }
-
-    #introduction li {
-        margin-bottom: 10px;  /* Ajoute un peu d'espace entre les deux points */
-    }
-    #introduction li {
-        font-size: 1.2em;      /* Agrandit le texte (1.2 fois la taille normale) */
-        margin-bottom: 15px;   /* Ajoute un peu plus d'espace entre les deux points */
-        line-height: 1.4;      /* Pour que le texte ne soit pas trop serré si la ligne coupe */
-    }
-
-    #introduction ul {
-        display: table;
-        margin: 20px auto; /* Centre la liste et ajoute de l'espace en haut/bas */
-        text-align: left;
-        padding-left: 0;
-    }
-
-    #introduction li {
-        font-size: 1.2em;
-        margin-bottom: 15px;
-        line-height: 1.4;
-        color: #333; /* Le texte de la description reste gris foncé/noir */
-    }
-
-    /* On cible uniquement le texte en gras pour la couleur */
-    .text-democrat {
-        color: #0015BC; /* Bleu */
-        font-size: 1.1em;
-    }
-
-    .text-republican {
-        color: #E91D0E; /* Rouge */
-        font-size: 1.1em;
-    }
     header {
       display: flex;
-      justify-content: center; /* Centre la DIV dans le header */
+      justify-content: center;
       padding: 40px 0;
       background-color: #f8f9fa;
     }
 
     .header-content {
       display: flex;
-      flex-direction: column; /* Aligne les éléments en colonne */
-      align-items: center;    /* Centre horizontalement l'image et les titres */
-      text-align: center;     /* Centre le texte au cas où */
-      width: 100%;            /* S'assure que la div prend toute la place */
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 100%;
     }
 
     .header-content h1 {
       margin-top: 20px;
-      margin-bottom: 5px;     /* Rapproche le titre du sous-titre */
+      margin-bottom: 5px;
       font-size: 2.5em;
     }
 
-    /* On s'assure que l'image elle-même se comporte bien */
     .header-content img {
-      margin: 0 auto;         
+      margin: 0 auto;
       display: block;
     }
-    /* Style spécifique pour la liste de données */
+
+    .plot--img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    #introduction ul {
+      display: table;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: left;
+      padding-left: 0;
+      margin: 20px auto;
+    }
+
+    #introduction li {
+      font-size: 1.2em;
+      margin-bottom: 15px;
+      line-height: 1.4;
+      color: #333;
+    }
+
+    .text-democrat {
+      color: #0015BC;
+      font-size: 1.1em;
+    }
+
+    .text-republican {
+      color: #E91D0E;
+      font-size: 1.1em;
+    }
+
     .data-list {
-        display: table;            /* Réduit la largeur au contenu pour permettre le centrage */
-        margin: 30px auto;         /* Centre horizontalement et ajoute de l'espace vertical */
-        font-size: 1.15em;         /* Agrandit légèrement le texte */
-        line-height: 1.6;          /* Espace les lignes pour plus de clarté */
-        padding-left: 20px;        /* Espace pour les puces */
+      display: table;
+      margin: 30px auto;
+      font-size: 1.15em;
+      line-height: 1.6;
+      padding-left: 20px;
     }
 
     .data-list li {
-        margin-bottom: 12px;       /* Espace entre chaque point de la liste */
-        text-align: left;          /* Aligne le texte à gauche à l'intérieur du bloc centré */
+      margin-bottom: 12px;
+      text-align: left;
     }
 
     .data-list li strong {
-        color: #222;               /* Rend les chiffres un peu plus profonds */
-    }
-    .stats-list {
-        background-color: #f4f4f4; /* Un léger fond gris */
-        padding: 20px 40px;
-        border-left: 5px solid #333; /* Une petite barre sur le côté pour le style */
-        margin: 20px auto;
-        max-width: 850px;
-        list-style-type: none; /* On enlève les puces standards si tu veux */
+      color: #222;
     }
 
-    .stats-list li {
-        margin-bottom: 10px;
-        font-family: 'Courier New', Courier, monospace; /* Un look un peu plus "code/maths" */
-    }
     .clean-stats {
-        display: table;           /* Réduit la largeur au strict nécessaire */
-        margin: 30px auto;        /* Centre le bloc et ajoute de l'espace en haut/bas */
-        padding-left: 25px;       /* Garde un peu d'espace pour les puces */
-        list-style-type: disc;    /* Remet les puces classiques si tu les avais enlevées */
-        border-left: none;        /* On enlève la ligne bleue latérale pour un centrage plus propre */
+      display: table;
+      margin: 30px auto;
+      padding-left: 25px;
+      list-style-type: disc;
+      border-left: none;
     }
 
     .clean-stats li {
-        margin-bottom: 15px;
-        font-size: 1.1em;
-        line-height: 1.5;
-        text-align: left;         /* Le texte reste aligné à gauche à l'intérieur du bloc centré */
+      margin-bottom: 15px;
+      font-size: 1.1em;
+      line-height: 1.5;
+      text-align: left;
     }
+
     .questions-list {
-        display: table;            /* Réduit la largeur au contenu */
-        margin: 25px auto;         /* Centre le bloc sur la page */
-        font-size: 1.25em;         /* Rend les questions bien visibles */
-        font-style: italic;        /* Un style souvent utilisé pour les questions de recherche */
-        color: #2c3e50;            /* Un bleu très sombre, élégant */
-        line-height: 1.6;
-        padding-left: 20px;
+      display: table;
+      margin: 25px auto;
+      font-size: 1.25em;
+      font-style: italic;
+      color: #2c3e50;
+      line-height: 1.6;
+      padding-left: 20px;
     }
 
     .questions-list li {
-        margin-bottom: 15px;       /* Espace entre chaque question */
-        text-align: left;
+      margin-bottom: 15px;
+      text-align: left;
     }
-
-    </style>
+  </style>
 </head>
 
 <body>
-    <header>
-        <div class="header-content">
-        <img class="plot--img" src="/ada-vnboys-website/assets/img/youtube_logo.webp">
-        <h1>Views as Votes, a Datastory of Political Polarization</h1>
-        <p class="subtitle"> Is YouTube a mirror or a distortion of American politics?</p>
+  <header>
+    <div class="header-content">
+      <img class="plot--img" src="/ada-vnboys-website/assets/img/youtube_logo.webp">
+      <h1>Views as Votes, a Datastory of Political Polarization</h1>
+      <p class="subtitle"> Is YouTube a mirror or a distortion of American politics?</p>
     </div>
-    </header>
-    <nav>
-        <ul>
-            <li><a href="https://arxiv.org/abs/2012.10378" target="_blank">The YouNiverse Dataset</a></li>
-            <li><a href="#grouping">Youtube's Communities</a></li>
-            <li><a href="#pageviews">Trends and Polarization</a></li>
-            <li><a href="#opinions">Digital vs Reality</a></li>
-            <li><a href="#conclusion">Conclusion</a></li>
-        </ul>
-    </nav>
-    <main>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="https://arxiv.org/abs/2012.10378" target="_blank">The YouNiverse Dataset</a></li>
+      <li><a href="#grouping">Youtube's Communities</a></li>
+      <li><a href="#pageviews">Trends and Polarization</a></li>
+      <li><a href="#opinions">Digital vs Reality</a></li>
+      <li><a href="#conclusion">Conclusion</a></li>
+    </ul>
+  </nav>
+
+  <main>
     <section id="introduction" class="justify-text">
-        <div class="section-title">Introduction</div>
-        <p>
-            When America chooses its leader, the whole world holds its breath. Calling it a mere national voting process would be an understatement; 
-            it is a sacred geopolitical ritual whose consequences are felt across the globe, from Asian stock markets to European frontlines.
-            The American presidential election is a quadrennial marathon punctuated by key milestones: the primaries, the national conventions, and the final race between Democrats and Republicans, a duopoly that splits the nation in two distinct colors:
-        </p>
+      <div class="section-title">Introduction</div>
+      <p>
+        When America chooses its leader, the whole world holds its breath. Calling it a mere national voting process would be an understatement;
+        it is a sacred geopolitical ritual whose consequences are felt across the globe, from Asian stock markets to European frontlines.
+        The American presidential election is a quadrennial marathon punctuated by key milestones: the primaries, the national conventions, and the final race between Democrats and Republicans, a duopoly that splits the nation in two distinct colors:
+      </p>
 
-        <ul> 
-            <li><strong class="text-democrat">The Democratic Party:</strong> Generally representing liberal, progressive values.</li>
-            <li><strong class="text-republican">The Republican Party:</strong> Generally representing conservative, traditionalist values.</li>
-        </ul>
+      <ul>
+        <li><strong class="text-democrat">The Democratic Party:</strong> Generally representing liberal, progressive values.</li>
+        <li><strong class="text-republican">The Republican Party:</strong> Generally representing conservative, traditionalist values.</li>
+      </ul>
 
-        <p>
-            Our study focuses on the elections from 2008 to 2016, a period where the battlefield silently mutated. The epicenter of power shifted from television stages to a dematerialized arena, governed by new and volatile codes. Voters became users; speeches became content.
-            Here, we enter what we call the "Attention Democracy." In this digital space, legitimacy is no longer won solely by the vote, but by the obsessive capture of the voter’s mind.
-            Our investigation dives deep into YouTube's massive datasets to answer a crucial question: is this new digital arena a faithful mirror of a nation in turmoil, or a distortion machine that polarizes reality and tears apart the social fabric?
-        </p>
+      <p>
+        Our study focuses on the elections from 2008 to 2016, a period where the battlefield silently mutated. The epicenter of power shifted from television stages to a dematerialized arena, governed by new and volatile codes. Voters became users; speeches became content.
+        Here, we enter what we call the "Attention Democracy." In this digital space, legitimacy is no longer won solely by the vote, but by the obsessive capture of the voter’s mind.
+        Our investigation dives deep into YouTube's massive datasets to answer a crucial question: is this new digital arena a faithful mirror of a nation in turmoil, or a distortion machine that polarizes reality and tears apart the social fabric?
+      </p>
     </section>
 
     <section id="research-questions">
-        <p>Our investigation seeks to answer three research questions:</p>
-        
-        <ul class="questions-list">
-            <li>Does YouTube act as a reliable barometer of genuine political interest?</li>
-            <li>Does the platform foster polarization or echo chambers?</li>
-            <li>Do the sentiments and topics discussed align with public opinion (as measured by polls)?</li>
-        </ul>
+      <p>Our investigation seeks to answer three research questions:</p>
+      <ul class="questions-list">
+        <li>Does YouTube act as a reliable barometer of genuine political interest?</li>
+        <li>Does the platform foster polarization or echo chambers?</li>
+        <li>Do the sentiments and topics discussed align with public opinion (as measured by polls)?</li>
+      </ul>
     </section>
 
-        <section id="channels">
-            <div class="section-title">Data Presentation</div>
-            
-            <p>
-                Before presenting our answers to all these questions, we must first define the boundaries of our arena.
-                YouTube is vast and noisy; isolating the signal of political discourse requires rigorous filtering.
-            </p>
-
-            <div class="subsection-title">2.1 The Dataset: YouNiverse</div>
-            <p>
-                Our analysis relies on YouNiverse, a large-scale dataset of English-speaking YouTube metadata.
-                This massive archive allows us to observe the platform's evolution during the critical years of
-                2008, 2012, and 2016.
-                The scale of the data is monumental, establishing the statistical significance of our observations:
-            </p>
-            
-            <ul class="data-list">
-                <li><strong>136,470 Channels:</strong> Filtered for English content, with a minimum of 10k subscribers to ensure relevance.</li>
-                <li><strong>73 Million Videos:</strong> Spanning from 2005 to late 2019.</li>
-                <li><strong>8.6 Billion Comments:</strong> Representing the voice of the "electorate" (users).</li>
-                <li><strong>Metadata Richness:</strong> We utilize titles, tags, view counts, and upload dates to reconstruct the timeline of events.</li>
-            </ul>
-
-            <div class="subsection-title">2.2 The Filter: Defining "Political" Content</div>
-            <p>
-                One of the major challenges in this analysis was distinguishing a political video from the ocean
-                of gaming, music, and vlog content. To detect political content, we needed a robust lexicon.
-                Initial attempts to build a dictionary using political tracts and manifestos yielded poor results,
-                often capturing generic terms unrelated to the specific vernacular of YouTube. Consequently, we
-                leveraged Large Language Models (LLMs) to generate a massive, comprehensive vocabulary of political
-                terminology, covering the spectrum from legislative terms to campaign slogans.
-            </p>
-
-            <div class="subsection-title">2.3 The Focus: Why "News &amp; Politics"?</div>
-            <p>
-                With our vocabulary in place, we mapped the distribution of political terms across YouTube's
-                15 primary categories. Processing the descriptions of 73 million videos was computationally
-                prohibitive, so we focused our signal detection on Video Titles and Tags. The goal was to identify
-                which category serves as the true "battlefield" for political discourse.
-            </p>
-
-
-            <div id="political-bar-chart" style="width:100%; height:600px;"></div>
-
-
-            <p>
-                As shown in this chart, the category <strong>"News &amp; Politics"</strong> is the clear leader, 
-                with 42.3% of its videos containing political vocabulary. While "Nonprofits" and "Travel" 
-                show some density, they lack the volume and specific focus of the News category.
-            </p>
-
-            
-            
-
-        </section>
-
-
-
-
-        <!-- RQ1 -->
-        <section id="grouping">
-            <h2>Does YouTube act as a reliable barometer of genuine political interest? </h2>
-            <p>
-                Looking at the temporal distribution of videos within "News & Politics," we observe a striking trend.
-                Rather than a "heartbeat" oscillating with election cycles (peaks every 4 years), we see an exponential growth curve. 
-                The volume of content explodes, particularly after 2018. This suggests that political discourse on YouTube is not merely a reaction to events, but a constantly rising tide. The platform's growth itself overshadows the seasonality of elections, posing a challenge: we must normalize data to compare engagement across different election years fairly.
-            </p>
-
-            <div id="videos-chart" style="width: 100%; height: 500px; margin: 20px auto;"></div>
-            
-
-            
-
-
-
-
-            <!-- <div id="issues-chart" style="width:100%; height:600px; margin: 40px 0;"></div> -->
-
-
-
-
-            <p>
-            The pie chart below shows the political orientation of the channels obtained from the external dataset us_bias.
-            We can see that the distribution is fairly even with channels with a centered political orientation representing the largest part. 
-            This is to be expected as many channels are rather neutral or prefer to stay politically objective. We can see that the proportion of left-oriented vs right-oriented is very similar: 35.1% total on the right and 33.3% on the left. 
-            Interestingly, there are more Lean Left than Lean Right which suggests that the leftists are somewhat more moderate. The size of the dataset hinders us from drawing any conclusions as it is too small and not representative of all the channels in the News & Politics category. 
-            </p>
-            <div id="political_orientation-chart" style="width: 100%; height: 500px; margin: 20px auto;"></div>
-                
-            
-            <p>
-            When comparing political orientations based on the number of videos posted throughout the period covered by the dataset, we see greater disparity. Nearly half of the videos are classified as neutral, while those on the left represent one-third of the total analysed, surpassing those on the right by 7.1%. This lead is significant given the large number of videos analysed.
-            </p>
-            <div id="video_share-chart" style="width: 100%; height: 500px; margin: 20px auto;"></div>
-
-
-
-
-            
-            <p>Who is present on YouTube? We now compare political parties based on subscribers. The pie chart above once again shows an advantage for the Democrats. Indeed, 43.4% of subscribers to channels in the News & Politics category are classified as left-wing, while only 21.1% are right-wing. 
-            According to our analysis, there are therefore twice as many Democrats as Republicans in this category of channels.</p>
-            <div id="sub-chart" style="width: 100%; height: 500px; margin: 20px auto;"></div>
-                
-
-
-            
-
-
-            <p>
-            Let us now take a closer look at what happens during the elections covered by our dataset: 
-            </p>
-
-
-
-            <!-- ADD THE CHART HERE  celui avec les 3 périodes électorales-->
-            <div style="text-align:center; margin-bottom:10px;">
-              <button onclick="showYear(2008)">2008</button>
-              <button onclick="showYear(2012)">2012</button>
-              <button onclick="showYear(2016)">2016</button>
-            </div>
-
-            <div id="main" style="width: 100%; height: 500px; margin: 20px auto;"></div>
-
-
-
-
-            <p>
-            Firstly, there is a significant difference between the distribution of political leanings in these three elections. Indeed, the 2016 elections show a much more varied landscape than the two previous elections, as if YouTube had been a turning point since the 2016 campaign, thus showing a particular interest in the platform. This growing interest is also illustrated by the number of videos posted during these election periods. This number increased tenfold between each election.
-            In terms of distribution, the Democratic trend seen so far is once again demonstrated here, with this party leading in all three elections. This lead is particularly marked in 2008 (26.2% vs 7.3%) and in 2016 (40.7% vs 24%). One important question remains: How does this fit with the presidential election results ? 
-            </p>
-            
-            <p>
-            On the 4th of November 2008, Barack Obama was elected as president, running as the candidate for the Democratic Party. 
-            He won by a margin of 7% (popular vote) which is not small and shows the increased popularity of Democrats. 
-            The distribution of the published videos’ political orientations does show a greater proportion of Leftist (Democrat) videos with respect to the Lean Right. 
-            However, the center, that is, videos with a more neutral voice, hold by far the greatest share of the videos, with more than two thirds. 
-            There are only 328 videos published in more than a year and a half for this graph which is a small sample size and therefore the conclusions cannot be final or considered representative of how Youtube is today with that amount of videos being published in a split second. 
-            </p>
-
-            <p>
-            In 2012, Obama was once again elected president and won by a smaller margin with respect to 2008 (4% in the popular vote). 
-            The “center” portion is by and large the biggest with a fairly even split between the two ends of the political spectrum in the remaining share which echoes the real results. 
-            However, once again, the share of videos is still quite small and therefore a greater sample size would be needed to confirm these observations.
-            Moreover, the number of videos only shows presence of channel subscribing to a certain political orientation and not the activity of the viewers (which would represent the voting population) 
-            </p>
-
-            <p>
-            In 2016, Donald Trump, a Republican, was elected president by the American people. 
-            However, the popular vote actually went to Hillary Clinton by nearly 3 million votes (2%) so the results were extremely close. 
-            These elections are known for how polarized they were and how split the public opinion was. 
-            This is reflected in the pie chart where we see the lowest share of neutral “center” videos and a greater proportion of the other videos. 
-            The “Left” and “Lean left” is the greatest part of the pie chart, disproportionately so, as the election was a lot closer. 
-            This shows that the democrats were particularly active on Youtube during the elections. This is only one of the social medium used as a platform to spread their message and only one of many possible campaigning strategies.  
-            </p>
-
-
-            <p>
-            We have now seen who are the political actors on Youtube and the political orientations they express.
-            We looked at their following and their activity especially during election period which allows us to get a picture of what the relationship between Youtube and U.S Politics looks like. 
-            This picture is more of a snapshot as the number of channels used is only a small fraction of the total number of channels in the News & Politics category but we believe it is fairly representative as it shows the most important channels. 
-            However, it will be useful for us in order to set the scene and compare it with the activity of the viewers. 
-            </p>
-
-
-
-
-
-
-            <!-- <img  class="plot--img" src="trump_dance.gif" alt="Trump " > -->
-            
-        </section>
-
-
-
-
-
-
-        <!-- RQ2 -->
-        <section id="pageviews">
-            <h2>Does the platform foster polarization or echo chambers?</h2>
-            
-               
-
-
-            
-
-
-        <div style="max-width:1000px;margin:20px auto;">
-          <h3>Word / politician presence (title + tags)</h3>
-
-          <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;">
-            <div style="flex:1;min-width:280px;">
-              <label>3–4 words (comma/space separated)</label><br/>
-              <input id="wp-words" style="width:100%;padding:8px;font-size:16px;"
-                    placeholder="e.g. biden, trump, obama" />
-              <div id="wp-hint" style="font-size:12px;opacity:0.8;margin-top:4px;"></div>
-            </div>
-
-            <div>
-              <label>Start</label><br/>
-              <input id="wp-start" type="date" style="padding:8px;font-size:16px;" />
-            </div>
-
-            <div>
-              <label>End</label><br/>
-              <input id="wp-end" type="date" style="padding:8px;font-size:16px;" />
-            </div>
-
-            <div>
-              <label>Splits</label><br/>
-              <select id="wp-splits" style="padding:8px;font-size:16px;">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4" selected>4</option>
-              </select>
-            </div>
-
-            <div>
-              <button id="wp-btn" style="padding:10px 14px;font-size:16px;cursor:pointer;">
-                Plot
-              </button>
-            </div>
+    <section id="channels">
+      <div class="section-title">Data Presentation</div>
+
+      <p>
+        Before presenting our answers to all these questions, we must first define the boundaries of our arena.
+        YouTube is vast and noisy; isolating the signal of political discourse requires rigorous filtering.
+      </p>
+
+      <div class="subsection-title">2.1 The Dataset: YouNiverse</div>
+      <p>
+        Our analysis relies on YouNiverse, a large-scale dataset of English-speaking YouTube metadata.
+        This massive archive allows us to observe the platform's evolution during the critical years of
+        2008, 2012, and 2016.
+        The scale of the data is monumental, establishing the statistical significance of our observations:
+      </p>
+
+      <ul class="data-list">
+        <li><strong>136,470 Channels:</strong> Filtered for English content, with a minimum of 10k subscribers to ensure relevance.</li>
+        <li><strong>73 Million Videos:</strong> Spanning from 2005 to late 2019.</li>
+        <li><strong>8.6 Billion Comments:</strong> Representing the voice of the "electorate" (users).</li>
+        <li><strong>Metadata Richness:</strong> We utilize titles, tags, view counts, and upload dates to reconstruct the timeline of events.</li>
+      </ul>
+
+      <div class="subsection-title">2.2 The Filter: Defining "Political" Content</div>
+      <p>
+        One of the major challenges in this analysis was distinguishing a political video from the ocean
+        of gaming, music, and vlog content. To detect political content, we needed a robust lexicon.
+        Initial attempts to build a dictionary using political tracts and manifestos yielded poor results,
+        often capturing generic terms unrelated to the specific vernacular of YouTube. Consequently, we
+        leveraged Large Language Models (LLMs) to generate a massive, comprehensive vocabulary of political
+        terminology, covering the spectrum from legislative terms to campaign slogans.
+      </p>
+
+      <div class="subsection-title">2.3 The Focus: Why "News &amp; Politics"?</div>
+      <p>
+        With our vocabulary in place, we mapped the distribution of political terms across YouTube's
+        15 primary categories. Processing the descriptions of 73 million videos was computationally
+        prohibitive, so we focused our signal detection on Video Titles and Tags. The goal was to identify
+        which category serves as the true "battlefield" for political discourse.
+      </p>
+
+      <div id="political-bar-chart" style="width:100%; height:600px;"></div>
+
+      <p>
+        As shown in this chart, the category <strong>"News &amp; Politics"</strong> is the clear leader,
+        with 42.3% of its videos containing political vocabulary. While "Nonprofits" and "Travel"
+        show some density, they lack the volume and specific focus of the News category.
+      </p>
+    </section>
+
+    <!-- RQ1 -->
+    <section id="grouping">
+      <h2>Does YouTube act as a reliable barometer of genuine political interest? </h2>
+      <p>
+        Looking at the temporal distribution of videos within "News & Politics," we observe a striking trend.
+        Rather than a "heartbeat" oscillating with election cycles (peaks every 4 years), we see an exponential growth curve.
+        The volume of content explodes, particularly after 2018. This suggests that political discourse on YouTube is not merely a reaction to events, but a constantly rising tide. The platform's growth itself overshadows the seasonality of elections, posing a challenge: we must normalize data to compare engagement across different election years fairly.
+      </p>
+
+      <div id="videos-chart" style="width: 100%; height: 500px; margin: 20px auto;"></div>
+
+      <p>
+        The pie chart below shows the political orientation of the channels obtained from the external dataset us_bias.
+        We can see that the distribution is fairly even with channels with a centered political orientation representing the largest part.
+        This is to be expected as many channels are rather neutral or prefer to stay politically objective. We can see that the proportion of left-oriented vs right-oriented is very similar: 35.1% total on the right and 33.3% on the left.
+        Interestingly, there are more Lean Left than Lean Right which suggests that the leftists are somewhat more moderate. The size of the dataset hinders us from drawing any conclusions as it is too small and not representative of all the channels in the News & Politics category.
+      </p>
+      <div id="political_orientation-chart" style="width: 100%; height: 500px; margin: 20px auto;"></div>
+
+      <p>
+        When comparing political orientations based on the number of videos posted throughout the period covered by the dataset, we see greater disparity. Nearly half of the videos are classified as neutral, while those on the left represent one-third of the total analysed, surpassing those on the right by 7.1%. This lead is significant given the large number of videos analysed.
+      </p>
+      <div id="video_share-chart" style="width: 100%; height: 500px; margin: 20px auto;"></div>
+
+      <p>Who is present on YouTube? We now compare political parties based on subscribers. The pie chart above once again shows an advantage for the Democrats. Indeed, 43.4% of subscribers to channels in the News & Politics category are classified as left-wing, while only 21.1% are right-wing.
+        According to our analysis, there are therefore twice as many Democrats as Republicans in this category of channels.</p>
+      <div id="sub-chart" style="width: 100%; height: 500px; margin: 20px auto;"></div>
+
+      <p>
+        Let us now take a closer look at what happens during the elections covered by our dataset:
+      </p>
+
+      <div style="text-align:center; margin-bottom:10px;">
+        <button onclick="showYear(2008)">2008</button>
+        <button onclick="showYear(2012)">2012</button>
+        <button onclick="showYear(2016)">2016</button>
+      </div>
+
+      <div id="main" style="width: 100%; height: 500px; margin: 20px auto;"></div>
+
+      <p>
+        Firstly, there is a significant difference between the distribution of political leanings in these three elections. Indeed, the 2016 elections show a much more varied landscape than the two previous elections, as if YouTube had been a turning point since the 2016 campaign, thus showing a particular interest in the platform. This growing interest is also illustrated by the number of videos posted during these election periods. This number increased tenfold between each election.
+        In terms of distribution, the Democratic trend seen so far is once again demonstrated here, with this party leading in all three elections. This lead is particularly marked in 2008 (26.2% vs 7.3%) and in 2016 (40.7% vs 24%). One important question remains: How does this fit with the presidential election results ?
+      </p>
+
+      <p>
+        On the 4th of November 2008, Barack Obama was elected as president, running as the candidate for the Democratic Party.
+        He won by a margin of 7% (popular vote) which is not small and shows the increased popularity of Democrats.
+        The distribution of the published videos’ political orientations does show a greater proportion of Leftist (Democrat) videos with respect to the Lean Right.
+        However, the center, that is, videos with a more neutral voice, hold by far the greatest share of the videos, with more than two thirds.
+        There are only 328 videos published in more than a year and a half for this graph which is a small sample size and therefore the conclusions cannot be final or considered representative of how Youtube is today with that amount of videos being published in a split second.
+      </p>
+
+      <p>
+        In 2012, Obama was once again elected president and won by a smaller margin with respect to 2008 (4% in the popular vote).
+        The “center” portion is by and large the biggest with a fairly even split between the two ends of the political spectrum in the remaining share which echoes the real results.
+        However, once again, the share of videos is still quite small and therefore a greater sample size would be needed to confirm these observations.
+        Moreover, the number of videos only shows presence of channel subscribing to a certain political orientation and not the activity of the viewers (which would represent the voting population)
+      </p>
+
+      <p>
+        In 2016, Donald Trump, a Republican, was elected president by the American people.
+        However, the popular vote actually went to Hillary Clinton by nearly 3 million votes (2%) so the results were extremely close.
+        These elections are known for how polarized they were and how split the public opinion was.
+        This is reflected in the pie chart where we see the lowest share of neutral “center” videos and a greater proportion of the other videos.
+        The “Left” and “Lean left” is the greatest part of the pie chart, disproportionately so, as the election was a lot closer.
+        This shows that the democrats were particularly active on Youtube during the elections. This is only one of the social medium used as a platform to spread their message and only one of many possible campaigning strategies.
+      </p>
+
+      <p>
+        We have now seen who are the political actors on Youtube and the political orientations they express.
+        We looked at their following and their activity especially during election period which allows us to get a picture of what the relationship between Youtube and U.S Politics looks like.
+        This picture is more of a snapshot as the number of channels used is only a small fraction of the total number of channels in the News & Politics category but we believe it is fairly representative as it shows the most important channels.
+        However, it will be useful for us in order to set the scene and compare it with the activity of the viewers.
+      </p>
+    </section>
+
+    <!-- RQ2 -->
+    <section id="pageviews">
+      <h2>Does the platform foster polarization or echo chambers?</h2>
+
+      <div style="max-width: 1100px; margin: 0 auto;">
+        <p style="margin:6px 0 12px 0; color:#444;">
+          Enter <b>3–4 names</b> (comma-separated). You can type <b>last names</b> only (e.g., <i>Biden</i>) and we will match them to full names (e.g., <i>Joe Biden</i>).
+          Dates are pre-filled; adjust them if needed, then click <b>Plot</b>.
+        </p>
+
+        <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:end; margin: 10px 0;">
+          <div>
+            <label>Names (3–4, comma-separated)</label><br>
+            <input id="words" type="text" value="Biden, Trump, Obama" style="width:320px;">
           </div>
-
-          <div id="wp-error" style="color:#b00020;margin-top:10px;"></div>
+          <div>
+            <label>Start</label><br>
+            <input id="start" type="month">
+          </div>
+          <div>
+            <label>End</label><br>
+            <input id="end" type="month">
+          </div>
+          <button id="plotBtn">Plot</button>
+          <div id="err" style="color:#b00020; font-weight:600;"></div>
         </div>
 
-        <div id="wp-charts" style="max-width:1100px;margin:10px auto;display:grid;gap:16px;"></div>
+        <div id="word-chart" style="width:100%; height:520px;"></div>
+      </div>
+    </section>
 
+    <!-- RQ3 -->
+    <section id="opinions">
+      <h2>Do the sentiments and topics discussed align with public opinion ?</h2>
+      <div id="issues-chart" style="width:100%; height:600px; margin: 40px 0;"></div>
+    </section>
 
+    <!-- Conclusions -->
+    <section id="conclusion">
+      <h2>Conclusion</h2>
+    </section>
+  </main>
 
+  <footer>
+    <a href="https://github.com/epfl-ada/ada-2022-project-vnboys"><img src="/ada-vnboys-website/assets/img/ivon.png" alt="" title="GitHub"></a>
+    <div class="link--git">
+      <div class="ling--git--item">
+        <a href="{{ site.github.owner_url }}">Eugenio <span class="red">I</span>uginiocamp</a>
+      </div>
+      <div class="ling--git--item">
+        <a href="https://github.com/pigglou"> Louis <span class="red">P</span>igglou </a>
+      </div>
+      <div class="ling--git--item">
+        <a href="https://github.com/vickiwarou"> Victoria<span class="red">V</span>ickiwarou</a>
+      </div>
+      <div class="ling--git--item">
+        <a href="https://github.com/plpeter74"> <span class="red">P</span>lpeter75</a>
+      </div>
+      <div class="ling--git--item">
+        <a href="https://github.com/aaduval"> Anthonin <span class="red">A</span>aduval</a>
+      </div>
+    </div>
+  </footer>
 
+  <script src="{{ '/assets/js/scale.fix.js' | relative_url }}"></script>
 
+  {% if site.google_analytics %}
+  <script>
+    (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date(); a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+    ga('create', '{{ site.google_analytics }}', 'auto');
+    ga('send', 'pageview');
+  </script>
+  {% endif %}
 
+  <!-- =========================================================
+       EXISTING CHARTS (unchanged except for consistency)
+       ========================================================= -->
 
+  <script>
+    // Initialize the chart
+    var chartDom = document.getElementById('sub-chart');
+    var myChart = echarts.init(chartDom);
 
-
-
-
-
-        </section>
-
-
-
-
-
-
-
-
-
-        <!-- RQ3 -->
-        <section id="opinions">
-            <h2>Do the sentiments and topics discussed align with public opinion ?</h2>
-
-            <div id="issues-chart" style="width:100%; height:600px; margin: 40px 0;"></div>
-
-            
-        
-        </section>
-
-
-
-
-
-
-
-
-
-        <!-- Conclutions -->
-        <section id="conclusion">
-            <h2>Conclusion</h2>
-
-
-
-
-
-
-
-
-        </section>
-    </main>
-
-
-
-
-
-
-
-
-
-    <footer>
-        <a href="https://github.com/epfl-ada/ada-2022-project-vnboys"><img src="/ada-vnboys-website/assets/img/ivon.png"
-                alt="" title="GitHub"></a>
-        <div class="link--git">
-            <div class="ling--git--item">
-                <a href="{{ site.github.owner_url }}">Eugenio <span class="red">I</span>uginiocamp</a>
-            </div>
-            <div class="ling--git--item">
-                <a href="https://github.com/pigglou"> Louis <span class="red">P</span>igglou </a>
-            </div>
-            <div class="ling--git--item">
-                <a href="https://github.com/vickiwarou"> Victoria<span class="red">V</span>ickiwarou</a>
-            </div>
-            <div class="ling--git--item">
-                <a href="https://github.com/plpeter74"> <span class="red">P</span>lpeter75</a>
-            </div>
-            <div class="ling--git--item">
-                <a href="https://github.com/aaduval"> Anthonin <span class="red">A</span>aduval</a>
-            </div>
-        </div>
-    </footer>
-
-    <script src="{{ '/assets/js/scale.fix.js' | relative_url }}"></script>
-
-
-    {% if site.google_analytics %}
-    <script>
-        (function (i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date(); a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
-        ga('create', '{{ site.google_analytics }}', 'auto');
-        ga('send', 'pageview');
-    </script>
-    {% endif %}
-
-
-
-    <script>
-        // Initialize the chart
-        var chartDom = document.getElementById('sub-chart');
-        var myChart = echarts.init(chartDom);
-
-        // Chart configuration
-        var option = {
-            color: ['#CC0000', '#FF6B6B', '#808080', '#6495ED', '#4169E1'],
-            title: {
-                text: 'Number of subscriber share by political orientation',
-                subtext: 'Total Number of Subscribers: 52,500,000',
-                left: 'center'
-            },
-            tooltip: {
-                trigger: 'item',
-                formatter: '{b}: {c}%'
-            },
-            legend: {
-                orient: 'vertical',
-                left: 'left'
-            },
-            series: [
-                {
-                    name: 'Political Orientation',
-                    type: 'pie',
-                    radius: '50%',
-                    data: [
-                        { value: 7.7, name: 'Right' },
-                        { value: 13.4, name: 'Lean Right' },
-                        { value: 35.4, name: 'Center' },
-                        { value: 26.2, name: 'Lean Left' },
-                        { value: 17.2, name: 'Left' }
-                    ],
-                    emphasis: {
-                        itemStyle: {
-                            shadowBlur: 10,
-                            shadowOffsetX: 0,
-                            shadowColor: 'rgba(0, 0, 0, 0.5)'
-                        }
-                    }
-                }
-            ]
-        };
-
-        // Apply the configuration
-        myChart.setOption(option);
-
-        // Make chart responsive
-        window.addEventListener('resize', function () {
-            myChart.resize();
-        });
-    </script>
-  
-    <script type="text/javascript">
-  var mainChartDom = document.getElementById('main');
-  var mainPieChart = echarts.init(mainChartDom);  // Changed from myChart
-
-  var dataByYear = {
-    2008: [
-      { name: 'Right', value: 0 },
-      { name: 'Lean Right', value: 7.3 },
-      { name: 'Center', value: 66.5 },
-      { name: 'Lean left', value: 26.2 },
-      { name: 'Left', value: 0 }
-    ],
-    2012: [
-      { name: 'Right', value: 0.4 },
-      { name: 'Lean Right', value: 5.7 },
-      { name: 'Center', value: 85.5 },
-      { name: 'Lean left', value: 6.9 },
-      { name: 'Left', value: 1 }
-    ],
-    2016: [
-      { name: 'Right', value: 0.3 },
-      { name: 'Lean Right', value: 23.7 },
-      { name: 'Center', value: 35.2 },
-      { name: 'Lean left', value: 19 },
-      { name: 'Left', value: 21.7 }
-    ]
-  };
-
-  function showYear(year) {
+    // Chart configuration
     var option = {
       color: ['#CC0000', '#FF6B6B', '#808080', '#6495ED', '#4169E1'],
       title: {
-        text: year.toString(),
-        subtext:
-          year === 2008 ? '328 videos' :
-          year === 2012 ? '7,646 videos' :
-          '56,519 videos',
+        text: 'Number of subscriber share by political orientation',
+        subtext: 'Total Number of Subscribers: 52,500,000',
         left: 'center'
       },
-      tooltip: {
-        trigger: 'item',
-        formatter: '{b}: {d}%'
-      },
-      legend: {
-        orient: 'vertical',
-        left: 'left'
-      },
-      series: [
-        {
-          type: 'pie',
-          radius: '55%',
-          data: dataByYear[year],
-          label: {
-            formatter: '{b}: {d}%'
+      tooltip: { trigger: 'item', formatter: '{b}: {c}%' },
+      legend: { orient: 'vertical', left: 'left' },
+      series: [{
+        name: 'Political Orientation',
+        type: 'pie',
+        radius: '50%',
+        data: [
+          { value: 7.7, name: 'Right' },
+          { value: 13.4, name: 'Lean Right' },
+          { value: 35.4, name: 'Center' },
+          { value: 26.2, name: 'Lean Left' },
+          { value: 17.2, name: 'Left' }
+        ],
+        emphasis: {
+          itemStyle: {
+            shadowBlur: 10,
+            shadowOffsetX: 0,
+            shadowColor: 'rgba(0, 0, 0, 0.5)'
           }
         }
+      }]
+    };
+
+    myChart.setOption(option);
+    window.addEventListener('resize', function () { myChart.resize(); });
+  </script>
+
+  <script type="text/javascript">
+    var mainChartDom = document.getElementById('main');
+    var mainPieChart = echarts.init(mainChartDom);
+
+    var dataByYear = {
+      2008: [
+        { name: 'Right', value: 0 },
+        { name: 'Lean Right', value: 7.3 },
+        { name: 'Center', value: 66.5 },
+        { name: 'Lean left', value: 26.2 },
+        { name: 'Left', value: 0 }
+      ],
+      2012: [
+        { name: 'Right', value: 0.4 },
+        { name: 'Lean Right', value: 5.7 },
+        { name: 'Center', value: 85.5 },
+        { name: 'Lean left', value: 6.9 },
+        { name: 'Left', value: 1 }
+      ],
+      2016: [
+        { name: 'Right', value: 0.3 },
+        { name: 'Lean Right', value: 23.7 },
+        { name: 'Center', value: 35.2 },
+        { name: 'Lean left', value: 19 },
+        { name: 'Left', value: 21.7 }
       ]
     };
 
-    mainPieChart.setOption(option, true);  // Changed from myChart
-  }
-
-  // default view
-  showYear(2008);
-  
-  // Make responsive
-  window.addEventListener('resize', function() {
-    mainPieChart.resize();  // Changed from myChart
-  });
-</script>
-
-
-    <script>
-        // Initialize the chart
-        var chartDom = document.getElementById('political_orientation-chart');
-        var myChart = echarts.init(chartDom);
-
-        // Chart configuration
-        var option = {
-            color: ['#CC0000', '#FF6B6B', '#808080', '#6495ED', '#4169E1'],
-            title: {
-                text: 'Political orientation of select US politics channels',
-                subtext: 'Total Number of Channels: 57',
-                left: 'center'
-            },
-            tooltip: {
-                trigger: 'item',
-                formatter: '{b}: {c}%'
-            },
-            legend: {
-                orient: 'vertical',
-                left: 'left'
-            },
-            series: [
-                {
-                    name: 'Political Orientation',
-                    type: 'pie',
-                    radius: '50%',
-                    data: [
-                        { value: 26.3, name: 'Right' },
-                        { value: 8.8, name: 'Lean Right' },
-                        { value: 31.6, name: 'Center' },
-                        { value: 17.5, name: 'Lean Left' },
-                        { value: 15.8, name: 'Left' }
-                    ],
-                    emphasis: {
-                        itemStyle: {
-                            shadowBlur: 10,
-                            shadowOffsetX: 0,
-                            shadowColor: 'rgba(0, 0, 0, 0.5)'
-                        }
-                    }
-                }
-            ]
-        };
-
-        // Apply the configuration
-        myChart.setOption(option);
-
-        // Make chart responsive
-        window.addEventListener('resize', function () {
-            myChart.resize();
-        });
-    </script>
-
-    <script>
-        // Initialize the chart
-        var chartDom = document.getElementById('video_share-chart');
-        var myChart = echarts.init(chartDom);
-
-        // Chart configuration
-        var option = {
-            color: ['#CC0000', '#FF6B6B', '#808080', '#6495ED', '#4169E1'],
-            title: {
-                text: 'Video production share by political orientation',
-                subtext: 'Total Number of Videos 908909',
-                left: 'center'
-            },
-            tooltip: {
-                trigger: 'item',
-                formatter: '{b}: {c}%'
-            },
-            legend: {
-                orient: 'vertical',
-                left: 'left'
-            },
-            series: [
-                {
-                    name: 'Political Orientation',
-                    type: 'pie',
-                    radius: '50%',
-                    data: [
-                        { value: 10.1, name: 'Right' },
-                        { value: 13.2, name: 'Lean Right' },
-                        { value: 46.3, name: 'Center' },
-                        { value: 27.4, name: 'Lean Left' },
-                        { value: 3.0, name: 'Left' }
-                    ],
-                    emphasis: {
-                        itemStyle: {
-                            shadowBlur: 10,
-                            shadowOffsetX: 0,
-                            shadowColor: 'rgba(0, 0, 0, 0.5)'
-                        }
-                    }
-                }
-            ]
-        };
-
-        // Apply the configuration
-        myChart.setOption(option);
-
-        // Make chart responsive
-        window.addEventListener('resize', function () {
-            myChart.resize();
-        });
-    </script>
-
-
-
-
-
-
-
-
-
-
-
-<script>
-var issuesChartDom = document.getElementById('issues-chart');
-var issuesChart = echarts.init(issuesChartDom);
-
-fetch('{{ site.baseurl }}/data/pre-process-pools.json')
-  .then(r => r.json())
-  .then(rawData => runIssuesChart(rawData));
-
-function runIssuesChart(rawData) {
-
-  const categories = [...new Set(rawData.map(d => d.Category))];
-
-  // adapter les données (poll-level)
-  const adaptedData = rawData.map(d => [
-    d.share,        // Value
-    d.poll_date,    // Date
-    d.Category,     // Category
-    d.Category      // Label
-  ]);
-
-  const datasetWithFilters = [];
-  const seriesList = [];
-
-  categories.forEach(cat => {
-    const datasetId = 'dataset_' + cat;
-
-    datasetWithFilters.push({
-      id: datasetId,
-      fromDatasetId: 'dataset_raw',
-      transform: {
-        type: 'filter',
-        config: {
-          dimension: 'Category',
-          '=': cat
-        }
-      }
-    });
-
-    seriesList.push({
-      type: 'line',
-      datasetId: datasetId,
-      showSymbol: false,
-      name: cat,
-      endLabel: {
-        show: true,
-        formatter: params =>
-          params.value[3] + ': ' + (params.value[0] * 100).toFixed(1) + '%'
-      },
-      labelLayout: { moveOverlap: 'shiftY' },
-      emphasis: { focus: 'series' },
-      encode: {
-        x: 'Date',
-        y: 'Value',
-        tooltip: ['Value']
-      }
-    });
-  });
-
-  const option = {
-    animationDuration: 8000,
-    dataset: [
-      {
-        id: 'dataset_raw',
-        dimensions: ['Value', 'Date', 'Category', 'Label'],
-        source: adaptedData
-      },
-      ...datasetWithFilters
-    ],
-    title: {
-      text: 'Most important political issues (poll-level, smoothed upstream)'
-    },
-    tooltip: {
-      trigger: 'axis',
-      valueFormatter: v => (v * 100).toFixed(1) + '%'
-    },
-    xAxis: {
-      type: 'time',
-      name: 'Poll date'
-    },
-    yAxis: {
-      name: 'Share (%)',
-      axisLabel: {
-        formatter: v => (v * 100).toFixed(0) + '%'
-      }
-    },
-    grid: { right: 160 },
-    series: seriesList
-  };
-
-  issuesChart.setOption(option);
-  window.addEventListener('resize', () => issuesChart.resize());
-}
-</script>
-
-<script>
-var GRID_TOP = 120;
-var GRID_BOTTOM = 80;
-var GRID_LEFT = 60;
-var GRID_RIGHT = 60;
-var Y_DATA_ROUND_PRECISION = 0;
-
-var _breakAreaStyle = {
-  expandOnClick: false,
-  zigzagZ: 200,
-  zigzagAmplitude: 0,
-  itemStyle: {
-    borderColor: '#777',
-    opacity: 0
-  }
-};
-
-var chartDom = document.getElementById("videos-chart");
-var myChart = echarts.init(chartDom);
-
-fetch('{{ site.baseurl }}/data/videos-per-month.json')
-  .then(r => r.json())
-  .then(raw => run(raw))
-  .catch(err => console.error("JSON load error:", err));
-
-function run(raw) {
-  // raw = [{date: "YYYY-MM-DD", count: 123}, ...]
-  // ECharts line series data: [[x, y], ...]
-  var seriesData = raw
-    .map(d => [d.date, d.count])
-    .sort((a, b) => new Date(a[0]) - new Date(b[0]));
-
-  var option = {
-    title: {
-      text: 'Fisheye Lens on Line Chart',
-      subtext: 'Brush to magnify the details',
-      left: 'center',
-      textStyle: { fontSize: 20 },
-      subtextStyle: { color: '#175ce5', fontSize: 15, fontWeight: 'bold' }
-    },
-    tooltip: { trigger: 'axis' },
-    legend: {},
-    grid: {
-      top: GRID_TOP,
-      bottom: GRID_BOTTOM,
-      left: GRID_LEFT,
-      right: GRID_RIGHT
-    },
-    xAxis: [
-      {
-        type: 'time',
-        splitLine: { show: false },
-        breakArea: _breakAreaStyle
-      }
-    ],
-    yAxis: [
-      {
-        type: 'value',
-        axisTick: { show: true },
-        breakArea: _breakAreaStyle
-      }
-    ],
-    series: [
-      {
-        type: 'line',
-        name: 'Videos per month',
-        symbol: 'circle',
-        showSymbol: false,
-        symbolSize: 5,
-        data: seriesData
-      }
-    ]
-  };
-
-  myChart.setOption(option);
-  setTimeout(initAxisBreakInteraction, 0);
-  window.addEventListener("resize", () => myChart.resize());
-}
-
-/**
- * Interaction logic with axis break:
- *  - Brush to fisheye-magnify an area.
- */
-function initAxisBreakInteraction() {
-  var _brushingEl = null;
-
-  myChart.on('click', function (params) {
-    if (params.name === 'clearAxisBreakBtn') {
+    function showYear(year) {
       var option = {
-        xAxis: [{ breaks: [] }],
-        yAxis: [{ breaks: [] }]
+        color: ['#CC0000', '#FF6B6B', '#808080', '#6495ED', '#4169E1'],
+        title: {
+          text: year.toString(),
+          subtext:
+            year === 2008 ? '328 videos' :
+              year === 2012 ? '7,646 videos' :
+                '56,519 videos',
+          left: 'center'
+        },
+        tooltip: { trigger: 'item', formatter: '{b}: {d}%' },
+        legend: { orient: 'vertical', left: 'left' },
+        series: [{
+          type: 'pie',
+          radius: '55%',
+          data: dataByYear[year],
+          label: { formatter: '{b}: {d}%' }
+        }]
       };
-      addClearButtonUpdateOption(option, false);
-      myChart.setOption(option);
-    }
-  });
 
-  function addClearButtonUpdateOption(option, show) {
-    option.graphic = [
-      {
-        elements: [
-          {
+      mainPieChart.setOption(option, true);
+    }
+
+    showYear(2008);
+    window.addEventListener('resize', function () { mainPieChart.resize(); });
+  </script>
+
+  <script>
+    var chartDom = document.getElementById('political_orientation-chart');
+    var myChart = echarts.init(chartDom);
+
+    var option = {
+      color: ['#CC0000', '#FF6B6B', '#808080', '#6495ED', '#4169E1'],
+      title: {
+        text: 'Political orientation of select US politics channels',
+        subtext: 'Total Number of Channels: 57',
+        left: 'center'
+      },
+      tooltip: { trigger: 'item', formatter: '{b}: {c}%' },
+      legend: { orient: 'vertical', left: 'left' },
+      series: [{
+        name: 'Political Orientation',
+        type: 'pie',
+        radius: '50%',
+        data: [
+          { value: 26.3, name: 'Right' },
+          { value: 8.8, name: 'Lean Right' },
+          { value: 31.6, name: 'Center' },
+          { value: 17.5, name: 'Lean Left' },
+          { value: 15.8, name: 'Left' }
+        ],
+        emphasis: {
+          itemStyle: {
+            shadowBlur: 10,
+            shadowOffsetX: 0,
+            shadowColor: 'rgba(0, 0, 0, 0.5)'
+          }
+        }
+      }]
+    };
+
+    myChart.setOption(option);
+    window.addEventListener('resize', function () { myChart.resize(); });
+  </script>
+
+  <script>
+    var chartDom = document.getElementById('video_share-chart');
+    var myChart = echarts.init(chartDom);
+
+    var option = {
+      color: ['#CC0000', '#FF6B6B', '#808080', '#6495ED', '#4169E1'],
+      title: {
+        text: 'Video production share by political orientation',
+        subtext: 'Total Number of Videos 908909',
+        left: 'center'
+      },
+      tooltip: { trigger: 'item', formatter: '{b}: {c}%' },
+      legend: { orient: 'vertical', left: 'left' },
+      series: [{
+        name: 'Political Orientation',
+        type: 'pie',
+        radius: '50%',
+        data: [
+          { value: 10.1, name: 'Right' },
+          { value: 13.2, name: 'Lean Right' },
+          { value: 46.3, name: 'Center' },
+          { value: 27.4, name: 'Lean Left' },
+          { value: 3.0, name: 'Left' }
+        ],
+        emphasis: {
+          itemStyle: {
+            shadowBlur: 10,
+            shadowOffsetX: 0,
+            shadowColor: 'rgba(0, 0, 0, 0.5)'
+          }
+        }
+      }]
+    };
+
+    myChart.setOption(option);
+    window.addEventListener('resize', function () { myChart.resize(); });
+  </script>
+
+  <!-- =========================================================
+       Issues chart (poll-level) — unchanged path if that's correct for you
+       ========================================================= -->
+  <script>
+    var issuesChartDom = document.getElementById('issues-chart');
+    var issuesChart = echarts.init(issuesChartDom);
+
+    fetch('{{ site.baseurl }}/data/pre-process-pools.json')
+      .then(r => r.json())
+      .then(rawData => runIssuesChart(rawData));
+
+    function runIssuesChart(rawData) {
+      const categories = [...new Set(rawData.map(d => d.Category))];
+
+      const adaptedData = rawData.map(d => [
+        d.share,        // Value
+        d.poll_date,    // Date
+        d.Category,     // Category
+        d.Category      // Label
+      ]);
+
+      const datasetWithFilters = [];
+      const seriesList = [];
+
+      categories.forEach(cat => {
+        const datasetId = 'dataset_' + cat;
+
+        datasetWithFilters.push({
+          id: datasetId,
+          fromDatasetId: 'dataset_raw',
+          transform: {
+            type: 'filter',
+            config: { dimension: 'Category', '=': cat }
+          }
+        });
+
+        seriesList.push({
+          type: 'line',
+          datasetId: datasetId,
+          showSymbol: false,
+          name: cat,
+          endLabel: {
+            show: true,
+            formatter: params => params.value[3] + ': ' + (params.value[0] * 100).toFixed(1) + '%'
+          },
+          labelLayout: { moveOverlap: 'shiftY' },
+          emphasis: { focus: 'series' },
+          encode: {
+            x: 'Date',
+            y: 'Value',
+            tooltip: ['Value']
+          }
+        });
+      });
+
+      const option = {
+        animationDuration: 8000,
+        dataset: [{
+          id: 'dataset_raw',
+          dimensions: ['Value', 'Date', 'Category', 'Label'],
+          source: adaptedData
+        }, ...datasetWithFilters],
+        title: { text: 'Most important political issues (poll-level, smoothed upstream)' },
+        tooltip: {
+          trigger: 'axis',
+          valueFormatter: v => (v * 100).toFixed(1) + '%'
+        },
+        xAxis: { type: 'time', name: 'Poll date' },
+        yAxis: {
+          name: 'Share (%)',
+          axisLabel: { formatter: v => (v * 100).toFixed(0) + '%' }
+        },
+        grid: { right: 160 },
+        series: seriesList
+      };
+
+      issuesChart.setOption(option);
+      window.addEventListener('resize', () => issuesChart.resize());
+    }
+  </script>
+
+  <!-- =========================================================
+       Videos chart — unchanged (uses your axis break logic)
+       ========================================================= -->
+  <script>
+    var GRID_TOP = 120;
+    var GRID_BOTTOM = 80;
+    var GRID_LEFT = 60;
+    var GRID_RIGHT = 60;
+    var Y_DATA_ROUND_PRECISION = 0;
+
+    var _breakAreaStyle = {
+      expandOnClick: false,
+      zigzagZ: 200,
+      zigzagAmplitude: 0,
+      itemStyle: { borderColor: '#777', opacity: 0 }
+    };
+
+    var chartDom = document.getElementById("videos-chart");
+    var myChart = echarts.init(chartDom);
+
+    fetch('{{ site.baseurl }}/data/videos-per-month.json')
+      .then(r => r.json())
+      .then(raw => run(raw))
+      .catch(err => console.error("JSON load error:", err));
+
+    function run(raw) {
+      var seriesData = raw
+        .map(d => [d.date, d.count])
+        .sort((a, b) => new Date(a[0]) - new Date(b[0]));
+
+      var option = {
+        title: {
+          text: 'Fisheye Lens on Line Chart',
+          subtext: 'Brush to magnify the details',
+          left: 'center',
+          textStyle: { fontSize: 20 },
+          subtextStyle: { color: '#175ce5', fontSize: 15, fontWeight: 'bold' }
+        },
+        tooltip: { trigger: 'axis' },
+        legend: {},
+        grid: { top: GRID_TOP, bottom: GRID_BOTTOM, left: GRID_LEFT, right: GRID_RIGHT },
+        xAxis: [{ type: 'time', splitLine: { show: false }, breakArea: _breakAreaStyle }],
+        yAxis: [{ type: 'value', axisTick: { show: true }, breakArea: _breakAreaStyle }],
+        series: [{
+          type: 'line',
+          name: 'Videos per month',
+          symbol: 'circle',
+          showSymbol: false,
+          symbolSize: 5,
+          data: seriesData
+        }]
+      };
+
+      myChart.setOption(option);
+      setTimeout(initAxisBreakInteraction, 0);
+      window.addEventListener("resize", () => myChart.resize());
+    }
+
+    function initAxisBreakInteraction() {
+      var _brushingEl = null;
+
+      myChart.on('click', function (params) {
+        if (params.name === 'clearAxisBreakBtn') {
+          var option = { xAxis: [{ breaks: [] }], yAxis: [{ breaks: [] }] };
+          addClearButtonUpdateOption(option, false);
+          myChart.setOption(option);
+        }
+      });
+
+      function addClearButtonUpdateOption(option, show) {
+        option.graphic = [{
+          elements: [{
             type: 'rect',
             ignore: !show,
             name: 'clearAxisBreakBtn',
@@ -997,428 +736,300 @@ function initAxisBreakInteraction() {
             left: 5,
             shape: { r: 3, width: 70, height: 30 },
             style: { fill: '#eee', stroke: '#999', lineWidth: 1 },
-            textContent: {
-              type: 'text',
-              style: { text: 'Reset', fontSize: 15, fontWeight: 'bold' }
-            },
+            textContent: { type: 'text', style: { text: 'Reset', fontSize: 15, fontWeight: 'bold' } },
             textConfig: { position: 'inside' }
-          }
-        ]
+          }]
+        }];
       }
-    ];
-  }
 
-  myChart.getZr().on('mousedown', function (params) {
-    _brushingEl = new echarts.graphic.Rect({
-      shape: { x: params.offsetX, y: params.offsetY },
-      style: { stroke: 'none', fill: '#ccc' },
-      ignore: true
-    });
-    myChart.getZr().add(_brushingEl);
-  });
+      myChart.getZr().on('mousedown', function (params) {
+        _brushingEl = new echarts.graphic.Rect({
+          shape: { x: params.offsetX, y: params.offsetY },
+          style: { stroke: 'none', fill: '#ccc' },
+          ignore: true
+        });
+        myChart.getZr().add(_brushingEl);
+      });
 
-  myChart.getZr().on('mousemove', function (params) {
-    if (!_brushingEl) return;
-    var initX = _brushingEl.shape.x;
-    var initY = _brushingEl.shape.y;
-    var currPoint = [params.offsetX, params.offsetY];
-    _brushingEl.setShape('width', currPoint[0] - initX);
-    _brushingEl.setShape('height', currPoint[1] - initY);
-    _brushingEl.ignore = false;
-  });
+      myChart.getZr().on('mousemove', function (params) {
+        if (!_brushingEl) return;
+        var initX = _brushingEl.shape.x;
+        var initY = _brushingEl.shape.y;
+        var currPoint = [params.offsetX, params.offsetY];
+        _brushingEl.setShape('width', currPoint[0] - initX);
+        _brushingEl.setShape('height', currPoint[1] - initY);
+        _brushingEl.ignore = false;
+      });
 
-  document.addEventListener('mouseup', function (params) {
-    if (!_brushingEl) return;
+      document.addEventListener('mouseup', function (params) {
+        if (!_brushingEl) return;
 
-    var initX = _brushingEl.shape.x;
-    var initY = _brushingEl.shape.y;
-    var currPoint = [params.offsetX, params.offsetY];
+        var initX = _brushingEl.shape.x;
+        var initY = _brushingEl.shape.y;
+        var currPoint = [params.offsetX, params.offsetY];
 
-    var xPixelSpan = Math.abs(currPoint[0] - initX);
-    var yPixelSpan = Math.abs(currPoint[1] - initY);
+        var xPixelSpan = Math.abs(currPoint[0] - initX);
+        var yPixelSpan = Math.abs(currPoint[1] - initY);
 
-    if (xPixelSpan > 2 && yPixelSpan > 2) {
-      updateAxisBreak(myChart, [initX, initY], currPoint, xPixelSpan, yPixelSpan);
-    }
-
-    myChart.getZr().remove(_brushingEl);
-    _brushingEl = null;
-  });
-
-  function updateAxisBreak(myChart, initXY, currPoint, xPixelSpan, yPixelSpan) {
-    var dataXY0 = myChart.convertFromPixel({ gridIndex: 0 }, initXY);
-    var dataXY1 = myChart.convertFromPixel({ gridIndex: 0 }, currPoint);
-
-    function makeDataRange(v0, v1) {
-      var dataRange = [roundXYValue(v0), roundXYValue(v1)];
-      if (dataRange[0] > dataRange[1]) dataRange.reverse();
-      return dataRange;
-    }
-
-    var xDataRange = makeDataRange(dataXY0[0], dataXY1[0]); // timestamps
-    var yDataRange = makeDataRange(dataXY0[1], dataXY1[1]);
-
-    var xySpan = getXYAxisPixelSpan(myChart);
-    var xGapPercentStr = (xPixelSpan / xySpan[0]) * 100 + '%';
-    var yGapPercentStr = (yPixelSpan / xySpan[1]) * 100 + '%';
-
-    function makeOption(xGapPercentStr, yGapPercentStr) {
-      return {
-        xAxis: [
-          {
-            breaks: [{ start: xDataRange[0], end: xDataRange[1], gap: xGapPercentStr }]
-          }
-        ],
-        yAxis: [
-          {
-            breaks: [{ start: yDataRange[0], end: yDataRange[1], gap: yGapPercentStr }]
-          }
-        ]
-      };
-    }
-
-    myChart.setOption(makeOption(xGapPercentStr, yGapPercentStr));
-    setTimeout(() => {
-      var option = makeOption('80%', '80%');
-      addClearButtonUpdateOption(option, true);
-      myChart.setOption(option);
-    }, 0);
-  }
-
-  function getXYAxisPixelSpan(myChart) {
-    return [
-      myChart.getWidth() - GRID_LEFT - GRID_RIGHT,
-      myChart.getHeight() - GRID_BOTTOM - GRID_TOP
-    ];
-  }
-}
-
-function roundXYValue(val) {
-  return +(+val).toFixed(Y_DATA_ROUND_PRECISION);
-}
-</script>
-
-
-
-
-
-<script>
-(function () {
-  const categories = [
-    "News & Politics","Nonprofits & Activism","Travel & Events","Education",
-    "People & Blogs","Science & Technology","Gaming","Autos & Vehicles",
-    "Howto & Style","Entertainment","Film & Animation","Sports",
-    "Pets & Animals","Comedy","Music"
-  ];
-
-  const values = [
-    42.3, 32.3, 28.2, 27.8, 20.9, 20.2, 19.2,
-    18.1, 18.1, 18.0, 17.7, 16.7, 16.4, 15.4, 12.0
-  ];
-
-  const el = document.getElementById("political-bar-chart");
-  if (!el) return;
-
-  const chart = echarts.init(el);
-
-  const option = {
-    title: { text: "Proportion of Political Content by Video Category", left: "center" },
-    tooltip: {
-      trigger: "axis",
-      axisPointer: { type: "shadow" },
-      formatter: p => `${p[0].name}<br/>${p[0].value}%`
-    },
-    grid: { left: 60, right: 40, bottom: 120, top: 80 },
-    xAxis: {
-      type: "category",
-      data: categories,
-      axisLabel: { rotate: 45, interval: 0 }
-    },
-    yAxis: {
-      type: "value",
-      name: "Videos containing political vocabulary (%)",
-      min: 0,
-      max: 100
-    },
-    series: [{
-      type: "bar",
-      data: values,
-      barWidth: "60%",
-      label: { show: true, position: "top", formatter: v => `${v.value}%` }
-    }]
-  };
-
-  chart.setOption(option);
-  window.addEventListener("resize", () => chart.resize());
-})();
-</script>
-
-
-
-
-
-<script>
-(async function () {
-  // --- paths ---
-  const DATA_URL  = '{{ site.baseurl }}/data/preprocessed/word_presence_monthly.json';
-  const INDEX_URL = '{{ site.baseurl }}/data/preprocessed/politicians_index.json'; // last_name -> [full names]
-
-  const elWords  = document.getElementById("wp-words");
-  const elStart  = document.getElementById("wp-start");
-  const elEnd    = document.getElementById("wp-end");
-  const elSplits = document.getElementById("wp-splits");
-  const elBtn    = document.getElementById("wp-btn");
-  const elErr    = document.getElementById("wp-error");
-  const elCharts = document.getElementById("wp-charts");
-  const elHint   = document.getElementById("wp-hint");
-
-  if (!window.echarts) {
-    elErr.textContent = "ECharts is not loaded (echarts is undefined).";
-    return;
-  }
-
-  // --- load json once ---
-  const [rows, index] = await Promise.all([
-    fetch(DATA_URL).then(r => r.json()),
-    fetch(INDEX_URL).then(r => r.json())
-  ]);
-
-  // rows: [{word,date,share,count,total},...]
-  // build set of available full names
-  const available = new Set(rows.map(r => String(r.word).toLowerCase()));
-
-  // parse YYYY-MM into a Date (use day 01)
-  function ymToDate(ym) {
-    // ym can be "YYYY-MM" or "YYYY-MM-DD"
-    if (ym.length === 7) return new Date(ym + "-01T00:00:00");
-    return new Date(ym + "T00:00:00");
-  }
-
-  // convert input token -> full name candidates using index
-  function resolveTokens(tokens, maxPerLast=1) {
-    const out = [];
-    for (const tRaw of tokens) {
-      const t = tRaw.trim().toLowerCase();
-      if (!t) continue;
-
-      if (!t.includes(" ") && index[t]) {
-        const hits = index[t];
-        out.push(...hits.slice(0, maxPerLast));
-      } else {
-        // allow full name typed
-        out.push(tRaw.trim());
-      }
-    }
-    // unique (case-insensitive)
-    const seen = new Set();
-    const uniq = [];
-    for (const x of out) {
-      const k = x.toLowerCase();
-      if (!seen.has(k)) { seen.add(k); uniq.push(x); }
-    }
-    return uniq;
-  }
-
-  // keep only words that exist in dataset
-  function filterExisting(words) {
-    const ok = [];
-    const missing = [];
-    for (const w of words) {
-      if (available.has(w.toLowerCase())) ok.push(w);
-      else missing.push(w);
-    }
-    return { ok, missing };
-  }
-
-  function parseWords(str) {
-    return str.split(/[\s,;]+/).map(s => s.trim()).filter(Boolean);
-  }
-
-  // get overall min/max dates from dataset
-  const allDates = rows.map(r => ymToDate(String(r.date)));
-  const minD = new Date(Math.min(...allDates));
-  const maxD = new Date(Math.max(...allDates));
-  const fmtDateInput = d => d.toISOString().slice(0,10);
-
-  // init date inputs
-  elStart.value = fmtDateInput(minD);
-  elEnd.value   = fmtDateInput(maxD);
-  elHint.textContent = `Dataset range: ${fmtDateInput(minD)} → ${fmtDateInput(maxD)}`;
-
-  // group by word for fast access: wordLower -> [{dateObj, share, count, total},...]
-  const byWord = new Map();
-  for (const r of rows) {
-    const w = String(r.word);
-    const wl = w.toLowerCase();
-    const item = {
-      word: w,
-      dateObj: ymToDate(String(r.date)),
-      dateStr: String(r.date),
-      share: +r.share,
-      count: +r.count,
-      total: +r.total
-    };
-    if (!byWord.has(wl)) byWord.set(wl, []);
-    byWord.get(wl).push(item);
-  }
-  // sort each series
-  for (const [k, arr] of byWord.entries()) {
-    arr.sort((a,b) => a.dateObj - b.dateObj);
-  }
-
-  function dateSplitBoundaries(startDate, endDate, splits) {
-    const s = startDate.getTime();
-    const e = endDate.getTime();
-    const bounds = [];
-    for (let i=0;i<=splits;i++){
-      bounds.push(new Date(s + (e - s) * (i / splits)));
-    }
-    return bounds;
-  }
-
-  function buildBarsForWindow(words, s, e) {
-    // Equivalent to your Python:
-    // mentions[w] = number of videos containing word in [s,e)
-    // normalized => 100 * mentions / n_videos
-    //
-    // Here we use monthly shares; we aggregate as weighted average by total videos.
-    // share_window = 100 * sum(count) / sum(total)
-    const result = [];
-    for (const w of words) {
-      const arr = byWord.get(w.toLowerCase()) || [];
-      let sumCount = 0;
-      let sumTotal = 0;
-      for (const p of arr) {
-        if (p.dateObj >= s && p.dateObj < e) {
-          sumCount += p.count;
-          sumTotal += p.total;
+        if (xPixelSpan > 2 && yPixelSpan > 2) {
+          updateAxisBreak(myChart, [initX, initY], currPoint, xPixelSpan, yPixelSpan);
         }
+
+        myChart.getZr().remove(_brushingEl);
+        _brushingEl = null;
+      });
+
+      function updateAxisBreak(myChart, initXY, currPoint, xPixelSpan, yPixelSpan) {
+        var dataXY0 = myChart.convertFromPixel({ gridIndex: 0 }, initXY);
+        var dataXY1 = myChart.convertFromPixel({ gridIndex: 0 }, currPoint);
+
+        function roundXYValue(val) { return +(+val).toFixed(Y_DATA_ROUND_PRECISION); }
+
+        function makeDataRange(v0, v1) {
+          var dataRange = [roundXYValue(v0), roundXYValue(v1)];
+          if (dataRange[0] > dataRange[1]) dataRange.reverse();
+          return dataRange;
+        }
+
+        var xDataRange = makeDataRange(dataXY0[0], dataXY1[0]);
+        var yDataRange = makeDataRange(dataXY0[1], dataXY1[1]);
+
+        var xySpan = [
+          myChart.getWidth() - GRID_LEFT - GRID_RIGHT,
+          myChart.getHeight() - GRID_BOTTOM - GRID_TOP
+        ];
+        var xGapPercentStr = (xPixelSpan / xySpan[0]) * 100 + '%';
+        var yGapPercentStr = (yPixelSpan / xySpan[1]) * 100 + '%';
+
+        function makeOption(xGapPercentStr, yGapPercentStr) {
+          return {
+            xAxis: [{ breaks: [{ start: xDataRange[0], end: xDataRange[1], gap: xGapPercentStr }] }],
+            yAxis: [{ breaks: [{ start: yDataRange[0], end: yDataRange[1], gap: yGapPercentStr }] }]
+          };
+        }
+
+        myChart.setOption(makeOption(xGapPercentStr, yGapPercentStr));
+        setTimeout(() => {
+          var option = makeOption('80%', '80%');
+          addClearButtonUpdateOption(option, true);
+          myChart.setOption(option);
+        }, 0);
       }
-      const share = sumTotal > 0 ? (100 * sumCount / sumTotal) : 0;
-      result.push({ word: w, share, sumTotal });
     }
-    return result;
-  }
+  </script>
 
-  function clearCharts() {
-    elCharts.innerHTML = "";
-  }
+  <!-- =========================================================
+       Bar chart (static)
+       ========================================================= -->
+  <script>
+    (function () {
+      const categories = [
+        "News & Politics", "Nonprofits & Activism", "Travel & Events", "Education",
+        "People & Blogs", "Science & Technology", "Gaming", "Autos & Vehicles",
+        "Howto & Style", "Entertainment", "Film & Animation", "Sports",
+        "Pets & Animals", "Comedy", "Music"
+      ];
 
-  function render(words, startStr, endStr, splits) {
-    elErr.textContent = "";
-    clearCharts();
+      const values = [
+        42.3, 32.3, 28.2, 27.8, 20.9, 20.2, 19.2,
+        18.1, 18.1, 18.0, 17.7, 16.7, 16.4, 15.4, 12.0
+      ];
 
-    // resolve last names -> full names
-    const resolved = resolveTokens(words, 1);
+      const el = document.getElementById("political-bar-chart");
+      if (!el) return;
 
-    // keep only existing (in dataset)
-    const { ok, missing } = filterExisting(resolved);
+      const chart = echarts.init(el);
 
-    if (ok.length < 3 || ok.length > 4) {
-      elErr.textContent = `Need 3–4 valid names. Currently valid: ${ok.length}.` +
-        (missing.length ? ` Missing: ${missing.join(", ")}` : "");
-      return;
-    }
-
-    const start = new Date(startStr + "T00:00:00");
-    const end   = new Date(endStr   + "T00:00:00");
-    if (!(start < end)) {
-      elErr.textContent = "Start must be before End.";
-      return;
-    }
-
-    // grid for subplots like Python
-    const ncols = Math.min(2, splits);
-    elCharts.style.gridTemplateColumns = `repeat(${ncols}, minmax(0, 1fr))`;
-
-    const bounds = dateSplitBoundaries(start, end, splits);
-
-    // create one chart per window
-    for (let i=0;i<splits;i++) {
-      const s = bounds[i];
-      const e = bounds[i+1];
-
-      const bars = buildBarsForWindow(ok, s, e);
-
-      // create div
-      const div = document.createElement("div");
-      div.style.width = "100%";
-      div.style.height = "420px";
-      div.style.border = "1px solid rgba(0,0,0,0.08)";
-      div.style.borderRadius = "10px";
-      div.style.padding = "8px";
-      elCharts.appendChild(div);
-
-      const chart = echarts.init(div);
-
-      const x = bars.map(b => b.word);
-      const y = bars.map(b => +b.share.toFixed(2));
-
-      chart.setOption({
-        title: {
-          text: `${s.toISOString().slice(0,10)} → ${e.toISOString().slice(0,10)}`,
-          subtext: `Weighted by #videos per month (approx. Python normalize=True)`,
-          left: "center",
-          textStyle: { fontSize: 12 },
-          subtextStyle: { fontSize: 11 }
-        },
+      const option = {
+        title: { text: "Proportion of Political Content by Video Category", left: "center" },
         tooltip: {
           trigger: "axis",
           axisPointer: { type: "shadow" },
-          formatter: (p) => `${p[0].name}<br/>${p[0].value}%`
+          formatter: p => `${p[0].name}<br/>${p[0].value}%`
         },
-        grid: { left: 55, right: 20, top: 70, bottom: 80 },
-        xAxis: {
-          type: "category",
-          data: x,
-          axisLabel: { rotate: 30, interval: 0 }
+        grid: { left: 60, right: 40, bottom: 120, top: 80 },
+        xAxis: { type: "category", data: categories, axisLabel: { rotate: 45, interval: 0 } },
+        yAxis: { type: "value", name: "Videos containing political vocabulary (%)", min: 0, max: 100 },
+        series: [{
+          type: "bar",
+          data: values,
+          barWidth: "60%",
+          label: { show: true, position: "top", formatter: v => `${v.value}%` }
+        }]
+      };
+
+      chart.setOption(option);
+      window.addEventListener("resize", () => chart.resize());
+    })();
+  </script>
+
+  <!-- =========================================================
+       ✅ Word presence interactive chart (FIXED)
+       - correct JSON path: /data/preprocessed/word_presence_monthly.json
+       - resolves last names via /data/extern/politicians.json
+       - auto-fills dates + auto-plot
+       ========================================================= -->
+  <script>
+  (function () {
+    const elWords = document.getElementById("words");
+    const elStart = document.getElementById("start");
+    const elEnd   = document.getElementById("end");
+    const elBtn   = document.getElementById("plotBtn");
+    const elErr   = document.getElementById("err");
+
+    const chartDom = document.getElementById("word-chart");
+    const chart = echarts.init(chartDom);
+
+    // ✅ Correct paths
+    const DATA_URL = '{{ "/data/word_presence_monthly.json" | relative_url }}';
+    const POL_URL  = '{{ "/data/politicians.json" | relative_url }}';
+
+    let rows = null;
+    let polIndex = null;
+
+    function resolveWords(words, index, maxPerLastName = 1) {
+      const resolved = [];
+
+      for (const w of words) {
+        const w0 = String(w).trim();
+        if (!w0) continue;
+
+        const key = w0.toLowerCase();
+
+        // If user typed a single token and it exists as a last-name bucket, expand it
+        if (!key.includes(" ") && index && index[key]) {
+          const hits = index[key];
+          if (maxPerLastName === 1) resolved.push(hits[0]);
+          else resolved.push(...hits.slice(0, maxPerLastName));
+        } else {
+          resolved.push(w0);
+        }
+      }
+
+      // unique (case-insensitive), keep order
+      const seen = new Set();
+      const out = [];
+      for (const x of resolved) {
+        const k = x.toLowerCase();
+        if (!seen.has(k)) {
+          seen.add(k);
+          out.push(x);
+        }
+      }
+      return out;
+    }
+
+    // --- helpers dates "YYYY-MM" ---
+    function ymToInt(ym) {
+      const [Y, M] = ym.split("-").map(Number);
+      return Y * 100 + M;
+    }
+    function inRange(ym, startYm, endYm) {
+      const v = ymToInt(ym);
+      return v >= ymToInt(startYm) && v <= ymToInt(endYm);
+    }
+
+    function parseWords() {
+      return elWords.value
+        .split(",")
+        .map(s => s.trim())
+        .filter(Boolean)
+        .slice(0, 4);
+    }
+
+    function render() {
+      elErr.textContent = "";
+
+      // 1) parse user input
+      const words = parseWords();
+      if (words.length < 3 || words.length > 4) {
+        elErr.textContent = "Please enter 3–4 names, comma-separated.";
+        return;
+      }
+
+      // 2) resolve last names -> full names (Biden -> Joe Biden)
+      const resolvedWords = resolveWords(words, polIndex, 1);
+
+      const startYM = elStart.value;
+      const endYM   = elEnd.value;
+      if (!startYM || !endYM) {
+        elErr.textContent = "Start and End must be filled.";
+        return;
+      }
+
+      // x-axis : all months in the window
+      const x = [...new Set(rows
+        .map(d => String(d.date))
+        .filter(ym => inRange(ym, startYM, endYM))
+      )].sort((a, b) => ymToInt(a) - ymToInt(b));
+
+      // series: one line per resolved word
+      const series = resolvedWords.map(w => {
+        const mapYMtoShare = new Map(
+          rows
+            .filter(d => String(d.word).toLowerCase() === w.toLowerCase())
+            .map(d => [String(d.date), Number(d.share)])   // share is already in %
+        );
+
+        const y = x.map(ym => mapYMtoShare.has(ym) ? mapYMtoShare.get(ym) : null);
+
+        return {
+          name: w,
+          type: "line",
+          showSymbol: false,
+          connectNulls: true,
+          data: y
+        };
+      });
+
+      chart.setOption({
+        title: { text: "Word presence over time", left: "center" },
+        tooltip: {
+          trigger: "axis",
+          valueFormatter: v => (v == null ? "-" : v.toFixed(3) + "%")
         },
+        legend: { top: 40 },
+        grid: { top: 90, left: 55, right: 30, bottom: 50 },
+        xAxis: { type: "category", data: x, name: "Month" },
         yAxis: {
           type: "value",
           name: "Mentions / videos (%)",
-          min: 0,
-          max: 100
+          axisLabel: { formatter: v => v.toFixed(2) + "%" }
         },
-        series: [{
-          type: "bar",
-          data: y,
-          label: { show: true, position: "top", formatter: v => `${v.value}%` }
-        }]
-      });
-
-      window.addEventListener("resize", () => chart.resize());
+        series
+      }, true);
     }
-  }
 
-  // button handler
-  elBtn.addEventListener("click", () => {
-    const words = parseWords(elWords.value);
-    render(words, elStart.value, elEnd.value, parseInt(elSplits.value, 10));
-  });
+    (async function init() {
+      try {
+        const [rData, rPol] = await Promise.all([fetch(DATA_URL), fetch(POL_URL)]);
+        if (!rData.ok) throw new Error("Cannot load JSON: " + DATA_URL + " (" + rData.status + ")");
+        if (!rPol.ok)  throw new Error("Cannot load JSON: " + POL_URL + " (" + rPol.status + ")");
 
-  // default example (if present)
-  elWords.value = "biden trump obama";
-  elBtn.click();
-})();
-</script>
+        rows = await rData.json();
+        polIndex = await rPol.json();
 
+        // Default dates from dataset
+        const allYM = rows.map(d => String(d.date));
+        const minYM = allYM.reduce((a, b) => ymToInt(a) < ymToInt(b) ? a : b);
+        const maxYM = allYM.reduce((a, b) => ymToInt(a) > ymToInt(b) ? a : b);
 
+        elStart.value = minYM;
+        elEnd.value   = maxYM;      // or set "2019-09" if you want a default cutoff
 
+        elBtn.addEventListener("click", render);
+        window.addEventListener("resize", () => chart.resize());
 
+        // Auto plot on load
+        render();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+      } catch (e) {
+        elErr.textContent = e.message;
+        console.error(e);
+      }
+    })();
+  })();
+  </script>
 
 
 </body>
