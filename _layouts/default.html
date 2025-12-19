@@ -881,8 +881,8 @@
     const chart = echarts.init(chartDom);
 
     // ✅ Correct paths
-    const DATA_URL = '{{ "/data/preprocessed/word_presence_monthly.json" | relative_url }}';
-    const POL_URL  = '{{ "/data/extern/politicians.json" | relative_url }}';
+    const DATA_URL = '{{ "/data/word_presence_monthly.json" | relative_url }}';
+    const POL_URL  = '{{ "/data/politicians.json" | relative_url }}';
 
     let rows = null;
     let polIndex = null;
