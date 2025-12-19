@@ -1278,7 +1278,6 @@
 
   const chart = echarts.init(el);
 
-  // JSON généré par le notebook
   const DATA_URL = '{{ "/data/top10_tags_share_of_voice_yearly.json" | relative_url }}';
 
   let rows;
@@ -1292,14 +1291,24 @@
     return;
   }
 
-  // years (x-axis)
   const years = rows.map(d => String(d.year));
-
-  // tags = toutes les clés sauf "year"
   const tags = Object.keys(rows[0]).filter(k => k !== "year");
 
-  // series stacked area
-  const series = tags.map(tag => ({
+  // ✅ Matplotlib / seaborn "tab10" palette (same as your screenshot)
+  const TAB10 = [
+    "#1f77b4", // blue
+    "#ff7f0e", // orange
+    "#2ca02c", // green
+    "#d62728", // red
+    "#9467bd", // purple
+    "#8c564b", // brown
+    "#e377c2", // pink
+    "#7f7f7f", // gray
+    "#bcbd22", // olive/yellow-green
+    "#17becf"  // cyan
+  ];
+
+  const series = tags.map((tag, i) => ({
     name: tag,
     type: "line",
     stack: "Total",
@@ -1310,6 +1319,9 @@
   }));
 
   const option = {
+    // ✅ force exact colors like the Python plot
+    color: TAB10,
+
     title: {
       text: "Cumulative prevalence of the top 10 leading political tags over time",
       left: "center"
@@ -1345,6 +1357,7 @@
   window.addEventListener("resize", () => chart.resize());
 })();
 </script>
+
 
 
 
