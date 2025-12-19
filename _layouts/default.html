@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width">
 
     <script src="https://cdn.jsdelivr.net/npm/echarts@6/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
     <style>
     .section-title {
       font-weight: bold;
@@ -337,6 +338,7 @@
 
 
             <!-- ADD THE CHART HERE  celui avec les 3 périodes électorales-->
+             <div id="main"></div>
 
 
 
@@ -574,6 +576,154 @@
         });
     </script>
     <script>
+        var chartDom = document.getElementById('main');
+        var myChart = echarts.init(chartDom);
+        
+        var option = {
+          color: ['#CC0000', '#FF6B6B', '#808080', '#6495ED', '#4169E1'],
+          
+          dataset: [
+            {
+              source: [
+                ['Category', 'Value', 'Year'],
+                ['Right', 0, 2008],
+                ['Lean Right', 7.3, 2008],
+                ['Center', 66.5, 2008],
+                ['Lean left', 26.2, 2008],
+                ['Left', 0, 2008],
+                ['Right', 0.4, 2012],
+                ['Lean Right', 5.7, 2012],
+                ['Center', 85.5, 2012],
+                ['Lean left', 6.9, 2012],
+                ['Left', 1, 2012],
+                ['Right', 0.3, 2016],
+                ['Lean Right', 23.7, 2016],
+                ['Center', 35.2, 2016],
+                ['Lean left', 19, 2016],
+                ['Left', 21.7, 2016]
+              ]
+            },
+            {
+              transform: {
+                type: 'filter',
+                config: { dimension: 'Year', value: 2008 }
+              }
+            },
+            {
+              transform: {
+                type: 'filter',
+                config: { dimension: 'Year', value: 2012 }
+              }
+            },
+            {
+              transform: {
+                type: 'filter',
+                config: { dimension: 'Year', value: 2016 }
+              }
+            }
+          ],
+          title: [
+            {
+              text: '2008',
+              subtext: '328 videos',
+              left: '50%',
+              top: '5%',
+              textAlign: 'center'
+            },
+            {
+              text: '2012',
+              subtext: '7,646 videos',
+              left: '50%',
+              top: '35%',
+              textAlign: 'center'
+            },
+            {
+              text: '2016',
+              subtext: '56,519 videos',
+              left: '50%',
+              top: '65%',
+              textAlign: 'center'
+            }
+          ],
+          series: [
+            {
+              type: 'pie',
+              radius: 50,
+              center: ['50%', '25%'],
+              datasetIndex: 1
+            },
+            {
+              type: 'pie',
+              radius: 50,
+              center: ['50%', '50%'],
+              datasetIndex: 2
+            },
+            {
+              type: 'pie',
+              radius: 50,
+              center: ['50%', '75%'],
+              datasetIndex: 3
+            }
+          ],
+          media: [
+            {
+              query: { minAspectRatio: 1 },
+              option: {
+                title: [
+                  {
+                    left: '25%',
+                    top: '5%'
+                  },
+                  {
+                    left: '50%',
+                    top: '5%'
+                  },
+                  {
+                    left: '75%',
+                    top: '5%'
+                  }
+                ],
+                series: [
+                  { center: ['25%', '50%'] },
+                  { center: ['50%', '50%'] },
+                  { center: ['75%', '50%'] }
+                ]
+              }
+            },
+            {
+              option: {
+                title: [
+                  {
+                    left: '50%',
+                    top: '5%'
+                  },
+                  {
+                    left: '50%',
+                    top: '35%'
+                  },
+                  {
+                    left: '50%',
+                    top: '65%'
+                  }
+                ],
+                series: [
+                  { center: ['50%', '25%'] },
+                  { center: ['50%', '50%'] },
+                  { center: ['50%', '75%'] }
+                ]
+              }
+            }
+          ]
+        };
+        
+        myChart.setOption(option);
+        
+        // Make chart responsive
+        window.addEventListener('resize', function() {
+            myChart.resize();
+        });
+    </script>
+    <script>
         // Initialize the chart
         var chartDom = document.getElementById('political_orientation-chart');
         var myChart = echarts.init(chartDom);
@@ -678,6 +828,8 @@
             myChart.resize();
         });
     </script>
+
+
 
 
 /* ===============================
