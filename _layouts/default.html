@@ -722,11 +722,10 @@
 </p>
 
 
-<!-- c'est quoi ce graph ? -->
 
-<div id="issues-chart" style="width:100%; height:600px; margin: 40px 0;"></div>
 
-<!-- boxplot graph ici -->
+<div id="rq3-boxplot" style="width: 100%; height: 520px;"></div>
+
 
 
 <p>
@@ -1396,6 +1395,104 @@
       }
     }
   </script>
+
+<script>
+(async function () {
+  const el = document.getElementById("rq3-boxplot");
+  if (!el) return;
+
+  // IMPORTANT: n'inclus ECharts qu'une seule fois dans ta page.
+  // <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+
+  const chart = echarts.init(el);
+
+  // ✅ mets ici le chemin correct (où tu as upload le json dans ton repo)
+  const DATA_URL = '{{ "/data/preprocessed/boxplot_RQ3.json" | relative_url }}';
+  // si ton fichier s'appelle exactement "boxplot_RQ3 (2).json", renomme-le (évite espaces/parenthèses)
+  // puis commit + push.
+
+  let rows;
+  try {
+    const r = await fetch(DATA_URL);
+    if (!r.ok) throw new Error(`Cannot load JSON: ${DATA_URL} (${r.status})`);
+    rows = await r.json();
+  } catch (e) {
+    console.error(e);
+    el.innerHTML = `<p style="color:#b00020;font-weight:600;">${e.message}</p>`;
+    return;
+  }
+
+  // rows: [{category, min,q1,median,q3,max,count,lower_whisker,upper_whisker}, ...]
+  const categories = rows.map(d => d.category);
+
+  // ECharts boxplot data format: [min, Q1, median, Q3, max]
+  // ⚠️ Si tu veux afficher les whiskers "réels" (upper_whisker/lower_whisker),
+  // utilise plutôt: [lower_whisker, q1, median, q3, upper_whisker]
+  const boxData = rows.map(d => ([
+    Number(d.lower_whisker ?? d.min),
+    Number(d.q1),
+    Number(d.median),
+    Number(d.q3),
+    Number(d.upper_whisker ?? d.max)
+  ]));
+
+  const counts = rows.map(d => Number(d.count));
+
+  const option = {
+    title: [
+      {
+        text: "RQ3 — View distribution by intensity",
+        left: "center"
+      }
+    ],
+    tooltip: {
+      trigger: "item",
+      formatter: (p) => {
+        const i = p.dataIndex;
+        const d = rows[i];
+        return `
+          <b>${d.category}</b><br/>
+          count: ${d.count}<br/>
+          min: ${d.min}<br/>
+          Q1: ${d.q1}<br/>
+          median: ${d.median}<br/>
+          Q3: ${d.q3}<br/>
+          max: ${d.max}<br/>
+          lower_whisker: ${d.lower_whisker}<br/>
+          upper_whisker: ${d.upper_whisker}
+        `;
+      }
+    },
+    grid: { left: 70, right: 40, bottom: 70, top: 80 },
+    xAxis: {
+      type: "category",
+      data: categories,
+      boundaryGap: true,
+      axisLabel: { interval: 0 }
+    },
+    yAxis: {
+      type: "log",              // ✅ RECOMMANDÉ vu tes max énormes
+      name: "Views (log scale)",
+      splitArea: { show: true }
+    },
+    series: [
+      {
+        name: "boxplot",
+        type: "boxplot",
+        data: boxData,
+        itemStyle: {
+          borderWidth: 2
+        }
+      }
+    ]
+  };
+
+  chart.setOption(option);
+  window.addEventListener("resize", () => chart.resize());
+})();
+</script>
+
+
 
   <!-- =========================================================
        Bar chart (static)
