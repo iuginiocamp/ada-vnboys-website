@@ -656,22 +656,54 @@
         <li>Slide lambda; toward $0.6$ or lower: You reveal the most distinctive words, so the specific terms that are unique to that specific topic and rare elsewhere.</li>
         </ul>
 
+    <p>
+      The Evolution of Discourse By applying this topic map to our timeline, we can see how the American digital conversation shifted over the decade. 
+      We compare it with a graph which is based on real opinion polls conducted among Americans
+    </p>
+
 
     <div class="split-section">
         <div class="column">
             <h3>Opinion poll</h3>
             <p>Analysis of the left-wing engagement shows a steady increase in video production during the primaries.</p>
             <div id="issues-chart" style="width:100%; height:600px; margin: 40px 0;"></div>
-            <p>Additional insights regarding the Democratic base on YouTube.</p>
+            <p>It shows a peak in "Economy & cost of living" around 2009-2012, matching the Great Recession’s impact. 
+              This trend declines until 2016, then rises again by 2024. 
+              "Health & welfare" spikes around 2018–2020, likely due to COVID-19, while other topics like "Security & foreign policy" and "Social & cultural issues" fluctuate moderately.
+            </p>
         </div>
 
         <div class="column">
-            <h3>YouTube topics</h3>
+            <h3>LDA analysis</h3>
             <p>On the other side, conservative channels exhibit higher engagement rates per video posted.</p>
             <div id="chart-right" style="width:100%; height:300px;"></div>
-            <p>Observations on the Republican content distribution strategy.</p>
+            <p>Mirrors the economic peak around 2008–2009, following the hypothesis about the Great Recession’s influence. 
+              The "Global Conflict & Foreign Intervention" topic declines sharply after 2006, while "Civil Rights, Law & Social Policy" and "US Elections & Cultural Debates" spike during election years (2008, 2012, 2016), reflecting political cycles.
+            </p>
         </div>
     </div>
+
+    <p>
+      Both graphs reflect some of the same major trends, particularly around economic issues and political events. 
+      The alignment of the economic peak in both graphs suggests that major real-world events do influence both public opinion and online discussions, but the medium (polls vs. YouTube) affects how these trends are captured and represented.
+    </p>
+
+    <h3>The mechanics of engagement : does rage pay?</h3>
+
+    <p>
+      Why did the conversation shift toward culture wars? 
+      Is it just a change in what people care about, or does YouTube’s algorithm push certain types of content because it gets more engagement?
+    </p>
+
+    <p>
+      To explore this, we measured the emotional intensity of video titles and tags using VADER, a sentiment analysis tool designed for social media. 
+      Instead of looking at whether a title is positive or negative, we focused on how emotionally charged it is, so we looked at the absolute value of the sentiment score, ranging from 0 to 1.
+    </p>
+
+    <p>
+      
+    </p>
+
 
 
     <div id="issues-chart" style="width:100%; height:600px; margin: 40px 0;"></div>
