@@ -429,18 +429,23 @@
             <h4>Political Makeup of Communities</h4>
             <p>This chart provides a visual breakdown of the political leanings within each identified community. Each bar represents a community, and the colored segments show the proportion of videos from different political biases (Left, Center, Right). This allows us to see if a community is politically homogeneous (an echo chamber) or diverse.</p>
             <img src="/ada-vnboys-website/assets/{{ year }}/bias_composition_plot.png" alt="Political Bias Composition for {{ year }}" style="width:100%; max-width:800px; display:block; margin:auto;">
-            <p> Notice anything? At first, in 2014 and 2015, the communities are rather well distributed and center is the most present political orientation. Starting from 2016 and onwards, the communtiies become a lot more homogeneous and more importantly, more red and blue, respectively. This reflects the distribution of videos posted throughout the election periods where in 2016 we saw a more politically split distirbution. </p>
+            <p> Notice anything? At first, in 2014 and 2015, the communities are rather well distributed and center is the most present political orientation. Starting from 2016 and onwards, the communities become a lot more homogeneous and more importantly, more red and blue, respectively. This reflects the distribution of videos posted throughout the election periods where in 2016 we saw a more politically split distribution. </p>
           </div>
 
           <div class="analysis-item">
             <h4>Top Discussion Topics</h4>
             <p>This chart displays the top three most discussed themes for each community, such as "Economy & jobs" or "Foreign policy." It helps define the identity of each conversation bubble by showing what issues were most important to them during the year. Hover over the bars for more details.</p>
+            <p>If we take 2016 as an example, we can see that elections and campaigns dominates the topic discussion in all but one commmunity showing that the election can create a sort of feedback loop where the communities themselves are more divided but also the topics that bring them together are divisive topics such as who to vote for.</p>
             <iframe src="/ada-vnboys-website/assets/{{ year }}/top_themes_plot.html" width="100%" height="500" style="border:1px solid #ccc; margin:auto; display:block;"></iframe>
           </div>
 
           <div class="analysis-item">
             <h4>Echo Chamber Diagnostics</h4>
             <p>This figure diagnoses the "echo chamber" phenomenon. The histogram on the left shows how many videos are "echo-prone" (seen by one community) versus "cross-audience" (seen by many). The bar chart on the right summarizes how many connections are within the same community versus across different communities, indicating how siloed the network is.</p>
+            <p>The graph above on the left shows us to what extent each video has a mix of communities. A peak on the right means most videos have multiple communities and are therefore not "echo-chambers". The year where you would expect a peak on the right, that is implies echo-chambers, is 2016. However, interestingly enough this year has a peak around the cross-audience threshold which means videos have multiple communities from different political orientations. A reason could be that a lot of videos are actually intended for wider audiences and not just select communities. </p>
+            <p>Other non-election years such as 2014 and 2015 show videos with fewer mixed communities.  </p>
+            <p>The graph on the left shows us the weight and edge weight of cross-communities linkage versus linkage within a community. If we continue the analysis of 2016, we can see that despite the apparent mixedness of communities seen in the videos. The communities interact much more whithin each other rather than with other communities. </p>
+
             <img src="/ada-vnboys-website/assets/{{ year }}/echo_chamber_diagnostics.png" alt="Echo Chamber Diagnostics for {{ year }}" style="width:100%; max-width:800px; display:block; margin:auto;">
           </div>
           
@@ -459,12 +464,18 @@
           <div class="analysis-item">
             <h4>What Defines a Community?</h4>
             <p>This plot shows which factors were most important for defining a community's identity and political leaning. Longer bars indicate more influential features, such as specific themes (e.g., "Immigration") or video properties (e.g., number of connections).</p>
+            <p>Taking again 2016 as a point of focus: we can see that "elections and campaign" is the defining feature in both determining the political orientation of a community as well as its identity (shape). 2015 and 2017 also share this feature, perhaps also feeding on the presidential race hype. However, 2014, for instance, does not have this feature and it is much more defined by the linkage in the videos that shape it rather than a singular topic. </p>
             <img src="/ada-vnboys-website/assets/{{ year }}/logistic_feature_importance.png" alt="Feature Importance for {{ year }}" style="width:100%; max-width:800px; display:block; margin:auto;">
           </div>
+
+    
           
         </div>
         {% endfor %}
       </div>
+      <p> What did we observe in this section? We saw what were the communities on Youtube each year and what were their defining characteristics. We learnt that election year communities are quite particular: for example, the feature that influence these communities the most is not which communities but the presidential race itself. 2016, as well, had communities that intereacted more with themselves rather than mixing. These communities are also more split ideologically compared to years like 2014 and 2015. Other years, on the other hand, do not show such polarization or striking defining features. </p>
+      <p> What does this tell us about Youtube communities? We cannot say that we can find complete echo chambers, but that polarizing events such as the 2016 presidential elections can cause communities to be particularly inward behaving. </p>
+      <p> We looked at who posts videos and who watches videos, let us now look at what the videos are about!</p>
     </section>
 
     <script>
