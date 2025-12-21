@@ -1151,131 +1151,109 @@
 
 
 <script>
-  const chartDom = document.getElementById('issues-chart'); // ou 'topics-chart'
-  const chart = echarts.init(chartDom);
-
-  // Couleurs Matplotlib tab10 (hex)
-  const TAB10 = [
-    "#1f77b4", // blue
-    "#ff7f0e", // orange
-    "#2ca02c", // green
-    "#d62728", // red
-    "#9467bd", // purple
-    "#8c564b", // brown
-    "#e377c2", // pink
-    "#7f7f7f", // gray
-    "#bcbd22", // olive
-    "#17becf"  // cyan
-  ];
+  const topicsDom = document.getElementById('opinion-chart'); // ou change l'id si tu veux un autre div
+  const topicsChart = echarts.init(topicsDom);
 
   fetch('{{ "/data/topic_evolution_echarts.json" | relative_url }}')
     .then(r => r.json())
-    .then(raw => run(raw))
-    .catch(err => {
-      console.error(err);
-      chartDom.innerHTML = `<p style="color:#b00020;font-weight:600;">${err.message}</p>`;
-    });
+    .then(rawData => runTopicsChart(rawData))
+    .catch(err => console.error("JSON load error:", err));
 
-  function run(rawData) {
-    rawData.sort((a,b) => Number(a.Year) - Number(b.Year));
+  function runTopicsChart(rawData) {
+    // rawData: [{Year: 2006, Topic: "...", Prevalence: 0.13}, ...]
 
-    // années (x)
+    // sécurité: trier par année
+    rawData.sort((a, b) => Number(a.Year) - Number(b.Year));
+
+    const topics = [...new Set(rawData.map(d => d.Topic))];
     const years = [...new Set(rawData.map(d => String(d.Year)))];
 
-    // topics (séries) — ordre stable
-    const topics = [...new Set(rawData.map(d => d.Topic))].sort((a,b) => a.localeCompare(b));
-
-    // data long -> dataset ECharts
-    const adapted = rawData.map(d => [
-      Number(d.Prevalence),  // Value (0-1)
-      String(d.Year),        // Year
-      d.Topic,               // Topic
-      d.Topic                // Label
+    // Format dataset (similaire à ton issues-chart)
+    // Dimensions: ['Value','Year','Topic','Label']
+    const adaptedData = rawData.map(d => [
+      Number(d.Prevalence),   // Value (0-1)
+      String(d.Year),         // Year (category)
+      d.Topic,                // Topic
+      d.Topic                 // Label
     ]);
 
     const datasetWithFilters = [];
     const seriesList = [];
 
-    topics.forEach((topic, i) => {
-      const dsId = "ds_" + topic;
+    topics.forEach(topic => {
+      const datasetId = 'ds_' + topic;
 
       datasetWithFilters.push({
-        id: dsId,
-        fromDatasetId: "dataset_raw",
-        transform: { type: "filter", config: { dimension: "Topic", "=": topic } }
+        id: datasetId,
+        fromDatasetId: 'dataset_raw',
+        transform: {
+          type: 'filter',
+          config: {
+            dimension: 'Topic',
+            '=': topic
+          }
+        }
       });
 
       seriesList.push({
-        name: topic,
-        type: "line",
-        datasetId: dsId,
+        type: 'line',
+        datasetId: datasetId,
         showSymbol: false,
-        smooth: 0.25,              // léger lissage côté ECharts (0..1)
-        lineStyle: { width: 2 },
-        emphasis: { focus: "series" },
+        name: topic,
         endLabel: {
           show: true,
-          distance: 6,
-          formatter: (p) => `${p.value[3]}: ${(p.value[0]*100).toFixed(1)}%`
+          formatter: params => {
+            // params.value = [Value, Year, Topic, Label]
+            const v = params.value[0];
+            return params.value[3] + ': ' + (v * 100).toFixed(1) + '%';
+          }
         },
-        labelLayout: { moveOverlap: "shiftY" },
-        encode: { x: "Year", y: "Value", tooltip: ["Value"] }
+        labelLayout: { moveOverlap: 'shiftY' },
+        emphasis: { focus: 'series' },
+        encode: {
+          x: 'Year',
+          y: 'Value',
+          tooltip: ['Value']
+        }
       });
     });
 
     const option = {
-      color: TAB10,  // ✅ mêmes couleurs que tab10 (réutilisées si >10 topics)
-      title: {
-        text: "Topic prevalence over time",
-        left: "center",
-        top: 10
-      },
-      tooltip: {
-        trigger: "axis",
-        axisPointer: { type: "line" },
-        valueFormatter: (v) => (Number(v) * 100).toFixed(1) + "%"
-      },
-      legend: {
-        type: "scroll",      // ✅ si trop de topics
-        top: 40,
-        left: 20,
-        right: 240           // laisse la place aux end labels
-      },
-      grid: {
-        top: 95,
-        left: 60,
-        right: 260,          // ✅ marge pour end labels
-        bottom: 60
-      },
+      animationDuration: 8000,
       dataset: [
         {
-          id: "dataset_raw",
-          dimensions: ["Value", "Year", "Topic", "Label"],
-          source: adapted
+          id: 'dataset_raw',
+          dimensions: ['Value', 'Year', 'Topic', 'Label'],
+          source: adaptedData
         },
         ...datasetWithFilters
       ],
+      title: { text: 'Topic prevalence over time (YouTube)' },
+      tooltip: {
+        trigger: 'axis',
+        valueFormatter: v => (Number(v) * 100).toFixed(1) + '%'
+      },
+      legend: {
+        top: 30
+      },
+      grid: { right: 220, left: 60, top: 90, bottom: 60 },
       xAxis: {
-        type: "category",
-        name: "Year",
-        data: years,
-        boundaryGap: false,
-        axisLabel: { rotate: 0 }
+        type: 'category',
+        name: 'Year',
+        data: years
       },
       yAxis: {
-        type: "value",
-        name: "Prevalence (%)",
-        axisLabel: { formatter: (v) => (v * 100).toFixed(0) + "%" },
-        splitLine: { show: true }
+        type: 'value',
+        name: 'Prevalence (%)',
+        axisLabel: { formatter: v => (v * 100).toFixed(0) + '%' }
       },
       series: seriesList
     };
 
-    chart.setOption(option);
-    window.addEventListener("resize", () => chart.resize());
+    topicsChart.setOption(option);
+    window.addEventListener('resize', () => topicsChart.resize());
   }
 </script>
-
 
 
   <!-- =========================================================
