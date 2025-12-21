@@ -1396,6 +1396,13 @@
     }
   </script>
 
+
+
+
+
+  <!-- =========================================================
+       RQ3 Boxplot chart (dynamic from JSON)
+       ========================================================= -->
 <script>
 (async function () {
   const el = document.getElementById("rq3-boxplot");
@@ -1407,7 +1414,7 @@
   const chart = echarts.init(el);
 
   // ✅ mets ici le chemin correct (où tu as upload le json dans ton repo)
-  const DATA_URL = '{{ "/data/preprocessed/boxplot_RQ3.json" | relative_url }}';
+  const DATA_URL = '{{ "/data/boxplot_RQ3.json" | relative_url }}';
   // si ton fichier s'appelle exactement "boxplot_RQ3 (2).json", renomme-le (évite espaces/parenthèses)
   // puis commit + push.
 
