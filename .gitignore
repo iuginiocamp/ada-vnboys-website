@@ -4,3 +4,7 @@ _site/
 Gemfile.lock
 
 .DS_Store
+
+# local-only folder
+ada-vnboys-nextjs/
+.DS_Store
