@@ -1,0 +1,282 @@
+[
+  {
+    "Year": 2006,
+    "Topic": "Global Economy & Geopolitics",
+    "Prevalence": 0.13078643381595612
+  },
+  {
+    "Year": 2007,
+    "Topic": "Global Economy & Geopolitics",
+    "Prevalence": 0.24052520096302032
+  },
+  {
+    "Year": 2008,
+    "Topic": "Global Economy & Geopolitics",
+    "Prevalence": 0.21009136736392975
+  },
+  {
+    "Year": 2009,
+    "Topic": "Global Economy & Geopolitics",
+    "Prevalence": 0.3430973291397095
+  },
+  {
+    "Year": 2010,
+    "Topic": "Global Economy & Geopolitics",
+    "Prevalence": 0.23402683436870575
+  },
+  {
+    "Year": 2011,
+    "Topic": "Global Economy & Geopolitics",
+    "Prevalence": 0.24053052067756653
+  },
+  {
+    "Year": 2012,
+    "Topic": "Global Economy & Geopolitics",
+    "Prevalence": 0.25773605704307556
+  },
+  {
+    "Year": 2013,
+    "Topic": "Global Economy & Geopolitics",
+    "Prevalence": 0.23431392014026642
+  },
+  {
+    "Year": 2014,
+    "Topic": "Global Economy & Geopolitics",
+    "Prevalence": 0.22261019051074982
+  },
+  {
+    "Year": 2015,
+    "Topic": "Global Economy & Geopolitics",
+    "Prevalence": 0.2415747493505478
+  },
+  {
+    "Year": 2016,
+    "Topic": "Global Economy & Geopolitics",
+    "Prevalence": 0.23607580363750458
+  },
+  {
+    "Year": 2017,
+    "Topic": "Global Economy & Geopolitics",
+    "Prevalence": 0.23029352724552155
+  },
+  {
+    "Year": 2018,
+    "Topic": "Global Economy & Geopolitics",
+    "Prevalence": 0.251625657081604
+  },
+  {
+    "Year": 2019,
+    "Topic": "Global Economy & Geopolitics",
+    "Prevalence": 0.259395033121109
+  },
+  {
+    "Year": 2006,
+    "Topic": "Civil Rights, Law & Social Policy",
+    "Prevalence": 0.2522275447845459
+  },
+  {
+    "Year": 2007,
+    "Topic": "Civil Rights, Law & Social Policy",
+    "Prevalence": 0.2255345582962036
+  },
+  {
+    "Year": 2008,
+    "Topic": "Civil Rights, Law & Social Policy",
+    "Prevalence": 0.22207410633563995
+  },
+  {
+    "Year": 2009,
+    "Topic": "Civil Rights, Law & Social Policy",
+    "Prevalence": 0.21625788509845734
+  },
+  {
+    "Year": 2010,
+    "Topic": "Civil Rights, Law & Social Policy",
+    "Prevalence": 0.242621049284935
+  },
+  {
+    "Year": 2011,
+    "Topic": "Civil Rights, Law & Social Policy",
+    "Prevalence": 0.26727718114852905
+  },
+  {
+    "Year": 2012,
+    "Topic": "Civil Rights, Law & Social Policy",
+    "Prevalence": 0.26150667667388916
+  },
+  {
+    "Year": 2013,
+    "Topic": "Civil Rights, Law & Social Policy",
+    "Prevalence": 0.2646314799785614
+  },
+  {
+    "Year": 2014,
+    "Topic": "Civil Rights, Law & Social Policy",
+    "Prevalence": 0.2740761637687683
+  },
+  {
+    "Year": 2015,
+    "Topic": "Civil Rights, Law & Social Policy",
+    "Prevalence": 0.25940263271331787
+  },
+  {
+    "Year": 2016,
+    "Topic": "Civil Rights, Law & Social Policy",
+    "Prevalence": 0.24003630876541138
+  },
+  {
+    "Year": 2017,
+    "Topic": "Civil Rights, Law & Social Policy",
+    "Prevalence": 0.25585871934890747
+  },
+  {
+    "Year": 2018,
+    "Topic": "Civil Rights, Law & Social Policy",
+    "Prevalence": 0.2640761435031891
+  },
+  {
+    "Year": 2019,
+    "Topic": "Civil Rights, Law & Social Policy",
+    "Prevalence": 0.27852118015289307
+  },
+  {
+    "Year": 2006,
+    "Topic": "US Elections & Cultural Debates",
+    "Prevalence": 0.16576290130615234
+  },
+  {
+    "Year": 2007,
+    "Topic": "US Elections & Cultural Debates",
+    "Prevalence": 0.16982443630695343
+  },
+  {
+    "Year": 2008,
+    "Topic": "US Elections & Cultural Debates",
+    "Prevalence": 0.21011480689048767
+  },
+  {
+    "Year": 2009,
+    "Topic": "US Elections & Cultural Debates",
+    "Prevalence": 0.15737804770469666
+  },
+  {
+    "Year": 2010,
+    "Topic": "US Elections & Cultural Debates",
+    "Prevalence": 0.2255176156759262
+  },
+  {
+    "Year": 2011,
+    "Topic": "US Elections & Cultural Debates",
+    "Prevalence": 0.22573202848434448
+  },
+  {
+    "Year": 2012,
+    "Topic": "US Elections & Cultural Debates",
+    "Prevalence": 0.24917064607143402
+  },
+  {
+    "Year": 2013,
+    "Topic": "US Elections & Cultural Debates",
+    "Prevalence": 0.2187720239162445
+  },
+  {
+    "Year": 2014,
+    "Topic": "US Elections & Cultural Debates",
+    "Prevalence": 0.2054077535867691
+  },
+  {
+    "Year": 2015,
+    "Topic": "US Elections & Cultural Debates",
+    "Prevalence": 0.22162970900535583
+  },
+  {
+    "Year": 2016,
+    "Topic": "US Elections & Cultural Debates",
+    "Prevalence": 0.27132225036621094
+  },
+  {
+    "Year": 2017,
+    "Topic": "US Elections & Cultural Debates",
+    "Prevalence": 0.23839519917964935
+  },
+  {
+    "Year": 2018,
+    "Topic": "US Elections & Cultural Debates",
+    "Prevalence": 0.2207259237766266
+  },
+  {
+    "Year": 2019,
+    "Topic": "US Elections & Cultural Debates",
+    "Prevalence": 0.21439899504184723
+  },
+  {
+    "Year": 2006,
+    "Topic": "Global Conflict & Foreign Intervention",
+    "Prevalence": 0.45122313499450684
+  },
+  {
+    "Year": 2007,
+    "Topic": "Global Conflict & Foreign Intervention",
+    "Prevalence": 0.36411580443382263
+  },
+  {
+    "Year": 2008,
+    "Topic": "Global Conflict & Foreign Intervention",
+    "Prevalence": 0.3577197194099426
+  },
+  {
+    "Year": 2009,
+    "Topic": "Global Conflict & Foreign Intervention",
+    "Prevalence": 0.28326675295829773
+  },
+  {
+    "Year": 2010,
+    "Topic": "Global Conflict & Foreign Intervention",
+    "Prevalence": 0.29783448576927185
+  },
+  {
+    "Year": 2011,
+    "Topic": "Global Conflict & Foreign Intervention",
+    "Prevalence": 0.2664602994918823
+  },
+  {
+    "Year": 2012,
+    "Topic": "Global Conflict & Foreign Intervention",
+    "Prevalence": 0.23158662021160126
+  },
+  {
+    "Year": 2013,
+    "Topic": "Global Conflict & Foreign Intervention",
+    "Prevalence": 0.2822825610637665
+  },
+  {
+    "Year": 2014,
+    "Topic": "Global Conflict & Foreign Intervention",
+    "Prevalence": 0.29790592193603516
+  },
+  {
+    "Year": 2015,
+    "Topic": "Global Conflict & Foreign Intervention",
+    "Prevalence": 0.2773929238319397
+  },
+  {
+    "Year": 2016,
+    "Topic": "Global Conflict & Foreign Intervention",
+    "Prevalence": 0.2525656819343567
+  },
+  {
+    "Year": 2017,
+    "Topic": "Global Conflict & Foreign Intervention",
+    "Prevalence": 0.27545255422592163
+  },
+  {
+    "Year": 2018,
+    "Topic": "Global Conflict & Foreign Intervention",
+    "Prevalence": 0.2635722756385803
+  },
+  {
+    "Year": 2019,
+    "Topic": "Global Conflict & Foreign Intervention",
+    "Prevalence": 0.2476848065853119
+  }
+]

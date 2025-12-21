@@ -677,7 +677,7 @@
         <div class="column">
             <h3>LDA analysis</h3>
             <p>On the other side, conservative channels exhibit higher engagement rates per video posted.</p>
-            <div id="chart-right" style="width:100%; height:300px;"></div>
+            <div id="opinion-chart" style="width:100%; height:300px;"></div>
             <p>Mirrors the economic peak around 2008–2009, following the hypothesis about the Great Recession’s influence. 
               The "Global Conflict & Foreign Intervention" topic declines sharply after 2006, while "Civil Rights, Law & Social Policy" and "US Elections & Cultural Debates" spike during election years (2008, 2012, 2016), reflecting political cycles.
             </p>
@@ -1136,6 +1136,114 @@
       window.addEventListener('resize', () => issuesChart.resize());
     }
   </script>
+
+
+
+<script>
+  const topicsDom = document.getElementById('opinion-chart'); // ou change l'id si tu veux un autre div
+  const topicsChart = echarts.init(topicsDom);
+
+  fetch('{{ "/data/topic_evolution_echarts.json" | relative_url }}')
+    .then(r => r.json())
+    .then(rawData => runTopicsChart(rawData))
+    .catch(err => console.error("JSON load error:", err));
+
+  function runTopicsChart(rawData) {
+    // rawData: [{Year: 2006, Topic: "...", Prevalence: 0.13}, ...]
+
+    // sécurité: trier par année
+    rawData.sort((a, b) => Number(a.Year) - Number(b.Year));
+
+    const topics = [...new Set(rawData.map(d => d.Topic))];
+    const years = [...new Set(rawData.map(d => String(d.Year)))];
+
+    // Format dataset (similaire à ton issues-chart)
+    // Dimensions: ['Value','Year','Topic','Label']
+    const adaptedData = rawData.map(d => [
+      Number(d.Prevalence),   // Value (0-1)
+      String(d.Year),         // Year (category)
+      d.Topic,                // Topic
+      d.Topic                 // Label
+    ]);
+
+    const datasetWithFilters = [];
+    const seriesList = [];
+
+    topics.forEach(topic => {
+      const datasetId = 'ds_' + topic;
+
+      datasetWithFilters.push({
+        id: datasetId,
+        fromDatasetId: 'dataset_raw',
+        transform: {
+          type: 'filter',
+          config: {
+            dimension: 'Topic',
+            '=': topic
+          }
+        }
+      });
+
+      seriesList.push({
+        type: 'line',
+        datasetId: datasetId,
+        showSymbol: false,
+        name: topic,
+        endLabel: {
+          show: true,
+          formatter: params => {
+            // params.value = [Value, Year, Topic, Label]
+            const v = params.value[0];
+            return params.value[3] + ': ' + (v * 100).toFixed(1) + '%';
+          }
+        },
+        labelLayout: { moveOverlap: 'shiftY' },
+        emphasis: { focus: 'series' },
+        encode: {
+          x: 'Year',
+          y: 'Value',
+          tooltip: ['Value']
+        }
+      });
+    });
+
+    const option = {
+      animationDuration: 8000,
+      dataset: [
+        {
+          id: 'dataset_raw',
+          dimensions: ['Value', 'Year', 'Topic', 'Label'],
+          source: adaptedData
+        },
+        ...datasetWithFilters
+      ],
+      title: { text: 'Topic prevalence over time (YouTube)' },
+      tooltip: {
+        trigger: 'axis',
+        valueFormatter: v => (Number(v) * 100).toFixed(1) + '%'
+      },
+      legend: {
+        top: 30
+      },
+      grid: { right: 220, left: 60, top: 90, bottom: 60 },
+      xAxis: {
+        type: 'category',
+        name: 'Year',
+        data: years
+      },
+      yAxis: {
+        type: 'value',
+        name: 'Prevalence (%)',
+        axisLabel: { formatter: v => (v * 100).toFixed(0) + '%' }
+      },
+      series: seriesList
+    };
+
+    topicsChart.setOption(option);
+    window.addEventListener('resize', () => topicsChart.resize());
+  }
+</script>
+
 
   <!-- =========================================================
        Videos chart — unchanged (uses your axis break logic)
