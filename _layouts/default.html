@@ -744,58 +744,41 @@
   </p>
   
   <p>
-    We therefore perform a <strong>Multivariate OLS Regression</strong>. This statistical method allows us to isolate the specific effect of <em>Emotional Intensity</em> on views while mathematically holding all other factors constant (channel size, election cycles, and topic).
+    We therefore perform a <strong>Multivariate OLS Regression</strong>. This statistical method allows us to isolate the specific effect of <em>Emotional Intensity</em> on views while mathematically holding all other factors constant (channel size, election cycles, and topic). The regression analysis reveals three key insights about what drives video views on YouTube, even after accounting for the size of the channel.
   </p>
 
   <p>
-    The regression analysis reveals three key insights about what drives video views on YouTube, even after accounting for the size of the channel:
+    <strong>First, regarding Emotional Intensity as a primary driver</strong>, we find that it is a powerful force on its own. A coefficient of <strong>0.80</strong> for intensity means that shifting from a neutral title (intensity = 0) to a highly charged one (intensity = 1) multiplies expected views by <strong>$e^{0.80} \approx 2.23$</strong>. This translates to a <strong>123% increase</strong> ($2.23 - 1 = 1.23$, or +123%) in views. What’s striking is that this effect is almost as strong as the impact of having more subscribers, meaning emotional language can significantly boost reach regardless of a channel’s popularity.
   </p>
 
-  <ul>
-    <li>
-      <strong>1. Emotional Intensity as a Primary Driver:</strong> 
-      Emotional intensity is a powerful driver on its own. A coefficient of <strong>0.80</strong> for intensity means that shifting from a neutral title (intensity = 0) to a highly charged one (intensity = 1) multiplies expected views by <strong>$e^{0.80} \approx 2.23$</strong>. 
-      This translates to a <strong>123% increase</strong> ($2.23 - 1 = 1.23$, or +123%) in views. What’s striking is that this effect is almost as strong as the impact of having more subscribers, meaning emotional language can significantly boost reach regardless of a channel’s popularity.
-    </li>
+  <p>
+    <strong>Second, topic choice matters significantly</strong> for overall popularity. Compared to the baseline of <em>"Global Economy & Geopolitics,"</em> videos about <em>"Culture Wars & Elections"</em> attract <strong>74% more views</strong> ($e^{0.555} - 1 \approx 0.74$), while <em>"Global Conflict"</em> content sees a <strong>59% increase</strong> ($e^{0.464} - 1 \approx 0.59$). The pattern is clear: culture wars dominate, followed by war coverage, with economic discussions trailing behind.
+  </p>
 
-    <li>
-      <strong>2. Topic Choice and Popularity:</strong> 
-      Topic choice matters significantly. Compared to the baseline of <em>"Global Economy & Geopolitics,"</em> videos about <em>"Culture Wars & Elections"</em> attract <strong>74% more views</strong> ($e^{0.555} - 1 \approx 0.74$), while <em>"Global Conflict"</em> content sees a <strong>59% increase</strong> ($e^{0.464} - 1 \approx 0.59$). The pattern is clear: culture wars dominate, followed by war coverage, with economic discussions trailing behind.
-    </li>
-
-    <li>
-      <strong>3. The Election Year Paradox:</strong> 
-      Election years present a paradox. The coefficient of <strong>-0.28</strong> for videos uploaded during election years translates to a multiplier of <strong>$e^{-0.28} \approx 0.753$</strong>, meaning views are reduced to <strong>75.3%</strong> of their expected value. This represents a <strong>drop of about 24.7%</strong> ($1 - 0.753 = 0.247$). The oversaturation of content during these periods means more competition for the same audience, reducing individual video reach.
-    </li>
-  </ul>
+  <p>
+    <strong>Finally, election years present a paradox</strong> in the attention economy. The coefficient of <strong>-0.28</strong> for videos uploaded during election years translates to a multiplier of <strong>$e^{-0.28} \approx 0.753$</strong>, meaning views are reduced to <strong>75.3%</strong> of their expected value. This represents a <strong>drop of about 24.7%</strong> ($1 - 0.753 = 0.247$). The oversaturation of content during these periods means more competition for the same audience, reducing individual video reach.
+  </p>
 
   <p>
     <em>In essence, YouTube’s attention economy is shaped by emotion, topic relevance, and timing, but too much competition can diminish returns.</em>
   </p>
 
 
-<p>
-  Is YouTube a mirror or a distortion? Our analysis suggests it is both. In 2008, the platform acted as a <strong>rational mirror</strong>, reflecting the tangible economic anxieties of a nation in crisis. But over time, the incentives shifted.
-</p>
 
-<p>
-  The data reveals a structural reality we call <span style="color: #e74c3c; font-weight: bold;">"The Outrage Advantage."</span> 
-  Our regression proves that in the marketplace of attention, high-intensity content structurally outperforms neutral reporting by <strong>123%</strong>.
-</p>
 
-<p>
-  This creates a self-reinforcing feedback loop:
-</p>
-<ul>
-  <li><strong>Cognitive Bias:</strong> Users naturally click more on sensational content.</li>
-  <li><strong>Algorithmic Optimization:</strong> The algorithm, optimized for engagement, "learns" this preference and pushes more aggressive content.</li>
-  <li><strong>Creative Adaptation:</strong> Creators, seeing what works, adapt their tone to remain competitive.</li>
-</ul>
 
-<p>
-  While the algorithm is not ideologically motivated, it is functionally efficient at exploiting this loop. Consequently, the discourse gravitated away from complex economic debates toward
-  the high-voltage territory of Culture Wars. YouTube does not just reflect the American electorate; it refracts it through a lens where emotion is the primary driver of visibility.
-</p>
+
+
+  <p>
+    Is YouTube a mirror or a distortion? Our analysis suggests it is both. 
+    In 2008, the platform acted as a rational mirror, reflecting the tangible economic anxieties of a nation in crisis. 
+    However, over time, the incentives governing the platform have fundamentally shifted. 
+    The data reveals a structural reality we call "The Outrage Advantage," where our regression analysis proves that high-intensity content structurally outperforms neutral reporting by 123%.
+  </p>
+
+  <p>
+    This disparity creates a self-reinforcing feedback loop: users naturally click more on sensational content due to cognitive bias; the algorithm, optimized for engagement, "learns" this preference and pushes more aggressive content; and creators adapt their tone to remain competitive. While the algorithm is not ideologically motivated, it is functionally efficient at exploiting this loop, gradually shifting the platform from a mirror of reality to a magnifier of outrage.
+  </p>
 
 
 
