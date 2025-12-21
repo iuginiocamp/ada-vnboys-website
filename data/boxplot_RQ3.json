@@ -1,0 +1,35 @@
+[
+  {
+    "category": "Low Intensity",
+    "min": 1.0,
+    "q1": 360.0,
+    "median": 1749.0,
+    "q3": 10131.0,
+    "max": 50716468.0,
+    "count": 714044,
+    "lower_whisker": 1.0,
+    "upper_whisker": 24787.5
+  },
+  {
+    "category": "Medium Intensity",
+    "min": 1.0,
+    "q1": 496.0,
+    "median": 2469.5,
+    "q3": 13436.75,
+    "max": 32726918.0,
+    "count": 387770,
+    "lower_whisker": 1.0,
+    "upper_whisker": 32847.875
+  },
+  {
+    "category": "High Intensity",
+    "min": 1.0,
+    "q1": 667.0,
+    "median": 3464.0,
+    "q3": 17763.5,
+    "max": 44762387.0,
+    "count": 167615,
+    "lower_whisker": 1.0,
+    "upper_whisker": 43408.25
+  }
+]

@@ -342,9 +342,9 @@
       </p>
 
     <div style="text-align:center; margin-bottom:20px; margin-top:20px;">
-      <button onclick="showYear(2008)" style="padding: 12px 24px; font-size: 18px; cursor: pointer;">2008</button>
-      <button onclick="showYear(2012)" style="padding: 12px 24px; font-size: 18px; cursor: pointer;">2012</button>
-      <button onclick="showYear(2016)" style="padding: 12px 24px; font-size: 18px; cursor: pointer;">2016</button>
+      <button onclick="showYear(2008)">2008</button>
+      <button onclick="showYear(2012)">2012</button>
+      <button onclick="showYear(2016)">2016</button>
     </div>
 
       <div id="main" style="width: 100%; height: 500px; margin: 20px auto;"></div>
@@ -722,11 +722,10 @@
 </p>
 
 
-<!-- c'est quoi ce graph ? -->
 
-<div id="issues-chart" style="width:100%; height:600px; margin: 40px 0;"></div>
 
-<!-- boxplot graph ici -->
+<div id="rq3-boxplot" style="width: 100%; height: 520px;"></div>
+
 
 
 <p>
@@ -740,28 +739,24 @@
 <p><strong>OLS Regression: Proving the Effect</strong></p>
 
 <p>
-    Visualizations like boxplots are powerful, but they can be misleading. They show us that high-intensity videos tend to have more views, but they don't tell us why. Is it really the anger that drives the views? Or is it simply that larger, more successful channels happen to use more emotional titles? 
-  </p>
-  
-  <p>
-    We therefore perform a <strong>Multivariate OLS Regression</strong>. This statistical method allows us to isolate the specific effect of <em>Emotional Intensity</em> on views while mathematically holding all other factors constant (channel size, election cycles, and topic). The regression analysis reveals three key insights about what drives video views on YouTube, even after accounting for the size of the channel.
-  </p>
+  Visualizations like boxplots are powerful, but they can be misleading. They show us that high-intensity videos tend to have more views, but they don't tell us why. Is it really the anger that drives the views? Or is it simply that larger, more successful channels happen to use more emotional titles? 
+</p>
 
-  <p>
-    <strong>First, regarding Emotional Intensity as a primary driver</strong>, we find that it is a powerful force on its own. A coefficient of <strong>0.80</strong> for intensity means that shifting from a neutral title (intensity = 0) to a highly charged one (intensity = 1) multiplies expected views by <strong>$e^{0.80} \approx 2.23$</strong>. This translates to a <strong>123% increase</strong> ($2.23 - 1 = 1.23$, or +123%) in views. What’s striking is that this effect is almost as strong as the impact of having more subscribers, meaning emotional language can significantly boost reach regardless of a channel’s popularity.
-  </p>
+<p>
+  We therefore perform a <strong>Multivariate OLS Regression</strong>. This statistical method allows us to isolate the specific effect of <em>Emotional Intensity</em> on views while mathematically holding all other factors constant (channel size, election cycles, and topic). The regression analysis reveals three key insights about what drives video views on YouTube, even after accounting for the size of the channel.
+</p>
 
-  <p>
-    <strong>Second, topic choice matters significantly</strong> for overall popularity. Compared to the baseline of <em>"Global Economy & Geopolitics,"</em> videos about <em>"Culture Wars & Elections"</em> attract <strong>74% more views</strong> ($e^{0.555} - 1 \approx 0.74$), while <em>"Global Conflict"</em> content sees a <strong>59% increase</strong> ($e^{0.464} - 1 \approx 0.59$). The pattern is clear: culture wars dominate, followed by war coverage, with economic discussions trailing behind.
-  </p>
+<p>
+  First, regarding Emotional Intensity as a primary driver, we find that it is a powerful force on its own. A coefficient of <strong>0.80</strong> for intensity means that shifting from a neutral title (intensity = 0) to a highly charged one (intensity = 1) multiplies expected views by <strong><em>e</em><sup>0.80</sup> &asymp; 2.23</strong>. This translates to a <strong>123% increase</strong> (2.23 - 1 = 1.23, or +123%) in views. What’s striking is that this effect is almost as strong as the impact of having more subscribers, meaning emotional language can significantly boost reach regardless of a channel’s popularity.
 
-  <p>
-    <strong>Finally, election years present a paradox</strong> in the attention economy. The coefficient of <strong>-0.28</strong> for videos uploaded during election years translates to a multiplier of <strong>$e^{-0.28} \approx 0.753$</strong>, meaning views are reduced to <strong>75.3%</strong> of their expected value. This represents a <strong>drop of about 24.7%</strong> ($1 - 0.753 = 0.247$). The oversaturation of content during these periods means more competition for the same audience, reducing individual video reach.
-  </p>
+  Second, topic choice matters significantly for overall popularity. Compared to the baseline of <em>"Global Economy & Geopolitics,"</em> videos about <em>"Culture Wars & Elections"</em> attract <strong>74% more views</strong> (<em>e</em><sup>0.555</sup> - 1 &asymp; 0.74), while <em>"Global Conflict"</em> content sees a <strong>59% increase</strong> (<em>e</em><sup>0.464</sup> - 1 &asymp; 0.59). The pattern is clear: culture wars dominate, followed by war coverage, with economic discussions trailing behind.
 
-  <p>
-    In essence, YouTube’s attention economy is shaped by emotion, topic relevance, and timing, but too much competition can diminish returns.
-  </p>
+  Finally, election years present a paradox in the attention economy. The coefficient of <strong>-0.28</strong> for videos uploaded during election years translates to a multiplier of <strong><em>e</em><sup>-0.28</sup> &asymp; 0.753</strong>, meaning views are reduced to <strong>75.3%</strong> of their expected value. This represents a <strong>drop of about 24.7%</strong> (1 - 0.753 = 0.247). The oversaturation of content during these periods means more competition for the same audience, reducing individual video reach.
+</p>
+
+<p>
+  In essence, YouTube’s attention economy is shaped by emotion, topic relevance, and timing, but too much competition can diminish returns.
+</p>
 
 
 
@@ -848,19 +843,19 @@
     <a href="https://github.com/epfl-ada/ada-2022-project-vnboys"><img src="/ada-vnboys-website/assets/img/ivon.png" alt="" title="GitHub"></a>
     <div class="link--git">
       <div class="ling--git--item">
-        <a href="{{ site.github.owner_url }}">Eugenio <span class="red">I</span>uginiocamp</a>
+        <a href="{{ site.github.owner_url }}">Eugenio <span class="red">C</span>ampanelli</a>
       </div>
       <div class="ling--git--item">
-        <a href="https://github.com/pigglou"> Louis <span class="red">P</span>igglou </a>
+        <a href="https://github.com/pigglou"> Louis <span class="red">P</span>iguet </a>
       </div>
       <div class="ling--git--item">
-        <a href="https://github.com/vickiwarou"> Victoria<span class="red">V</span>ickiwarou</a>
+        <a href="https://github.com/vickiwarou"> Victoria<span class="red">W</span>attel</a>
       </div>
       <div class="ling--git--item">
-        <a href="https://github.com/plpeter74"> Pierre-Louis <span class="red">P</span>lpeter74</a>
+        <a href="https://github.com/plpeter74"> Pierre-Louis <span class="red">P</span>eter</a>
       </div>
       <div class="ling--git--item">
-        <a href="https://github.com/aaduval"> Anthonin <span class="red">A</span>aduval</a>
+        <a href="https://github.com/aaduval"> Anthonin <span class="red">D</span>uval</a>
       </div>
     </div>
   </footer>
@@ -1405,6 +1400,111 @@
       }
     }
   </script>
+
+
+
+
+
+  <!-- =========================================================
+       RQ3 Boxplot chart (dynamic from JSON)
+       ========================================================= -->
+<script>
+(async function () {
+  const el = document.getElementById("rq3-boxplot");
+  if (!el) return;
+
+  // IMPORTANT: n'inclus ECharts qu'une seule fois dans ta page.
+  // <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+
+  const chart = echarts.init(el);
+
+  // ✅ mets ici le chemin correct (où tu as upload le json dans ton repo)
+  const DATA_URL = '{{ "/data/boxplot_RQ3.json" | relative_url }}';
+  // si ton fichier s'appelle exactement "boxplot_RQ3 (2).json", renomme-le (évite espaces/parenthèses)
+  // puis commit + push.
+
+  let rows;
+  try {
+    const r = await fetch(DATA_URL);
+    if (!r.ok) throw new Error(`Cannot load JSON: ${DATA_URL} (${r.status})`);
+    rows = await r.json();
+  } catch (e) {
+    console.error(e);
+    el.innerHTML = `<p style="color:#b00020;font-weight:600;">${e.message}</p>`;
+    return;
+  }
+
+  // rows: [{category, min,q1,median,q3,max,count,lower_whisker,upper_whisker}, ...]
+  const categories = rows.map(d => d.category);
+
+  // ECharts boxplot data format: [min, Q1, median, Q3, max]
+  // ⚠️ Si tu veux afficher les whiskers "réels" (upper_whisker/lower_whisker),
+  // utilise plutôt: [lower_whisker, q1, median, q3, upper_whisker]
+  const boxData = rows.map(d => ([
+    Number(d.lower_whisker ?? d.min),
+    Number(d.q1),
+    Number(d.median),
+    Number(d.q3),
+    Number(d.upper_whisker ?? d.max)
+  ]));
+
+  const counts = rows.map(d => Number(d.count));
+
+  const option = {
+    title: [
+      {
+        text: "RQ3 — View distribution by intensity",
+        left: "center"
+      }
+    ],
+    tooltip: {
+      trigger: "item",
+      formatter: (p) => {
+        const i = p.dataIndex;
+        const d = rows[i];
+        return `
+          <b>${d.category}</b><br/>
+          count: ${d.count}<br/>
+          min: ${d.min}<br/>
+          Q1: ${d.q1}<br/>
+          median: ${d.median}<br/>
+          Q3: ${d.q3}<br/>
+          max: ${d.max}<br/>
+          lower_whisker: ${d.lower_whisker}<br/>
+          upper_whisker: ${d.upper_whisker}
+        `;
+      }
+    },
+    grid: { left: 70, right: 40, bottom: 70, top: 80 },
+    xAxis: {
+      type: "category",
+      data: categories,
+      boundaryGap: true,
+      axisLabel: { interval: 0 }
+    },
+    yAxis: {
+      type: "log",              // ✅ RECOMMANDÉ vu tes max énormes
+      name: "Views (log scale)",
+      splitArea: { show: true }
+    },
+    series: [
+      {
+        name: "boxplot",
+        type: "boxplot",
+        data: boxData,
+        itemStyle: {
+          borderWidth: 2
+        }
+      }
+    ]
+  };
+
+  chart.setOption(option);
+  window.addEventListener("resize", () => chart.resize());
+})();
+</script>
+
+
 
   <!-- =========================================================
        Bar chart (static)
