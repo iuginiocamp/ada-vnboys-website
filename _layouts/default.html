@@ -702,17 +702,92 @@
     </p>
 
     <p>
-      
+    <p>
+    For example, a low-intensity title like <em>"Senate Committee Report on Budget"</em> 
+    or <em>"Full Interview with Candidate"</em> scores close to <strong>0</strong>. 
+    It’s neutral, factual, and straightforward.
+
+    On the other hand, high-intensity titles (<em>"SHOCKING betrayal,"</em> 
+    <em>"DESTROYED in debate,"</em> or <em>"CRISIS explosion"</em>) score close to <strong>1</strong>. 
+    They’re packed with hyperbole, moral outrage, or loaded language.
     </p>
 
 
 
-    <div id="issues-chart" style="width:100%; height:600px; margin: 40px 0;"></div>
-    <p> Who doesn't love polls? The graph here shows us the topics Americans found most important during the 2010s. </p>
-        <p> We can see that the economy was a big worry throughout most of the decade most likely due to the Great Recession and its tough aftershocks. After all, the heart of capitalism must worry about its economy.
-           Health and warfare seems to be a big concern, no surprise there as people do  want to be able to live and be able to go to the hospital. Healthcare being privatized is an obvious issue that is constantly being discussed
-           Another topic that results high in the polls is education and environment. Climate change and global warming are obviously issues that worry a lot of the population but sensitive topics like how to teach the children (e.g Critical Race Theory)   Less polarizing topics like public spending and government are not as important, seemingly, as they may be too technical for the average Joe and not controversial enough to care. </p>¨
-        <p> Now we have looked at the topics that show up in the polls, let us see which ones catch people's attention on Youtube!</p>
+<!-- <div id="issues-chart" style="width:100%; height:600px; margin: 40px 0;"></div> -->
+
+
+<p>
+  This intensity score acts like a rough measure of sensationalism or clickbait. 
+  The boxplot below shows how these intensity levels (low, medium, high) relate to viewer engagement.
+</p>
+
+
+
+
+<!-- boxplot graph ici -->
+
+
+<p>
+  The boxplot reveals that emotional intensity in video titles and tags directly impacts viewer engagement. 
+  Low-intensity content has fewer views and less variability, while medium-intensity content sees a rise in both median views and spread.
+
+  High-intensity content, however, stands out as it has the highest median views and the widest spread, indicating that sensational or emotionally charged titles attract more viewers and can achieve extreme engagement levels. This suggests YouTube’s algorithm may favor and amplify high-intensity content, as it tends to generate more attention and interaction. 
+  In essence, emotional intensity correlates with higher visibility and engagement.
+</p>
+
+<p>
+  OLS Regression: Proving the Effect
+  Visualizations like boxplots are powerful, but they can be misleading. 
+  They show us that high-intensity videos tend to have more views, but they don't tell us why. 
+  Is it really the anger that drives the views ? Or is it simply that larger, more successful channels happen to use more emotional titles ? 
+  We therefore perform a Multivariate OLS Regression. This statistical method allows us to isolate the specific effect of Emotional Intensity on views while mathematically holding all other factors constant (channel size, election cycles, and topic). 
+</p>
+
+<p>
+  The regression analysis reveals three key insights about what drives video views on YouTube, even after accounting for the size of the channel :
+</p>
+
+<p>
+  First, emotional intensity is a powerful driver on its own. A coefficient of <strong>0.80</strong> for intensity means that shifting from a neutral title (intensity = 0) to a highly charged one (intensity = 1) multiplies expected views by <em>e</em><sup>0.80</sup> &asymp; 2.23.
+  This translates to a <strong>123%</strong> increase (2.23 - 1 = 1.23, or +123%) in views. What’s striking is that this effect is almost as strong as the impact of having more subscribers, meaning emotional language can significantly boost reach regardless of a channel’s popularity.
+</p>
+
+<p>
+  Second, topic choice matters. Compared to the baseline of "Global Economy & Geopolitics," videos about "Culture Wars & Elections" attract <strong>74% more views</strong> ($e^{0.555} - 1 \approx 0.74$), while "Global Conflict" content sees a <strong>59% increase</strong> ($e^{0.464} - 1 \approx 0.59$). The pattern is clear: culture wars dominate, followed by war coverage, with economic discussions trailing behind.
+</p>
+
+<p>
+  Finally, election years present a paradox. The coefficient of <strong>-0.28</strong> for videos uploaded during election years translates to a multiplier of $e^{-0.28} \approx 0.753$, meaning views are reduced to <strong>75.3%</strong> of their expected value outside of election years. This represents a <strong>drop of about 24.7%</strong> ($1 - 0.753 = 0.247$). The oversaturation of content during these periods means more competition for the same audience, reducing individual video reach.
+</p>
+
+<p>
+  In essence, YouTube’s attention economy is shaped by emotion, topic relevance, and timing, but too much competition can diminish returns.
+</p>
+
+
+<p>
+  Is YouTube a mirror or a distortion? Our analysis suggests it is both. In 2008, the platform acted as a <strong>rational mirror</strong>, reflecting the tangible economic anxieties of a nation in crisis. But over time, the incentives shifted.
+</p>
+
+<p>
+  The data reveals a structural reality we call <span style="color: #e74c3c; font-weight: bold;">"The Outrage Advantage."</span> 
+  Our regression proves that in the marketplace of attention, high-intensity content structurally outperforms neutral reporting by <strong>123%</strong>.
+</p>
+
+<p>
+  This creates a self-reinforcing feedback loop:
+</p>
+<ul>
+  <li><strong>Cognitive Bias:</strong> Users naturally click more on sensational content.</li>
+  <li><strong>Algorithmic Optimization:</strong> The algorithm, optimized for engagement, "learns" this preference and pushes more aggressive content.</li>
+  <li><strong>Creative Adaptation:</strong> Creators, seeing what works, adapt their tone to remain competitive.</li>
+</ul>
+
+<p>
+  While the algorithm is not ideologically motivated, it is functionally efficient at exploiting this loop. Consequently, the discourse gravitated away from complex economic debates toward
+  the high-voltage territory of Culture Wars. YouTube does not just reflect the American electorate; it refracts it through a lens where emotion is the primary driver of visibility.
+</p>
 
 
 
@@ -724,12 +799,8 @@
 
 
 
-      <p>
-        The graph above shows the evolution over time of the top 10 most used tags filtered on the selected US channels in their share of total tags. 
-        We can see that many tags stay relatively stable in their use but a few vary significantly. 
-        Business and economy saw spikes during the years 2008-2009 which were the years of the Great Recession. 
-        The tag “elections” spiked in 2016, a lot more than in 2008 or 2012. This was an extremely mediatized and discussed election and therefore the jump makes sense. 
-      </p>
+
+
 
 
 
