@@ -1409,40 +1409,41 @@
        RQ3 Boxplot chart (dynamic from JSON)
        ========================================================= -->
 <script>
-(async () => {
-  // Get the container
+document.addEventListener("DOMContentLoaded", async () => {
   const el = document.getElementById("chart");
   if (!el) {
-    console.error("Chart container not found");
+    console.error("❌ #chart not found");
     return;
   }
 
-  // Initialize ECharts
+  // DEBUG: show container size
+  console.log("✅ chart container size:", el.clientWidth, el.clientHeight);
+
+  if (typeof echarts === "undefined") {
+    console.error("❌ echarts is not defined (script not loaded)");
+    el.innerHTML = "<pre>echarts is not defined — check echarts import.</pre>";
+    return;
+  }
+
   const chart = echarts.init(el);
 
-  // Path to the JSON file (GitHub Pages compatible)
-  const DATA_URL = "./data/boxplot_RQ3.json";
+  const DATA_URL = "./data/boxplot_RQ3.json"; // adjust if needed
+  console.log("🔎 fetching:", DATA_URL);
 
   let rows;
   try {
     const r = await fetch(DATA_URL);
-    if (!r.ok) {
-      throw new Error(`Cannot load JSON: ${DATA_URL} (${r.status})`);
-    }
+    console.log("📡 fetch status:", r.status);
+    if (!r.ok) throw new Error(`Cannot load JSON: ${DATA_URL} (${r.status})`);
     rows = await r.json();
+    console.log("✅ rows loaded:", rows.length);
   } catch (e) {
     console.error(e);
     el.innerHTML = `<pre>${e.message}</pre>`;
     return;
   }
 
-  // rows expected format:
-  // [{ category, min, q1, median, q3, max, count, lower_whisker, upper_whisker }, ...]
-
   const categories = rows.map(d => d.category);
-
-  // Boxplot format: [min, Q1, median, Q3, max]
-  // We use real whiskers when available
   const boxData = rows.map(d => ([
     Number(d.lower_whisker ?? d.min),
     Number(d.q1),
@@ -1452,68 +1453,19 @@
   ]));
 
   const option = {
-    title: [
-      {
-        text: "RQ3 — View distribution by intensity",
-        left: "center"
-      }
-    ],
-    tooltip: {
-      trigger: "item",
-      formatter: (p) => {
-        const d = rows[p.dataIndex];
-        return `
-<strong>${d.category}</strong><br/>
-count: ${d.count}<br/>
-min: ${d.min}<br/>
-Q1: ${d.q1}<br/>
-median: ${d.median}<br/>
-Q3: ${d.q3}<br/>
-max: ${d.max}<br/>
-lower whisker: ${d.lower_whisker}<br/>
-upper whisker: ${d.upper_whisker}
-        `;
-      }
-    },
-    grid: {
-      left: 70,
-      right: 40,
-      bottom: 70,
-      top: 80
-    },
-    xAxis: {
-      type: "category",
-      data: categories,
-      boundaryGap: true,
-      axisLabel: {
-        interval: 0
-      }
-    },
-    yAxis: {
-      type: "log",
-      name: "Views (log scale)",
-      splitArea: {
-        show: true
-      }
-    },
-    series: [
-      {
-        name: "boxplot",
-        type: "boxplot",
-        data: boxData,
-        itemStyle: {
-          borderWidth: 2
-        }
-      }
-    ]
+    title: [{ text: "RQ3 — View distribution by intensity", left: "center" }],
+    tooltip: { trigger: "item" },
+    grid: { left: 70, right: 40, bottom: 70, top: 80 },
+    xAxis: { type: "category", data: categories, axisLabel: { interval: 0 } },
+    yAxis: { type: "log", name: "Views (log scale)", splitArea: { show: true } },
+    series: [{ name: "boxplot", type: "boxplot", data: boxData }]
   };
 
   chart.setOption(option);
-
-  // Handle resize
   window.addEventListener("resize", () => chart.resize());
-})();
+});
 </script>
+
 
 
 
